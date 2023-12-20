@@ -14,9 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
  * Esta clase guarda los atributos de ingrediente
+ *
  * @author paula
  */
 @Entity
@@ -185,6 +185,31 @@ public class Ingrediente implements Serializable {
      */
     public void setGrasas(float grasas) {
         this.grasas = grasas;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof entities.Cliente)) {
+            return false;
+        }
+        entities.Cliente other = (entities.Cliente) object;
+        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
 }
