@@ -49,7 +49,7 @@ public class Diario implements Serializable {
     /**
      * Lista de Dias.
      */
-    private List<Fecha> listaDias;
+    private List<Fecha> listaFecha;
     /**
      * Lista de Ejercicios.
      */
@@ -87,15 +87,15 @@ public class Diario implements Serializable {
      * @return the ListDia
      */
     public List<Fecha> getListaDias() {
-        return listaDias;
+        return listaFecha;
     }
 
     /**
      *
      * @param listaDias the listaDias to set
      */
-    public void setListaDias(List<Fecha> listaDias) {
-        this.listaDias = listaDias;
+    public void setListaFechas(List<Fecha> listaFechas) {
+        this.listaFecha = listaFechas;
     }
 
     /**
