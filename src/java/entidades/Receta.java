@@ -7,18 +7,22 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de receta
+ *
  * @author paula
  */
 @Entity
@@ -63,6 +67,30 @@ public class Receta implements Serializable {
      */
     @ManyToMany
     private List<Ingrediente> ingredientes;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
+    private List<Diario> ListaDiariosR;
+
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> ListaDiariosR) {
+        this.id = id;
+        this.tipoReceta = tipoReceta;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.esVegetariano = esVegetariano;
+        this.esVegano = esVegano;
+        this.precio = precio;
+        this.ingredientes = ingredientes;
+        this.ListaDiariosR = ListaDiariosR;
+    }
+
+    public List<Diario> getListaDiariosR() {
+        return ListaDiariosR;
+    }
+
+    public void setListaDiariosR(List<Diario> ListaDiariosR) {
+        this.ListaDiariosR = ListaDiariosR;
+    }
 
     /**
      *
@@ -193,9 +221,6 @@ public class Receta implements Serializable {
         this.ingredientes = ingredientes;
     }
 
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -220,12 +245,5 @@ public class Receta implements Serializable {
     public String toString() {
         return super.toString();
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }
