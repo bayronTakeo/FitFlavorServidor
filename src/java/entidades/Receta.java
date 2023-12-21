@@ -67,13 +67,14 @@ public class Receta implements Serializable {
      * Lista de ingredientes que contiene la receta.
      */
     private String pasos;
-    
-    
-    
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
     private List<Ingrediente> ingredientes;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
+    private List<Diario> ListaDiariosR;
     @ManyToOne
     private Cliente cliente;
 
@@ -86,12 +87,24 @@ public class Receta implements Serializable {
         this.cliente = cliente;
     }
 
-    /**
-     *
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> ListaDiariosR) {
+        this.id = id;
+        this.tipoReceta = tipoReceta;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.esVegetariano = esVegetariano;
+        this.esVegano = esVegano;
+        this.precio = precio;
+        this.ingredientes = ingredientes;
+        this.ListaDiariosR = ListaDiariosR;
+    }
+
+    public List<Diario> getListaDiariosR() {
+        return ListaDiariosR;
+    }
+
+    public void setListaDiariosR(List<Diario> ListaDiariosR) {
+        this.ListaDiariosR = ListaDiariosR;
     }
 
     /**

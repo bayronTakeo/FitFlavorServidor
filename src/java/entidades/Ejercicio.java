@@ -59,7 +59,9 @@ public class Ejercicio implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
-    private List<Diario> ListaDiarios;
+    private List<Diario> ListaDiariosE;
+    
+    
 
     public Ejercicio(Integer id, String nombre, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> ListaDiarios) {
         this.id = id;
@@ -68,15 +70,15 @@ public class Ejercicio implements Serializable {
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
         this.intensidad = intensidad;
-        this.ListaDiarios = ListaDiarios;
+        this.ListaDiariosE = ListaDiarios;
     }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
-        this.ListaDiarios = ListaDiarios;
+        this.ListaDiariosE = ListaDiarios;
     }
 
     public List<Diario> getListaDiarios() {
-        return ListaDiarios;
+        return ListaDiariosE;
     }
 
     /**

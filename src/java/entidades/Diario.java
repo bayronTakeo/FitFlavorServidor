@@ -42,12 +42,18 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
-    @ManyToMany(mappedBy = "listaDiarios", fetch = FetchType.EAGER, cascade = ALL)
+    @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = ALL)
     private List<Ejercicio> listaEjercicios;
     /**
      * Lista de Recetas
      */
+    @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
+    /**
+     * Lista de Fechas
+     */
+    @ManyToMany(mappedBy = "listaDiariosF", fetch = FetchType.EAGER, cascade = ALL)
+    private List<Receta> listaFechas;
 
     /**
      *
