@@ -14,11 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de receta
+ *
  * @author paula
  */
 @Entity
@@ -63,6 +65,18 @@ public class Receta implements Serializable {
      */
     @ManyToMany
     private List<Ingrediente> ingredientes;
+
+    @ManyToOne
+    private Cliente cliente;
+
+    @XmlTransient
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     /**
      *
@@ -193,9 +207,6 @@ public class Receta implements Serializable {
         this.ingredientes = ingredientes;
     }
 
-    
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -220,12 +231,5 @@ public class Receta implements Serializable {
     public String toString() {
         return super.toString();
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

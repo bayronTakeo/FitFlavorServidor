@@ -6,10 +6,13 @@
 package entidades;
 
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,12 +40,24 @@ public class Cliente extends Usuario {
 
     private int altura;
 
-    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, int altura, Integer user_id, String email, String nombreCompleto, LocalDate fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    private List<Receta> recetasUsu;
+
+    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, int altura, List<Receta> recetasUsu, Integer user_id, String email, String nombreCompleto, LocalDate fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
         this.sexo = sexo;
         this.peso = peso;
         this.objetivo = objetivo;
         this.altura = altura;
+        this.recetasUsu = recetasUsu;
+    }
+
+    public void setRecetasUsu(List<Receta> recetasUsu) {
+        this.recetasUsu = recetasUsu;
+    }
+
+    public List<Receta> getRecetasUsu() {
+        return recetasUsu;
     }
 
     public static long getSerialVersionUID() {
