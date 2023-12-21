@@ -66,7 +66,10 @@ public class Receta implements Serializable {
     /**
      * Lista de ingredientes que contiene la receta.
      */
-
+    private String pasos;
+    
+    
+    
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
     private List<Ingrediente> ingredientes;
@@ -97,6 +100,14 @@ public class Receta implements Serializable {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPasos() {
+        return pasos;
+    }
+
+    public void setPasos(String pasos) {
+        this.pasos = pasos;
     }
 
     /**
