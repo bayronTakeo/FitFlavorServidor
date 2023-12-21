@@ -7,10 +7,13 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -39,6 +42,7 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
+    @ManyToMany(mappedBy = "listaDiarios", fetch = FetchType.EAGER, cascade = ALL)
     private List<Ejercicio> listaEjercicios;
     /**
      * Lista de Recetas
@@ -97,7 +101,6 @@ public class Diario implements Serializable {
      *
      * @return the ListaRecetas
      */
-
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }

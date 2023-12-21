@@ -6,10 +6,15 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -51,6 +56,28 @@ public class Ejercicio implements Serializable {
      * Intensidad del Ejercicio
      */
     private String intensidad;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
+    private List<Diario> ListaDiarios;
+
+    public Ejercicio(Integer id, String nombre, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> ListaDiarios) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.duracion = duracion;
+        this.kcalQuemadas = kcalQuemadas;
+        this.intensidad = intensidad;
+        this.ListaDiarios = ListaDiarios;
+    }
+
+    public void setListaDiarios(List<Diario> ListaDiarios) {
+        this.ListaDiarios = ListaDiarios;
+    }
+
+    public List<Diario> getListaDiarios() {
+        return ListaDiarios;
+    }
 
     /**
      *
