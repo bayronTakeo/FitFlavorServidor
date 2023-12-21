@@ -206,10 +206,10 @@ public class Receta implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof entities.Cliente)) {
+        if (!(object instanceof Cliente)) {
             return false;
         }
-        entities.Cliente other = (entities.Cliente) object;
+        Cliente other = (Cliente) object;
         if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
             return false;
         }
