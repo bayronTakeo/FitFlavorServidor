@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -23,6 +25,29 @@ import javax.persistence.Table;
  *
  * @author paula
  */
+@NamedQueries({
+    @NamedQuery(
+            name = "ordenarkCal", query = "SELECT *.i FROM Ingrediente i ORDER BY kCal ASC"
+    )
+    ,@NamedQuery(
+            name = "ordenarPrecio", query = "SELECT *.i FROM Ingrediente i ORDER BY precio ASC"
+    )
+    ,@NamedQuery(
+            name = "ordenarCarbohidratos", query = "SELECT *.i FROM Ingrediente i ORDER BY carbohidratos ASC"
+    )
+    ,@NamedQuery(
+            name = "ordenarProteinas", query = "SELECT *.i FROM Ingrediente i ORDER BY proteinas ASC"
+    )
+    ,@NamedQuery(
+            name = "ordenarGrasas", query = "SELECT *.i FROM Ingrediente i ORDER BY grasas ASC"
+    )
+    ,@NamedQuery(
+            name = "ordenarNombre", query = "SELECT *.i FROM Ingrediente i  ORDER BY nombre ASC"
+    )
+    ,@NamedQuery(
+            name = "tipoIngrediente", query = "SELECT *.i FROM Ingrediente i  WHERE tipo = :tipoIngrediente"
+    )})
+
 @Entity
 @Table(name = "ingrediente", schema = "fitFlavor")
 public class Ingrediente implements Serializable {

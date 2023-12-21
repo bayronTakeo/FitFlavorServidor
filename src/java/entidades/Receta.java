@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -26,6 +28,27 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author paula
  */
+
+@NamedQueries({
+    @NamedQuery(
+            name = "lista", query = "SELECT *.r FROM Receta r"
+    )
+    ,@NamedQuery(
+            name = "listaIngrediente", query = "SELECT *.r FROM Receta r WHERE Ingrediente i = :ingrediente"
+    )
+    ,@NamedQuery(
+            name = "ordenarDuracion", query = "SELECT *.r FROM Receta r ORDER BY duracion ASC"
+    )
+    ,@NamedQuery(
+            name = "vegano", query = "SELECT *.r FROM Receta r WHERE esVegano  = true"
+    )
+    ,@NamedQuery(
+            name = "vegetariano", query = "SELECT *.r FROM Receta r WHERE esVegetariano  = true"
+    )
+    ,@NamedQuery(
+            name = "precio", query = "SELECT *.r FROM Receta r ORDER BY precio ASC"
+    ),})
+
 @Entity
 @Table(name = "receta", schema = "fitFlavor")
 
