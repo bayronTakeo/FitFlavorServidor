@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+ * Esta clase contiene toda la informacion del cliente
+ *
  * @author Bayron
  */
 @Entity

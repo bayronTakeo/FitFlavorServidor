@@ -23,12 +23,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.DiscriminatorFormula;
 
 /**
+ * Esta clase contiene toda la informacion del usuario
  *
  * @author Bayron
  */
 @NamedQueries({
     @NamedQuery(
-            name = "signIn", query = "SELECT u FROM User u WHERE login = :loginUsr AND password = :passUsr"
+            name = "signIn", query = "SELECT u FROM User u WHERE login = :email AND password = :contrasenia"
     ),})
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
