@@ -7,12 +7,15 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -63,7 +66,9 @@ public class Receta implements Serializable {
     /**
      * Lista de ingredientes que contiene la receta.
      */
-    @ManyToMany
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
     private List<Ingrediente> ingredientes;
 
     @ManyToOne

@@ -6,12 +6,16 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -58,6 +62,29 @@ public class Ingrediente implements Serializable {
      * Grasas del ingrediente.
      */
     private float grasas;
+
+    @ManyToMany(mappedBy = "ingredientes", fetch = FetchType.EAGER, cascade = ALL)
+    private List<Receta> listaRecetas;
+
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, float precio, float kCal, float carbohidratos, float proteinas, float grasas, List<Receta> listaRecetas) {
+        this.id = id;
+        this.tipoIngrediente = tipoIngrediente;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.kCal = kCal;
+        this.carbohidratos = carbohidratos;
+        this.proteinas = proteinas;
+        this.grasas = grasas;
+        this.listaRecetas = listaRecetas;
+    }
+
+    public List<Receta> getListaRecetas() {
+        return listaRecetas;
+    }
+
+    public void setListaRecetas(List<Receta> listaRecetas) {
+        this.listaRecetas = listaRecetas;
+    }
 
     /**
      *
@@ -200,7 +227,7 @@ public class Ingrediente implements Serializable {
         if (!(object instanceof Cliente)) {
             return false;
         }
-       Cliente other = (Cliente) object;
+        Cliente other = (Cliente) object;
         if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
             return false;
         }
