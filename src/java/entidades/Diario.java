@@ -16,14 +16,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Esta clase guarda una lista de dias, ejercicios y recetas
+ *
  * @author gaizka
  */
 @Entity
 @Table(name = "diario", schema = "fitFlavor")
 
 @XmlRootElement
-public class Diario implements Serializable{
-    
+public class Diario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     /**
      * Campo identificador para el Diario.
@@ -40,72 +41,98 @@ public class Diario implements Serializable{
      */
     private List<Ejercicio> listaEjercicios;
     /**
-     * Lista de Recetas 
+     * Lista de Recetas
      */
     private List<Receta> listaRecetas;
+
     /**
-     * 
+     *
      * @return the id
      */
     public Integer getId() {
         return id;
     }
+
     /**
-     * 
-     * @param id the id to be set 
+     *
+     * @param id the id to be set
      */
     public void setId(Integer id) {
         this.id = id;
     }
+
     /**
-     * 
-     * @return the ListDia 
+     *
+     * @return the ListDia
      */
     public List<Dia> getListaDias() {
         return listaDias;
     }
+
     /**
-     * 
+     *
      * @param listaDias the listaDias to set
      */
     public void setListaDias(List<Dia> listaDias) {
         this.listaDias = listaDias;
     }
+
     /**
-     * 
+     *
      * @return the ListaEjercicios
      */
     public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
+
     /**
-     * 
+     *
      * @param listaEjercicios the listaEjercicios to set
      */
     public void setListaEjercicios(List<Ejercicio> listaEjercicios) {
         this.listaEjercicios = listaEjercicios;
     }
+
     /**
-     * 
+     *
      * @return the ListaRecetas
      */
-    
+
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }
-    
+
     /**
-     * 
+     *
      * @param listaRecetas the listaEjercicios to set
      */
-    
     public void setListaRecetas(List<Receta> listaRecetas) {
         this.listaRecetas = listaRecetas;
     }
-    
-    
-    
 
-    
-    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Cliente)) {
+            return false;
+        }
+        Cliente other = (Cliente) object;
+        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }
