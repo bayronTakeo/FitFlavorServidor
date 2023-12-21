@@ -94,6 +94,7 @@ public class Diario implements Serializable {
      *
      * @param listaDias the listaDias to set
      */
+
     public void setListaFechas(List<Fecha> listaFechas) {
         this.listaFecha = listaFechas;
     }

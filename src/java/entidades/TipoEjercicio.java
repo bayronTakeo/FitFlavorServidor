@@ -15,3 +15,4 @@ public enum TipoEjercicio {
     Pecho,
     Espalda
 }
+

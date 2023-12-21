@@ -5,10 +5,18 @@
  */
 package service;
 
+import entidades.Receta;
+import excepciones.DeleteException;
+
 /**
  *
- * @author 2dam
+ * @author paula
  */
-public class RecetaEJB {
+public class RecetaEJB implements RecetaInterface{
+
+    @Override
+    public void deleteReceta(Receta receta) throws DeleteException {
+
+    }
     
 }

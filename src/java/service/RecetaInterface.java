@@ -5,10 +5,15 @@
  */
 package service;
 
+import entidades.Receta;
+import excepciones.DeleteException;
+
 /**
  *
- * @author 2dam
+ * @author paula
  */
 public interface RecetaInterface {
+    
+    public void deleteReceta(Receta receta) throws DeleteException;
     
 }
