@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -56,6 +57,7 @@ public class Cliente extends Usuario {
         this.recetasUsu = recetasUsu;
     }
 
+    @XmlTransient
     public List<Receta> getRecetasUsu() {
         return recetasUsu;
     }

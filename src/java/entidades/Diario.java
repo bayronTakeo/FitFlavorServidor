@@ -14,17 +14,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda una lista de dias, ejercicios y recetas
  *
  * @author gaizka
  */
+
 @Entity
 @Table(name = "diario", schema = "fitFlavor")
-
+@NamedQueries({
+    @NamedQuery(
+            name = "ejercicio", query = "SELECT *.e FROM Ejercicio e"
+    ),@NamedQuery(
+            name = "receta", query = "SELECT *.r FROM Receta r"
+    ),@NamedQuery(
+            name = "fecha", query = "SELECT *.f FROM Fecha f"
+    ),})
 @XmlRootElement
 public class Diario implements Serializable {
 
@@ -38,7 +49,7 @@ public class Diario implements Serializable {
     /**
      * Lista de Dias.
      */
-    private List<Dia> listaDias;
+    private List<Fecha> listaDias;
     /**
      * Lista de Ejercicios.
      */
@@ -75,7 +86,7 @@ public class Diario implements Serializable {
      *
      * @return the ListDia
      */
-    public List<Dia> getListaDias() {
+    public List<Fecha> getListaDias() {
         return listaDias;
     }
 
@@ -83,7 +94,7 @@ public class Diario implements Serializable {
      *
      * @param listaDias the listaDias to set
      */
-    public void setListaDias(List<Dia> listaDias) {
+    public void setListaDias(List<Fecha> listaDias) {
         this.listaDias = listaDias;
     }
 
@@ -91,6 +102,7 @@ public class Diario implements Serializable {
      *
      * @return the ListaEjercicios
      */
+    @XmlTransient
     public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
@@ -107,6 +119,7 @@ public class Diario implements Serializable {
      *
      * @return the ListaRecetas
      */
+    @XmlTransient
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }

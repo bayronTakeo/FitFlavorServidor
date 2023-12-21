@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -23,6 +25,20 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author gaizka
  */
+
+@NamedQueries({
+    @NamedQuery(
+            name = "brazo", query = "SELECT *.e FROM Ejercicio e WHERE zona = brazo"
+    ),@NamedQuery(
+            name = "pierna", query = "SELECT *.e FROM Ejercicio e WHERE zona = pierna"
+    ),@NamedQuery(
+            name = "pecho", query = "SELECT *.e FROM Ejercicio e WHERE zona = pecho"
+    ),@NamedQuery(
+            name = "espalda", query = "SELECT *.e FROM Ejercicio e WHERE zona = espalda"
+    ),@NamedQuery(
+            name = "intensidad", query = "SELECT *.e FROM Ejercicio e ORDER BY intensidad ASC"
+    )})
+
 @Entity
 @Table(name = "ejercicio", schema = "fitFlavor")
 
@@ -40,6 +56,10 @@ public class Ejercicio implements Serializable {
      * Nombre del Ejercicio
      */
     private String nombre;
+    /**
+     * Tipo Ejercicio
+     */
+    private TipoEjercicio tipoEjercicio;
     /**
      * Descripcion del Ejercicio
      */
@@ -60,18 +80,21 @@ public class Ejercicio implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
     private List<Diario> ListaDiariosE;
-    
-    
 
-    public Ejercicio(Integer id, String nombre, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> ListaDiarios) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> ListaDiariosE) {
         this.id = id;
         this.nombre = nombre;
+        this.tipoEjercicio = tipoEjercicio;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
         this.intensidad = intensidad;
-        this.ListaDiariosE = ListaDiarios;
+        this.ListaDiariosE = ListaDiariosE;
     }
+    
+    
+
+    
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
         this.ListaDiariosE = ListaDiarios;
@@ -111,6 +134,24 @@ public class Ejercicio implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    
+
+    /**
+     *
+     * @return the tipoEjercicio
+     */
+    public TipoEjercicio getTipoEjercicio() {
+        return tipoEjercicio;
+    }
+
+    /**
+     *
+     * @param tipoEjercicio the tipoEjercicio to be set
+     */
+    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {    
+        this.tipoEjercicio = tipoEjercicio;
     }
 
     /**
@@ -175,6 +216,21 @@ public class Ejercicio implements Serializable {
      */
     public void setIntensidad(String intensidad) {
         this.intensidad = intensidad;
+    }
+    
+    /**
+     *
+     * @return the ListaDiariosEjercicio
+     */
+    public List<Diario> getListaDiariosE() {
+        return ListaDiariosE;
+    }
+    /**
+     *
+     * @param ListaDiariosE the ListaDiariosEjercicio to be set
+     */
+    public void setListaDiariosE(List<Diario> ListaDiariosE) {
+        this.ListaDiariosE = ListaDiariosE;
     }
 
     @Override

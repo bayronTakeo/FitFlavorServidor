@@ -19,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de ingrediente
@@ -50,6 +52,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ingrediente", schema = "fitFlavor")
+@XmlRootElement
 public class Ingrediente implements Serializable {
 
     /**
@@ -103,6 +106,7 @@ public class Ingrediente implements Serializable {
         this.listaRecetas = listaRecetas;
     }
 
+    @XmlTransient
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }
