@@ -29,7 +29,7 @@ import org.hibernate.annotations.DiscriminatorFormula;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "signIn", query = "SELECT u FROM User u WHERE login = :email AND password = :contrasenia"
+            name = "iniciarSesion", query = "SELECT u FROM Usuario u WHERE email = :emailUsr AND contrasenia = :contraseniaUsr"
     ),})
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
