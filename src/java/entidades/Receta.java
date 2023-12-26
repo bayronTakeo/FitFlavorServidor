@@ -99,7 +99,7 @@ public class Receta implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioReceta")
-    private List<Diario> ListaDiariosR;
+    private List<Diario> listaDiariosR;
     @ManyToOne
     private Cliente cliente;
 
@@ -112,7 +112,7 @@ public class Receta implements Serializable {
         this.cliente = cliente;
     }
 
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> ListaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> listaDiariosR) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -121,15 +121,16 @@ public class Receta implements Serializable {
         this.esVegano = esVegano;
         this.precio = precio;
         this.ingredientes = ingredientes;
-        this.ListaDiariosR = ListaDiariosR;
+        this.listaDiariosR = listaDiariosR;
     }
 
+    @XmlTransient
     public List<Diario> getListaDiariosR() {
-        return ListaDiariosR;
+        return listaDiariosR;
     }
 
-    public void setListaDiariosR(List<Diario> ListaDiariosR) {
-        this.ListaDiariosR = ListaDiariosR;
+    public void setListaDiariosR(List<Diario> listaDiariosR) {
+        this.listaDiariosR = listaDiariosR;
     }
 
     /**

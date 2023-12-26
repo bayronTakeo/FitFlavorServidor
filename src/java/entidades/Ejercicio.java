@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de Ejercicios
@@ -79,9 +80,9 @@ public class Ejercicio implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
-    private List<Diario> ListaDiariosE;
+    private List<Diario> listaDiariosE;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> ListaDiariosE) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -89,7 +90,7 @@ public class Ejercicio implements Serializable {
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
         this.intensidad = intensidad;
-        this.ListaDiariosE = ListaDiariosE;
+        this.listaDiariosE = listaDiariosE;
     }
     
     
@@ -97,11 +98,11 @@ public class Ejercicio implements Serializable {
     
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
-        this.ListaDiariosE = ListaDiarios;
+        this.listaDiariosE = ListaDiarios;
     }
 
     public List<Diario> getListaDiarios() {
-        return ListaDiariosE;
+        return listaDiariosE;
     }
 
     /**
@@ -220,17 +221,18 @@ public class Ejercicio implements Serializable {
     
     /**
      *
-     * @return the ListaDiariosEjercicio
+     * @return the listaDiariosE
      */
+    @XmlTransient
     public List<Diario> getListaDiariosE() {
-        return ListaDiariosE;
+        return listaDiariosE;
     }
     /**
      *
-     * @param ListaDiariosE the ListaDiariosEjercicio to be set
+     * @param listaDiariosE the listaDiariosE to be set
      */
     public void setListaDiariosE(List<Diario> ListaDiariosE) {
-        this.ListaDiariosE = ListaDiariosE;
+        this.listaDiariosE = listaDiariosE;
     }
 
     @Override

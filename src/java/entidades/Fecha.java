@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,16 +43,16 @@ public class Fecha implements Serializable {
     /**
      * Fecha
      */
-    private Date Fecha;
+    private Date dia;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioFecha")
-    private List<Diario> ListaDiariosF;
+    private List<Diario> listaDiariosF;
 
-    public Fecha(Integer id, Date Fecha, List<Diario> ListaDiariosF) {
+    public Fecha(Integer id, Date dia, List<Diario> ListaDiariosF) {
         this.id = id;
-        this.Fecha = Fecha;
-        this.ListaDiariosF = ListaDiariosF;
+        this.dia = dia;
+        this.listaDiariosF = listaDiariosF;
     }
 
     public Integer getId() {
@@ -62,20 +63,21 @@ public class Fecha implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return Fecha;
+    public Date getDia() {
+        return dia;
     }
 
-    public void setFecha(Date Fecha) {
-        this.Fecha = Fecha;
+    public void setDia(Date dia) {
+        this.dia = dia;
     }
 
+    @XmlTransient
     public List<Diario> getListaDiariosF() {
-        return ListaDiariosF;
+        return listaDiariosF;
     }
 
     public void setListaDiariosF(List<Diario> ListaDiariosF) {
-        this.ListaDiariosF = ListaDiariosF;
+        this.listaDiariosF = listaDiariosF;
     }
     
     @Override

@@ -47,10 +47,6 @@ public class Diario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     /**
-     * Lista de Dias.
-     */
-    private List<Fecha> listaFecha;
-    /**
      * Lista de Ejercicios.
      */
     @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = ALL)
@@ -64,7 +60,7 @@ public class Diario implements Serializable {
      * Lista de Fechas
      */
     @ManyToMany(mappedBy = "listaDiariosF", fetch = FetchType.EAGER, cascade = ALL)
-    private List<Receta> listaFechas;
+    private List<Fecha> listaFechas;
 
     /**
      *
@@ -84,19 +80,20 @@ public class Diario implements Serializable {
 
     /**
      *
-     * @return the ListDia
+     * @return the ListFechas
      */
-    public List<Fecha> getListaDias() {
-        return listaFecha;
+    @XmlTransient
+    public List<Fecha> getListaFechas() {
+        return listaFechas;
     }
 
     /**
      *
-     * @param listaDias the listaDias to set
+     * @param listaFechas the listaDias to set
      */
-
+    @XmlTransient
     public void setListaFechas(List<Fecha> listaFechas) {
-        this.listaFecha = listaFechas;
+        this.listaFechas = listaFechas;
     }
 
     /**
