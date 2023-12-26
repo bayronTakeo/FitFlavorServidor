@@ -1,94 +1,83 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor. 
+ * and open the template in the editor.
  */
 package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Esta clase Dia guarda los atributos de dias
  *
  * @author gaizka
  */
+
 @Entity
-@Table(name = "Diario", schema = "fitFlavor")
+@Table(name = "fecha", schema = "fitFlavor")
 
 @XmlRootElement
-class Dia implements Serializable {
+public class Fecha implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
-     * Campo identificador para el Diario.
+     * Campo identificador para la Fecha.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     /**
-     * Date de la fecha
+     * Fecha
      */
-    private Date fecha;
-    /**
-     * La hora del dia
-     */
-    private Double hora;
+    private Date Fecha;
 
-    /**
-     *
-     * @return the id
-     */
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioFecha")
+    private List<Diario> ListaDiariosF;
+
+    public Fecha(Integer id, Date Fecha, List<Diario> ListaDiariosF) {
+        this.id = id;
+        this.Fecha = Fecha;
+        this.ListaDiariosF = ListaDiariosF;
+    }
+
     public Integer getId() {
         return id;
     }
 
-    /**
-     *
-     * @param id the id to be set
-     */
     public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     *
-     * @return the fecha
-     */
     public Date getFecha() {
-        return fecha;
+        return Fecha;
     }
 
-    /**
-     *
-     * @param fecha the fecha to be set
-     */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFecha(Date Fecha) {
+        this.Fecha = Fecha;
     }
 
-    /**
-     *
-     * @return the hota
-     */
-    public Double getHora() {
-        return hora;
+    public List<Diario> getListaDiariosF() {
+        return ListaDiariosF;
     }
 
-    /**
-     *
-     * @param hora the hora to be set
-     */
-    public void setHora(Double hora) {
-        this.hora = hora;
+    public void setListaDiariosF(List<Diario> ListaDiariosF) {
+        this.ListaDiariosF = ListaDiariosF;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

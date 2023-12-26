@@ -52,6 +52,7 @@ public class Cliente extends Usuario {
         this.recetasUsu = recetasUsu;
     }
 
+    @XmlTransient
     public List<Receta> getRecetasUsu() {
         return recetasUsu;
     }

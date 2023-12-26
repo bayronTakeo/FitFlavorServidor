@@ -18,7 +18,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -26,9 +29,31 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author paula
  */
+
+@NamedQueries({
+    @NamedQuery(
+            name = "lista", query = "SELECT *.r FROM Receta r"
+    )
+    ,@NamedQuery(
+            name = "listaIngrediente", query = "SELECT *.r FROM Receta r WHERE Ingrediente i = :ingrediente"
+    )
+    ,@NamedQuery(
+            name = "ordenarDuracion", query = "SELECT *.r FROM Receta r ORDER BY duracion ASC"
+    )
+    ,@NamedQuery(
+            name = "vegano", query = "SELECT *.r FROM Receta r WHERE esVegano  = true"
+    )
+    ,@NamedQuery(
+            name = "vegetariano", query = "SELECT *.r FROM Receta r WHERE esVegetariano  = true"
+    )
+    ,@NamedQuery(
+            name = "precio", query = "SELECT *.r FROM Receta r ORDER BY precio ASC"
+    ),})
+
 @Entity
 @Table(name = "receta", schema = "fitFlavor")
 
+@XmlRootElement
 public class Receta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,11 +91,15 @@ public class Receta implements Serializable {
     /**
      * Lista de ingredientes que contiene la receta.
      */
+    private String pasos;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
     private List<Ingrediente> ingredientes;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
+    private List<Diario> ListaDiariosR;
     @ManyToOne
     private Cliente cliente;
 
@@ -83,12 +112,24 @@ public class Receta implements Serializable {
         this.cliente = cliente;
     }
 
-    /**
-     *
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> ListaDiariosR) {
+        this.id = id;
+        this.tipoReceta = tipoReceta;
+        this.nombre = nombre;
+        this.duracion = duracion;
+        this.esVegetariano = esVegetariano;
+        this.esVegano = esVegano;
+        this.precio = precio;
+        this.ingredientes = ingredientes;
+        this.ListaDiariosR = ListaDiariosR;
+    }
+
+    public List<Diario> getListaDiariosR() {
+        return ListaDiariosR;
+    }
+
+    public void setListaDiariosR(List<Diario> ListaDiariosR) {
+        this.ListaDiariosR = ListaDiariosR;
     }
 
     /**
@@ -97,6 +138,14 @@ public class Receta implements Serializable {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPasos() {
+        return pasos;
+    }
+
+    public void setPasos(String pasos) {
+        this.pasos = pasos;
     }
 
     /**
