@@ -7,7 +7,7 @@ package entidades;
 
 /**
  *
- * @author gaizka
+ * @author gaizkaa
  */
 public enum TipoEjercicio {
     Brazo,
