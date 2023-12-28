@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,6 +20,17 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author Bayron
  */
+@NamedQueries({
+    @NamedQuery(
+            name="sacarTodos", query="SELECT u from Usuario u WHERE privilegio = 1"
+    ),
+    @NamedQuery(
+            name="buscarCliente", query="SELECT u from Usuario u WHERE privilegio=1 AND(email like :usrEmail or nombreCompleto like :usrNombre)"
+    ), 
+    @NamedQuery(
+            name="buscarPorTelefono", query="SELECT u from Usuario u WHERE privilegio=1 and telefono = :usrTelefono"
+    ),
+})
 @Entity
 @Table(name = "cliente", schema = "fitFlavor")
 @DiscriminatorValue("1")
