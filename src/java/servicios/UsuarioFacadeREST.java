@@ -69,22 +69,6 @@ public class UsuarioFacadeREST {
          return null;
        
     }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-         return null;
-      
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-         return null;
-      
-    }
     
     /**
      * GET metodo para iniciar sesion
