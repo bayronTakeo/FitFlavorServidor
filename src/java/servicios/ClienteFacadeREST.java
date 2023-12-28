@@ -5,14 +5,22 @@
  */
 package servicios;
 
+import ejb.ClienteInterfaz;
 import entidades.Cliente;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -26,66 +34,80 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entidades.cliente")
-public class ClienteFacadeREST extends AbstractFacade<Cliente> {
+public class ClienteFacadeREST {
 
-    @PersistenceContext(unitName = "FitFlavorServidorPU")
-    private EntityManager em;
-
-    public ClienteFacadeREST() {
-        super(Cliente.class);
-    }
-
+    @EJB
+    private ClienteInterfaz ejb;
+    
+     private Logger LOGGER = Logger.getLogger(ClienteFacadeREST.class.getName());
+    
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente entity) {
-        super.create(entity);
+        try {
+            ejb.crearCliente(entity);
+        } catch (CreateException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Cliente entity) {
-        super.edit(entity);
+        try {
+            ejb.actualizarCliente(entity);
+        } catch (UpdateException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("cliente") Cliente cliente) {
+        try {
+         ejb.eliminarCliente(cliente);
+        } catch (DeleteException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @GET
-    @Path("{id}")
+    @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente find(@PathParam("id") Integer id) {
-        return super.find(id);
+    public Cliente buscar(@PathParam("valor") String valor) {
+        try {
+            Cliente cliente = ejb.buscarCliente(valor);
+            return cliente;
+        } catch (ReadException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @GET
-    @Override
+    @Path("/busquedaTelefono/{telefono}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    public Cliente buscar(@PathParam("telefono") int telefono) {
+        try {
+            Cliente cliente = ejb.buscarPorTelefono(telefono);
+            return cliente;
+        } catch (ReadException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
     
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Cliente> findAll() {
+        try {
+            List<Cliente> clientes = ejb.findAll();
+            return clientes;
+        } catch (ReadException e) {
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
+  
+   
+
+   
 }
