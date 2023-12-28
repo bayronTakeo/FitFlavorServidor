@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,7 +28,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author bayro
+ * @author bayron
  */
 @Stateless
 @Path("entidades.cliente")
@@ -53,7 +51,7 @@ public class ClienteFacadeREST {
 
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Cliente entity) {
+    public void edit( Cliente entity) {
         try {
             ejb.actualizarCliente(entity);
         } catch (UpdateException e) {
@@ -62,7 +60,7 @@ public class ClienteFacadeREST {
     }
 
     @DELETE
-    @Path("{id}")
+    @Path("{cliente}")
     public void remove(@PathParam("cliente") Cliente cliente) {
         try {
          ejb.eliminarCliente(cliente);

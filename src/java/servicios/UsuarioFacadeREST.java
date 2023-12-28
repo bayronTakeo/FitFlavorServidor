@@ -5,7 +5,6 @@
  */
 package servicios;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import ejb.UsuarioInterfaz;
 import entidades.Usuario;
 import excepciones.ReadException;
