@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
             name="sacarTodos", query="SELECT u from Usuario u WHERE privilegio = 1"
     ),
     @NamedQuery(
-            name="buscarCliente", query="SELECT u from Usuario u WHERE privilegio=1 AND(email like :usrEmail or nombreCompleto like :usrNombre)"
+            name="buscarCliente", query="SELECT u from Usuario u WHERE privilegio=1 AND(email like :usrValor or nombreCompleto like :usrValor)"
     ), 
     @NamedQuery(
             name="buscarPorTelefono", query="SELECT u from Usuario u WHERE privilegio=1 and telefono = :usrTelefono"
