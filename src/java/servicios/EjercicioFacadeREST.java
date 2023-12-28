@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package servicios;
 
-import entidades.Ingrediente;
+import entidades.Ejercicio;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,30 +22,30 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author 2dam
+ * @author bayro
  */
 @Stateless
-@Path("entidades.ingrediente")
-public class IngredienteFacadeREST extends AbstractFacade<Ingrediente> {
+@Path("entidades.ejercicio")
+public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
 
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
-    public IngredienteFacadeREST() {
-        super(Ingrediente.class);
+    public EjercicioFacadeREST() {
+        super(Ejercicio.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Ingrediente entity) {
+    public void create(Ejercicio entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Ingrediente entity) {
+    public void edit(@PathParam("id") Integer id, Ejercicio entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class IngredienteFacadeREST extends AbstractFacade<Ingrediente> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Ingrediente find(@PathParam("id") Integer id) {
+    public Ejercicio find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ingrediente> findAll() {
+    public List<Ejercicio> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ingrediente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Ejercicio> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

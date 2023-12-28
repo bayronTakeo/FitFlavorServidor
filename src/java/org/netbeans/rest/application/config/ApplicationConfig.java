@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package org.netbeans.rest.application.config;
 
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
 /**
  *
- * @author 2dam
+ * @author bayro
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
@@ -29,13 +29,13 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(service.ClienteFacadeREST.class);
-        resources.add(service.DiarioFacadeREST.class);
-        resources.add(service.EjercicioFacadeREST.class);
-        resources.add(service.FechaFacadeREST.class);
-        resources.add(service.IngredienteFacadeREST.class);
-        resources.add(service.RecetaFacadeREST.class);
-        resources.add(service.UsuarioFacadeREST.class);
+        resources.add(servicios.ClienteFacadeREST.class);
+        resources.add(servicios.DiarioFacadeREST.class);
+        resources.add(servicios.EjercicioFacadeREST.class);
+        resources.add(servicios.FechaFacadeREST.class);
+        resources.add(servicios.IngredienteFacadeREST.class);
+        resources.add(servicios.RecetaFacadeREST.class);
+        resources.add(servicios.UsuarioFacadeREST.class);
     }
     
 }

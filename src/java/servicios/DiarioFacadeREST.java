@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package servicios;
 
-import entidades.Ejercicio;
+import entidades.Diario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,30 +22,30 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author 2dam
+ * @author bayro
  */
 @Stateless
-@Path("entidades.ejercicio")
-public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
+@Path("entidades.diario")
+public class DiarioFacadeREST extends AbstractFacade<Diario> {
 
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
-    public EjercicioFacadeREST() {
-        super(Ejercicio.class);
+    public DiarioFacadeREST() {
+        super(Diario.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Ejercicio entity) {
+    public void create(Diario entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Ejercicio entity) {
+    public void edit(@PathParam("id") Integer id, Diario entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class EjercicioFacadeREST extends AbstractFacade<Ejercicio> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Ejercicio find(@PathParam("id") Integer id) {
+    public Diario find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> findAll() {
+    public List<Diario> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Diario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

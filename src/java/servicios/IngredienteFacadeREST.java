@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package servicios;
 
-import entidades.Fecha;
+import entidades.Ingrediente;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,30 +22,30 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author 2dam
+ * @author bayro
  */
 @Stateless
-@Path("entidades.fecha")
-public class FechaFacadeREST extends AbstractFacade<Fecha> {
+@Path("entidades.ingrediente")
+public class IngredienteFacadeREST extends AbstractFacade<Ingrediente> {
 
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
-    public FechaFacadeREST() {
-        super(Fecha.class);
+    public IngredienteFacadeREST() {
+        super(Ingrediente.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Fecha entity) {
+    public void create(Ingrediente entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Fecha entity) {
+    public void edit(@PathParam("id") Integer id, Ingrediente entity) {
         super.edit(entity);
     }
 
@@ -58,21 +58,21 @@ public class FechaFacadeREST extends AbstractFacade<Fecha> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Fecha find(@PathParam("id") Integer id) {
+    public Ingrediente find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Fecha> findAll() {
+    public List<Ingrediente> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Fecha> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Ingrediente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
