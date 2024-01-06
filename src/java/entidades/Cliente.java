@@ -49,6 +49,7 @@ public class Cliente extends Usuario {
 
     private int altura;
 
+    @XmlTransient
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Receta> recetasUsu;
 
@@ -60,12 +61,17 @@ public class Cliente extends Usuario {
         this.altura = altura;
         this.recetasUsu = recetasUsu;
     }
+    
+    // Constructor por defecto sin argumentos
+     public Cliente() {
+       super();
+    }
 
     public void setRecetasUsu(List<Receta> recetasUsu) {
         this.recetasUsu = recetasUsu;
     }
 
-    @XmlTransient
+  
     public List<Receta> getRecetasUsu() {
         return recetasUsu;
     }
