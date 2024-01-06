@@ -76,7 +76,6 @@ public class Cliente extends Usuario {
         return recetasUsu;
     }
 
-    @XmlTransient
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
