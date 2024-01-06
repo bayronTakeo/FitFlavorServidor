@@ -12,6 +12,7 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -43,9 +44,11 @@ public class ClienteFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente entity) {
         try {
+            LOGGER.log(Level.INFO, "Creating client {0}", entity.getUser_id());
             ejb.crearCliente(entity);
         } catch (CreateException e) {
-            throw new InternalServerErrorException(e.getMessage());
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage()); 
         }
     }
 
