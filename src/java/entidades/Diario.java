@@ -30,12 +30,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "diario", schema = "fitFlavor")
 @NamedQueries({
     @NamedQuery(
-            name = "ejercicio", query = "SELECT *.e FROM Ejercicio e"
-    ),@NamedQuery(
-            name = "receta", query = "SELECT *.r FROM Receta r"
-    ),@NamedQuery(
-            name = "fecha", query = "SELECT *.f FROM Fecha f"
-    ),})
+            name = "ejercicio", query = "SELECT e FROM Diario d JOIN d.listaEjercicios e"
+    ),
+    @NamedQuery(
+            name = "receta", query = "SELECT r FROM Diario d JOIN d.listaRecetas r"
+    ),
+    @NamedQuery(
+            name = "fecha", query = "SELECT f FROM Diario d JOIN d.listaFechas f"
+    )
+})
+
 @XmlRootElement
 public class Diario implements Serializable {
 
@@ -91,7 +95,6 @@ public class Diario implements Serializable {
      *
      * @param listaFechas the listaDias to set
      */
-    @XmlTransient
     public void setListaFechas(List<Fecha> listaFechas) {
         this.listaFechas = listaFechas;
     }
