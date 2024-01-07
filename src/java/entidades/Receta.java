@@ -32,23 +32,24 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({
     @NamedQuery(
-            name = "lista", query = "SELECT *.r FROM Receta r"
+            name = "lista", query = "SELECT r FROM Receta r"
+    ),
+    @NamedQuery(
+            name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
+    ),
+    @NamedQuery(
+            name = "ordenarDuracion", query = "SELECT r FROM Receta r ORDER BY r.duracion ASC"
+    ),
+    @NamedQuery(
+            name = "vegano", query = "SELECT r FROM Receta r WHERE r.esVegano = true"
+    ),
+    @NamedQuery(
+            name = "vegetariano", query = "SELECT r FROM Receta r WHERE r.esVegetariano = true"
+    ),
+    @NamedQuery(
+            name = "precio", query = "SELECT r FROM Receta r ORDER BY r.precio ASC"
     )
-    ,@NamedQuery(
-            name = "listaIngrediente", query = "SELECT *.r FROM Receta r WHERE Ingrediente i = :ingrediente"
-    )
-    ,@NamedQuery(
-            name = "ordenarDuracion", query = "SELECT *.r FROM Receta r ORDER BY duracion ASC"
-    )
-    ,@NamedQuery(
-            name = "vegano", query = "SELECT *.r FROM Receta r WHERE esVegano  = true"
-    )
-    ,@NamedQuery(
-            name = "vegetariano", query = "SELECT *.r FROM Receta r WHERE esVegetariano  = true"
-    )
-    ,@NamedQuery(
-            name = "precio", query = "SELECT *.r FROM Receta r ORDER BY precio ASC"
-    ),})
+})
 
 @Entity
 @Table(name = "receta", schema = "fitFlavor")
@@ -122,6 +123,9 @@ public class Receta implements Serializable {
         this.precio = precio;
         this.ingredientes = ingredientes;
         this.listaDiariosR = listaDiariosR;
+    }
+    public Receta() {
+        
     }
 
     @XmlTransient
