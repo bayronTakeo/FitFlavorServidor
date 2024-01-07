@@ -29,26 +29,28 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "ordenarkCal", query = "SELECT *.i FROM Ingrediente i ORDER BY kCal ASC"
+            name = "ordenarkCal", query = "SELECT i FROM Ingrediente i ORDER BY i.kCal ASC"
+    ),
+    @NamedQuery(
+            name = "ordenarPrecio", query = "SELECT i FROM Ingrediente i ORDER BY i.precio ASC"
+    ),
+    @NamedQuery(
+            name = "ordenarCarbohidratos", query = "SELECT i FROM Ingrediente i ORDER BY i.carbohidratos ASC"
+    ),
+    @NamedQuery(
+            name = "ordenarProteinas", query = "SELECT i FROM Ingrediente i ORDER BY i.proteinas ASC"
+    ),
+    @NamedQuery(
+            name = "ordenarGrasas", query = "SELECT i FROM Ingrediente i ORDER BY i.grasas ASC"
+    ),
+    @NamedQuery(
+            name = "ordenarNombre", query = "SELECT i FROM Ingrediente i ORDER BY i.nombre ASC"
+    ),
+    @NamedQuery(
+            name = "tipoIngrediente", query = "SELECT i FROM Ingrediente i WHERE i.tipoIngrediente = :tipoIngrediente"
     )
-    ,@NamedQuery(
-            name = "ordenarPrecio", query = "SELECT *.i FROM Ingrediente i ORDER BY precio ASC"
-    )
-    ,@NamedQuery(
-            name = "ordenarCarbohidratos", query = "SELECT *.i FROM Ingrediente i ORDER BY carbohidratos ASC"
-    )
-    ,@NamedQuery(
-            name = "ordenarProteinas", query = "SELECT *.i FROM Ingrediente i ORDER BY proteinas ASC"
-    )
-    ,@NamedQuery(
-            name = "ordenarGrasas", query = "SELECT *.i FROM Ingrediente i ORDER BY grasas ASC"
-    )
-    ,@NamedQuery(
-            name = "ordenarNombre", query = "SELECT *.i FROM Ingrediente i  ORDER BY nombre ASC"
-    )
-    ,@NamedQuery(
-            name = "tipoIngrediente", query = "SELECT *.i FROM Ingrediente i  WHERE tipo = :tipoIngrediente"
-    )})
+})
+
 
 @Entity
 @Table(name = "ingrediente", schema = "fitFlavor")
@@ -104,6 +106,10 @@ public class Ingrediente implements Serializable {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
+    }
+    
+    public Ingrediente(){
+        
     }
 
     @XmlTransient
