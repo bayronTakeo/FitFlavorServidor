@@ -29,15 +29,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({
     @NamedQuery(
-            name = "brazo", query = "SELECT *.e FROM Ejercicio e WHERE zona = brazo"
+            name = "brazo", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = brazo"
     ),@NamedQuery(
-            name = "pierna", query = "SELECT *.e FROM Ejercicio e WHERE zona = pierna"
+            name = "pierna", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = pierna"
     ),@NamedQuery(
-            name = "pecho", query = "SELECT *.e FROM Ejercicio e WHERE zona = pecho"
+            name = "pecho", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = pecho"
     ),@NamedQuery(
-            name = "espalda", query = "SELECT *.e FROM Ejercicio e WHERE zona = espalda"
+            name = "espalda", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = espalda"
     ),@NamedQuery(
-            name = "intensidad", query = "SELECT *.e FROM Ejercicio e ORDER BY intensidad ASC"
+            name = "intensidad", query = "SELECT e FROM Ejercicio e ORDER BY intensidad ASC"
     )})
 
 @Entity
@@ -92,9 +92,6 @@ public class Ejercicio implements Serializable {
         this.intensidad = intensidad;
         this.listaDiariosE = listaDiariosE;
     }
-    
-    
-
     
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
@@ -223,7 +220,6 @@ public class Ejercicio implements Serializable {
      *
      * @return the listaDiariosE
      */
-    @XmlTransient
     public List<Diario> getListaDiariosE() {
         return listaDiariosE;
     }
