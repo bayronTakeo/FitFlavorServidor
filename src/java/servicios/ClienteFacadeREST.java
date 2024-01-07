@@ -37,27 +37,29 @@ public class ClienteFacadeREST {
 
     @EJB
     private ClienteInterfaz ejb;
-    
-     private Logger LOGGER = Logger.getLogger(ClienteFacadeREST.class.getName());
-    
+
+    private Logger LOGGER = Logger.getLogger(ClienteFacadeREST.class.getName());
+
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente entity) {
         try {
-            LOGGER.log(Level.INFO, "Creating client {0}", entity.getUser_id());
+            LOGGER.log(Level.INFO, "Creando cliente{0}", entity.getUser_id());
             ejb.crearCliente(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage()); 
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit( Cliente entity) {
+    public void edit(Cliente entity) {
         try {
+            LOGGER.log(Level.INFO, "modificando cliente{0}", entity.getUser_id());
             ejb.actualizarCliente(entity);
         } catch (UpdateException e) {
+            LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
@@ -66,8 +68,10 @@ public class ClienteFacadeREST {
     @Path("{cliente}")
     public void remove(@PathParam("cliente") Cliente cliente) {
         try {
-         ejb.eliminarCliente(cliente);
+            LOGGER.log(Level.INFO, "eliminando cliente{0}", cliente.getUser_id());
+            ejb.eliminarCliente(cliente);
         } catch (DeleteException e) {
+            LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
@@ -80,6 +84,7 @@ public class ClienteFacadeREST {
             Cliente cliente = ejb.buscarCliente(valor);
             return cliente;
         } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
@@ -92,10 +97,11 @@ public class ClienteFacadeREST {
             Cliente cliente = ejb.buscarPorTelefono(telefono);
             return cliente;
         } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Cliente> findAll() {
@@ -103,12 +109,9 @@ public class ClienteFacadeREST {
             List<Cliente> clientes = ejb.findAll();
             return clientes;
         } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
 
-  
-   
-
-   
 }
