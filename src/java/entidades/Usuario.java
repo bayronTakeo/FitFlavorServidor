@@ -149,7 +149,9 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         this.privilegio = privilegio;
     }
-
+    public Usuario() { 
+        
+    }
     @Override
     public int hashCode() {
         int hash = 0;
