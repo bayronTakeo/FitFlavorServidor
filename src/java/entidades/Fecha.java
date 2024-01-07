@@ -54,6 +54,10 @@ public class Fecha implements Serializable {
         this.dia = dia;
         this.listaDiariosF = listaDiariosF;
     }
+    
+    public Fecha(){
+        
+    }
 
     public Integer getId() {
         return id;
@@ -71,7 +75,6 @@ public class Fecha implements Serializable {
         this.dia = dia;
     }
 
-    @XmlTransient
     public List<Diario> getListaDiariosF() {
         return listaDiariosF;
     }
