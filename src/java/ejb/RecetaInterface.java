@@ -26,7 +26,7 @@ public interface RecetaInterface {
 
     public List<Receta> listaRecetas() throws ReadException;
 
-    public List<Receta> listaIngredientes() throws ReadException;
+  //  public List<Receta> listaIngredientes() throws ReadException;
 
     public List<Receta> vegano(boolean esVegano) throws ReadException;
 

@@ -22,13 +22,13 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class IngredienteEJB implements IngredienteInterface {
 
-    @PersistenceContext(unitName = "fitFlavor")
+    @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
     @Override
-    public void deleteIngrediente(Ingrediente ingrediente) throws DeleteException {
+    public void deleteIngrediente(int id) throws DeleteException {
         try {
-            em.remove(em.merge(ingrediente));
+            em.remove(em.merge(id));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
         }
@@ -55,59 +55,59 @@ public class IngredienteEJB implements IngredienteInterface {
         }
     }
 
-    public List<Ingrediente> buscarkCals() throws ReadException {
+    public List<Ingrediente> buscarPrecio(float precio) throws ReadException {
         try {
-            return em.createNamedQuery("buscarkCals").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("buscarPrecio").setParameter("precio", precio).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
 
-    public List<Ingrediente> buscarPrecio() throws ReadException {
+    public List<Ingrediente> buscarCarbohidratos(float carbohidratos) throws ReadException {
         try {
-            return em.createNamedQuery("buscarPrecio").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("buscarCarbohidratos").setParameter("carbohidratos", carbohidratos).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
 
-
-    public List<Ingrediente> buscarCarbohidratos() throws ReadException {
+    public List<Ingrediente> buscarProteinas(float proteinas) throws ReadException {
         try {
-            return em.createNamedQuery("buscarCarbohidratos").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("buscarProteinas").setParameter("proteinas", proteinas).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
 
-    public List<Ingrediente> buscarProteinas() throws ReadException {
+    public List<Ingrediente> buscarGrasas(float grasas) throws ReadException {
         try {
-            return em.createNamedQuery("buscarProteinas").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("buscarGrasas").setParameter("grasas", grasas).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
 
-    public List<Ingrediente> buscarGrasas() throws ReadException {
+    public List<Ingrediente> buscarNombre(String nombre) throws ReadException {
         try {
-            return em.createNamedQuery("buscarGrasas").getResultList();
-        } catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
-
-    public List<Ingrediente> buscarNombre() throws ReadException {
-        try {
-            return em.createNamedQuery("buscarNombre").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("buscarNombre").setParameter("nombre", nombre).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
 
     @Override
-    public List<Ingrediente> tipoIngrediente() throws ReadException {
+    public List<Ingrediente> tipoIngrediente(String tipoIngrediente) throws ReadException {
         try {
-            return em.createNamedQuery("tipoIngrediente").getResultList();
+            return (List<Ingrediente>) em.createNamedQuery("tipoIngrediente").setParameter("tipoIngrediente", tipoIngrediente).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Ingrediente> buscarkCal(float kCal) throws ReadException {
+        try {
+            return em.createNamedQuery("buscarkCal").setParameter("kCal", kCal).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

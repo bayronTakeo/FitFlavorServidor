@@ -19,24 +19,24 @@ import java.util.List;
  */
 public interface IngredienteInterface {
 
-    public void deleteIngrediente(Ingrediente ingrediente) throws DeleteException;
+    public void deleteIngrediente(int id) throws DeleteException;
 
     public void createIngrediente(Ingrediente ingrediente) throws CreateException;
 
     public void updateIngrediente(Ingrediente ingrediente) throws UpdateException;
 
-    public List<Ingrediente> buscarkCals() throws ReadException;
+    public List<Ingrediente> buscarkCal(float kCal) throws ReadException;
 
-    public List<Ingrediente> buscarPrecio() throws ReadException;
+    public List<Ingrediente> buscarPrecio(float precio) throws ReadException;
 
-    public List<Ingrediente> buscarCarbohidratos() throws ReadException;
+    public List<Ingrediente> buscarCarbohidratos(float carbohidratos) throws ReadException;
 
-    public List<Ingrediente> buscarProteinas() throws ReadException;
+    public List<Ingrediente> buscarProteinas(float proteinas) throws ReadException;
 
-    public List<Ingrediente> buscarGrasas() throws ReadException;
+    public List<Ingrediente> buscarGrasas(float grasas) throws ReadException;
 
-    public List<Ingrediente> buscarNombre() throws ReadException;
+    public List<Ingrediente> buscarNombre(String nombre) throws ReadException;
 
-    public List<Ingrediente> tipoIngrediente() throws ReadException;
+    public List<Ingrediente> tipoIngrediente(String tipoIngrediente) throws ReadException;
 
 }

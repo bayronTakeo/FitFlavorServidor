@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class RecetaEJB implements RecetaInterface {
 
-    @PersistenceContext(unitName = "fitFlavor")
+    @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
     @Override
@@ -64,18 +64,17 @@ public class RecetaEJB implements RecetaInterface {
         }
     }
 
-    @Override
-    public List<Receta> listaIngredientes() throws ReadException {
-        try {
-            return em.createNamedQuery("listaIngredientes").getResultList();
-        } catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
-
+    // @Override
+    // public List<Receta> listaIngredientes() throws ReadException {
+    //     try {
+    //         return em.createNamedQuery("listaIngredientes").setParameter("listaIngredientes", tipoIngrediente).getResultList();
+    //    } catch (Exception e) {
+    //         throw new ReadException(e.getMessage());
+    //     }
+    // }
     public List<Receta> vegano(boolean esVegano) throws ReadException {
         try {
-            return em.createNamedQuery("esVegano").getResultList();
+            return em.createNamedQuery("esVegano").setParameter("esVegano", esVegano).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -83,7 +82,7 @@ public class RecetaEJB implements RecetaInterface {
 
     public List<Receta> vegetariano(boolean esVegetariano) throws ReadException {
         try {
-            return em.createNamedQuery("esVegetariano").getResultList();
+            return em.createNamedQuery("esVegetariano").setParameter("esVegetariano", esVegetariano).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -92,7 +91,7 @@ public class RecetaEJB implements RecetaInterface {
     @Override
     public List<Receta> precio(float precio) throws ReadException {
         try {
-            return em.createNamedQuery("precio").getResultList();
+            return em.createNamedQuery("precio").setParameter("precio", precio).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

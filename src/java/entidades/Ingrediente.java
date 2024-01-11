@@ -37,19 +37,19 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "buscarCarbohidratos", query = "SELECT i FROM Ingrediente i WHERE i.Carbohidratos = :Carbohidratos"
+            name = "buscarCarbohidratos", query = "SELECT i FROM Ingrediente i WHERE i.carbohidratos = :carbohidratos"
     )
     ,
     @NamedQuery(
-            name = "buscarProteinas", query = "SELECT i FROM Ingrediente i WHERE i.Proteinas = :Proteinas"
+            name = "buscarProteinas", query = "SELECT i FROM Ingrediente i WHERE i.proteinas = :proteinas"
     )
     ,
     @NamedQuery(
-            name = "buscarGrasas", query = "SELECT i FROM Ingrediente i WHERE i.Grasas = :Grasas"
+            name = "buscarGrasas", query = "SELECT i FROM Ingrediente i WHERE i.grasas = :grasas"
     )
     ,
     @NamedQuery(
-            name = "buscarNombre", query = "SELECT i FROM Ingrediente i WHERE i.Nombre = :Nombre"
+            name = "buscarNombre", query = "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre"
     )
     ,
     @NamedQuery(

@@ -92,7 +92,9 @@ public class Ejercicio implements Serializable {
         this.intensidad = intensidad;
         this.listaDiariosE = listaDiariosE;
     }
-    
+    public Ejercicio(){
+        
+    }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
         this.listaDiariosE = ListaDiarios;

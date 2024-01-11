@@ -94,18 +94,18 @@ public class RecetaFacadeREST {
         }
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Receta> listaIngrediente() {
-        try {
-            List<Receta> recetas = ejb.listaIngredientes();
-            return recetas;
-        } catch (ReadException e) {
-            LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage());
-        }
-    }
-
+    // @GET
+    //@Path("/listaIngrediente")
+    // @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    //public List<Receta> listaIngrediente() {
+    //  try {
+    //    List<Receta> recetas = ejb.listaIngredientes();
+    //  return recetas;
+    // } catch (ReadException e) {
+    //   LOGGER.severe(e.getMessage());
+    // throw new InternalServerErrorException(e.getMessage());
+    //}
+    //}
     @GET
     @Path("/vegano/{esVegano}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
