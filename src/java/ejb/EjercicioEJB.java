@@ -11,6 +11,8 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,7 +24,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EjercicioEJB implements EjercicioInterface{
     
-    @PersistenceContext(unitName ="fitFlavor")
+    @PersistenceContext(unitName ="FitFlavorServidorPU")
     private EntityManager em;
 
     @Override
@@ -55,51 +57,57 @@ public class EjercicioEJB implements EjercicioInterface{
         }  
     }
     
-    
-    @Override
-    public List<Ejercicio> listaBrazo() throws ReadException {
+    public List<Ejercicio> listaBrazo(Enum brazo) throws ReadException {
         try {
-            return em.createNamedQuery("brazo").getResultList();
+            return em.createNamedQuery("brazo").setParameter("brazo", brazo).getResultList();
+        }catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+    }
+    
+    public List<Ejercicio> listaPierna(Enum pierna) throws ReadException {
+        try {
+            return em.createNamedQuery("pierna").setParameter("pierna", pierna).getResultList();
+        }catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+    }
+    
+    public List<Ejercicio> listaPecho(Enum pecho) throws ReadException {
+        try {
+            return em.createNamedQuery("pecho").setParameter("pecho", pecho).getResultList();
+        }catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+    }
+    
+    public List<Ejercicio> listaEspalda(Enum espalda) throws ReadException {
+        try {
+            return em.createNamedQuery("espalda").setParameter("espalda", espalda).getResultList();
         }catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
     
     @Override
-    public List<Ejercicio> listaPierna() throws ReadException {
+    public List<Ejercicio> listaIntensidad(String intensidad) throws ReadException {
         try {
-            return em.createNamedQuery("pierna").getResultList();
+            return em.createNamedQuery("buscarIntensidad").setParameter("intensidad", intensidad).getResultList();
         }catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
-    
+
     @Override
-    public List<Ejercicio> listaPecho() throws ReadException {
+    public List<Ejercicio> listaEjercicios() throws ReadException {
         try {
-            return em.createNamedQuery("pecho").getResultList();
+            return em.createNamedQuery("ejercicio").getResultList();
         }catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
+
     
-    @Override
-    public List<Ejercicio> listaEspalda() throws ReadException {
-        try {
-            return em.createNamedQuery("espalda").getResultList();
-        }catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
-    
-    @Override
-    public List<Ejercicio> listaIntensidad() throws ReadException {
-        try {
-            return em.createNamedQuery("intesidad").getResultList();
-        }catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
     
     
 }

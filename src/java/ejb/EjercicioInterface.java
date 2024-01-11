@@ -11,6 +11,7 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import static javassist.CtMethod.ConstParameter.string;
 
 
 /**
@@ -21,18 +22,20 @@ public interface EjercicioInterface {
     
     public void createEjercicio(Ejercicio ejercicio) throws CreateException;
     
-    public List<Ejercicio> listaBrazo() throws ReadException;
+    public List<Ejercicio> listaBrazo(Enum brazo) throws ReadException;
     
-    public List<Ejercicio> listaPierna() throws ReadException;
+    public List<Ejercicio> listaPierna(Enum pierna) throws ReadException;
     
-    public List<Ejercicio> listaPecho() throws ReadException;
+    public List<Ejercicio> listaPecho(Enum pecho) throws ReadException;
     
-    public List<Ejercicio> listaEspalda() throws ReadException;
+    public List<Ejercicio> listaEspalda(Enum espalda) throws ReadException;
     
-    public List<Ejercicio> listaIntensidad() throws ReadException;
+    public List<Ejercicio> listaIntensidad(String intensidad) throws ReadException;
     
     public void updateEjercicio(Ejercicio ejercicio) throws UpdateException;
     
     public void deleteEjercicio(Ejercicio ejercicio) throws DeleteException;
+
+    public List<Ejercicio> listaEjercicios() throws ReadException;
             
 }
