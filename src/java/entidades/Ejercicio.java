@@ -29,17 +29,24 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author gaizka
  */
-
 @NamedQueries({
     @NamedQuery(
-            name = "brazo", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :brazo"
-    ),@NamedQuery(
+            name = "todosEjercicios", query = "SELECT e from Ejercicio e "
+    )
+    ,
+    @NamedQuery(
+            name = "brazo", query = "SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = 'Brazo'"
+    )
+    ,@NamedQuery(
             name = "pierna", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :pierna"
-    ),@NamedQuery(
+    )
+    ,@NamedQuery(
             name = "pecho", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :pecho"
-    ),@NamedQuery(
+    )
+    ,@NamedQuery(
             name = "espalda", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :espalda"
-    ),@NamedQuery(
+    )
+    ,@NamedQuery(
             name = "buscarIntensidad", query = "SELECT e FROM Ejercicio e Where intensidad = :intensidad"
     )})
 
@@ -96,8 +103,9 @@ public class Ejercicio implements Serializable {
         this.intensidad = intensidad;
         this.listaDiariosE = listaDiariosE;
     }
+
     public Ejercicio() {
-        
+
     }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
@@ -140,8 +148,6 @@ public class Ejercicio implements Serializable {
         this.nombre = nombre;
     }
 
-    
-
     /**
      *
      * @return the tipoEjercicio
@@ -154,7 +160,7 @@ public class Ejercicio implements Serializable {
      *
      * @param tipoEjercicio the tipoEjercicio to be set
      */
-    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {    
+    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {
         this.tipoEjercicio = tipoEjercicio;
     }
 
@@ -221,7 +227,7 @@ public class Ejercicio implements Serializable {
     public void setIntensidad(String intensidad) {
         this.intensidad = intensidad;
     }
-    
+
     /**
      *
      * @return the listaDiariosE
@@ -229,6 +235,7 @@ public class Ejercicio implements Serializable {
     public List<Diario> getListaDiariosE() {
         return listaDiariosE;
     }
+
     /**
      *
      * @param listaDiariosE the listaDiariosE to be set

@@ -13,29 +13,28 @@ import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
 
-
 /**
  *
  * @author gaizka
  */
 public interface EjercicioInterface {
-    
+
     public void createEjercicio(Ejercicio ejercicio) throws CreateException;
-    
-    public List<Ejercicio> listaBrazo(TipoEjercicio brazo) throws ReadException;
-    
+
+    public List<Ejercicio> listaBrazo() throws ReadException;
+
     public List<Ejercicio> listaPierna(TipoEjercicio pierna) throws ReadException;
-    
+
     public List<Ejercicio> listaPecho(TipoEjercicio pecho) throws ReadException;
-    
+
     public List<Ejercicio> listaEspalda(TipoEjercicio espalda) throws ReadException;
-    
+
     public List<Ejercicio> listaIntensidad(String intensidad) throws ReadException;
-    
+
     public void updateEjercicio(Ejercicio ejercicio) throws UpdateException;
-    
+
     public void deleteEjercicio(Ejercicio ejercicio) throws DeleteException;
 
     public List<Ejercicio> listaEjercicios() throws ReadException;
-            
+
 }

@@ -17,8 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -30,7 +28,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import servicios.RecetaFacadeREST;
 
 /**
  *
@@ -38,11 +35,11 @@ import servicios.RecetaFacadeREST;
  */
 @Stateless
 @Path("entidades.ejercicio")
-public class EjercicioFacadeREST{
+public class EjercicioFacadeREST {
 
     @EJB
     private EjercicioInterface ejb;
-    private Logger LOGGER = Logger.getLogger(RecetaFacadeREST.class.getName());
+    private Logger LOGGER = Logger.getLogger(EjercicioFacadeREST.class.getName());
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,7 +76,7 @@ public class EjercicioFacadeREST{
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Ejercicio> lista() {
@@ -91,20 +88,20 @@ public class EjercicioFacadeREST{
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
-    @Path("/listaBrazo/{brazo}")
+    @Path("/listaBrazo")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaBrazo(@PathParam("brazo") TipoEjercicio brazo) {
+    public List<Ejercicio> listaBrazo() {
         try {
-            List<Ejercicio> ejercicios = ejb.listaBrazo(brazo);
+            List<Ejercicio> ejercicios = ejb.listaBrazo();
             return ejercicios;
-        }catch (ReadException e) {
+        } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Path("/listaPierna/{pierna}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -117,7 +114,7 @@ public class EjercicioFacadeREST{
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Path("/listaPecho/{pecho}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -130,7 +127,7 @@ public class EjercicioFacadeREST{
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Path("/listaEspalda/{espalda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -143,7 +140,7 @@ public class EjercicioFacadeREST{
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
+
     @GET
     @Path("/listaIntensidad/{intensidad}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
