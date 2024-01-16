@@ -5,9 +5,9 @@
  */
 package servicios;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import ejb.EjercicioInterface;
 import entidades.Ejercicio;
+import entidades.TipoEjercicio;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -21,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
@@ -29,6 +30,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import servicios.RecetaFacadeREST;
 
 /**
  *
@@ -93,11 +95,11 @@ public class EjercicioFacadeREST{
     @GET
     @Path("/listaBrazo/{brazo}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaBrazo(@PathParam("brazo") Enum brazo) {
+    public List<Ejercicio> listaBrazo(@PathParam("brazo") TipoEjercicio brazo) {
         try {
             List<Ejercicio> ejercicios = ejb.listaBrazo(brazo);
             return ejercicios;
-        } catch (ReadException e) {
+        }catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
@@ -106,7 +108,7 @@ public class EjercicioFacadeREST{
     @GET
     @Path("/listaPierna/{pierna}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaPierna(@PathParam("pierna") Enum pierna) {
+    public List<Ejercicio> listaPierna(@PathParam("pierna") TipoEjercicio pierna) {
         try {
             List<Ejercicio> ejercicios = ejb.listaPierna(pierna);
             return ejercicios;
@@ -119,7 +121,7 @@ public class EjercicioFacadeREST{
     @GET
     @Path("/listaPecho/{pecho}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaPecho(@PathParam("pecho") Enum pecho) {
+    public List<Ejercicio> listaPecho(@PathParam("pecho") TipoEjercicio pecho) {
         try {
             List<Ejercicio> ejercicios = ejb.listaPecho(pecho);
             return ejercicios;
@@ -132,7 +134,7 @@ public class EjercicioFacadeREST{
     @GET
     @Path("/listaEspalda/{espalda}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaEspalda(@PathParam("espalda") Enum espalda) {
+    public List<Ejercicio> listaEspalda(@PathParam("espalda") TipoEjercicio espalda) {
         try {
             List<Ejercicio> ejercicios = ejb.listaEspalda(espalda);
             return ejercicios;
@@ -145,7 +147,7 @@ public class EjercicioFacadeREST{
     @GET
     @Path("/listaIntensidad/{intensidad}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaIntensidad(@PathParam("intensidad") String intensidad) {
+    public List<Ejercicio> listaIntensidad(@PathParam("intensidad") @DefaultValue("DEFAULT_VALUE") String intensidad) {
         try {
             List<Ejercicio> ejercicios = ejb.listaIntensidad(intensidad);
             return ejercicios;

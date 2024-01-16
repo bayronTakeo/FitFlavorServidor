@@ -5,10 +5,13 @@
  */
 package entidades;
 
+import entidades.Cliente;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -60,6 +63,7 @@ public class Ejercicio implements Serializable {
     /**
      * Tipo Ejercicio
      */
+    @Enumerated(EnumType.STRING)
     private TipoEjercicio tipoEjercicio;
     /**
      * Descripcion del Ejercicio

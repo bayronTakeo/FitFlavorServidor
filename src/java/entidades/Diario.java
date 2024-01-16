@@ -5,6 +5,9 @@
  */
 package entidades;
 
+import entidades.Cliente;
+import entidades.Fecha;
+import entidades.Receta;
 import java.io.Serializable;
 import java.util.List;
 import static javax.persistence.CascadeType.ALL;

@@ -6,6 +6,7 @@
 package ejb;
 
 import entidades.Ejercicio;
+import entidades.TipoEjercicio;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -57,7 +58,7 @@ public class EjercicioEJB implements EjercicioInterface{
         }  
     }
     
-    public List<Ejercicio> listaBrazo(Enum brazo) throws ReadException {
+    public List<Ejercicio> listaBrazo(TipoEjercicio brazo) throws ReadException {
         try {
             return em.createNamedQuery("brazo").setParameter("brazo", brazo).getResultList();
         }catch (Exception e) {
@@ -65,15 +66,17 @@ public class EjercicioEJB implements EjercicioInterface{
         }
     }
     
-    public List<Ejercicio> listaPierna(Enum pierna) throws ReadException {
+    public List<Ejercicio> listaPierna(TipoEjercicio pierna) throws ReadException {
+        List<Ejercicio> ejercicios;
         try {
-            return em.createNamedQuery("pierna").setParameter("pierna", pierna).getResultList();
+            ejercicios = em.createNamedQuery("pierna").setParameter("pierna", pierna).getResultList();
         }catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
+          return ejercicios;
     }
     
-    public List<Ejercicio> listaPecho(Enum pecho) throws ReadException {
+    public List<Ejercicio> listaPecho(TipoEjercicio pecho) throws ReadException {
         try {
             return em.createNamedQuery("pecho").setParameter("pecho", pecho).getResultList();
         }catch (Exception e) {
@@ -81,7 +84,7 @@ public class EjercicioEJB implements EjercicioInterface{
         }
     }
     
-    public List<Ejercicio> listaEspalda(Enum espalda) throws ReadException {
+    public List<Ejercicio> listaEspalda(TipoEjercicio espalda) throws ReadException {
         try {
             return em.createNamedQuery("espalda").setParameter("espalda", espalda).getResultList();
         }catch (Exception e) {
@@ -97,6 +100,7 @@ public class EjercicioEJB implements EjercicioInterface{
             throw new ReadException(e.getMessage());
         }
     }
+    
 
     @Override
     public List<Ejercicio> listaEjercicios() throws ReadException {
