@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "brazo", query = "SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = 'Brazo'"
+            name = "buscarPorTipo", query = "SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipoEjercicio"
     )
     ,@NamedQuery(
             name = "pierna", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :pierna"

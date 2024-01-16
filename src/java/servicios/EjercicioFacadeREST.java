@@ -90,11 +90,11 @@ public class EjercicioFacadeREST {
     }
 
     @GET
-    @Path("/listaBrazo")
+    @Path("/listaPorTipo/{tipoEjercicio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaBrazo() {
+    public List<Ejercicio> listaPorTipo(@PathParam("tipoEjercicio") TipoEjercicio brazo) {
         try {
-            List<Ejercicio> ejercicios = ejb.listaBrazo();
+            List<Ejercicio> ejercicios = ejb.listaPorTipo(brazo);
             return ejercicios;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());

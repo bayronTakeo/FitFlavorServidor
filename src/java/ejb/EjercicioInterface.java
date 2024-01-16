@@ -21,7 +21,7 @@ public interface EjercicioInterface {
 
     public void createEjercicio(Ejercicio ejercicio) throws CreateException;
 
-    public List<Ejercicio> listaBrazo() throws ReadException;
+    public List<Ejercicio> listaPorTipo(TipoEjercicio tipoEjercicio) throws ReadException;
 
     public List<Ejercicio> listaPierna(TipoEjercicio pierna) throws ReadException;
 

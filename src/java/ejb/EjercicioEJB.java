@@ -58,9 +58,9 @@ public class EjercicioEJB implements EjercicioInterface {
         }
     }
 
-    public List<Ejercicio> listaBrazo() throws ReadException {
+    public List<Ejercicio> listaPorTipo(TipoEjercicio tipoEjercicio) throws ReadException {
         try {
-            return em.createNamedQuery("brazo").getResultList();
+            return em.createNamedQuery("buscarPorTipo").setParameter("tipoEjercicio", tipoEjercicio).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
