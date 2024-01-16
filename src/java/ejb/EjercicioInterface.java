@@ -23,12 +23,6 @@ public interface EjercicioInterface {
 
     public List<Ejercicio> listaPorTipo(TipoEjercicio tipoEjercicio) throws ReadException;
 
-    public List<Ejercicio> listaPierna(TipoEjercicio pierna) throws ReadException;
-
-    public List<Ejercicio> listaPecho(TipoEjercicio pecho) throws ReadException;
-
-    public List<Ejercicio> listaEspalda(TipoEjercicio espalda) throws ReadException;
-
     public List<Ejercicio> listaIntensidad(String intensidad) throws ReadException;
 
     public void updateEjercicio(Ejercicio ejercicio) throws UpdateException;

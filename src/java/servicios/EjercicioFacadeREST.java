@@ -103,45 +103,6 @@ public class EjercicioFacadeREST {
     }
 
     @GET
-    @Path("/listaPierna/{pierna}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaPierna(@PathParam("pierna") TipoEjercicio pierna) {
-        try {
-            List<Ejercicio> ejercicios = ejb.listaPierna(pierna);
-            return ejercicios;
-        } catch (ReadException e) {
-            LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage());
-        }
-    }
-
-    @GET
-    @Path("/listaPecho/{pecho}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaPecho(@PathParam("pecho") TipoEjercicio pecho) {
-        try {
-            List<Ejercicio> ejercicios = ejb.listaPecho(pecho);
-            return ejercicios;
-        } catch (ReadException e) {
-            LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage());
-        }
-    }
-
-    @GET
-    @Path("/listaEspalda/{espalda}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ejercicio> listaEspalda(@PathParam("espalda") TipoEjercicio espalda) {
-        try {
-            List<Ejercicio> ejercicios = ejb.listaEspalda(espalda);
-            return ejercicios;
-        } catch (ReadException e) {
-            LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage());
-        }
-    }
-
-    @GET
     @Path("/listaIntensidad/{intensidad}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Ejercicio> listaIntensidad(@PathParam("intensidad") @DefaultValue("DEFAULT_VALUE") String intensidad) {

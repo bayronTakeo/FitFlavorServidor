@@ -66,32 +66,6 @@ public class EjercicioEJB implements EjercicioInterface {
         }
     }
 
-    public List<Ejercicio> listaPierna(TipoEjercicio pierna) throws ReadException {
-        List<Ejercicio> ejercicios;
-        try {
-            ejercicios = em.createNamedQuery("pierna").setParameter("pierna", pierna).getResultList();
-        } catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-        return ejercicios;
-    }
-
-    public List<Ejercicio> listaPecho(TipoEjercicio pecho) throws ReadException {
-        try {
-            return em.createNamedQuery("pecho").setParameter("pecho", pecho).getResultList();
-        } catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
-
-    public List<Ejercicio> listaEspalda(TipoEjercicio espalda) throws ReadException {
-        try {
-            return em.createNamedQuery("espalda").setParameter("espalda", espalda).getResultList();
-        } catch (Exception e) {
-            throw new ReadException(e.getMessage());
-        }
-    }
-
     @Override
     public List<Ejercicio> listaIntensidad(String intensidad) throws ReadException {
         try {
