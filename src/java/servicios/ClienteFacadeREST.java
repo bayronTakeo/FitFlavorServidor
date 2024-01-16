@@ -31,7 +31,6 @@ import javax.ws.rs.core.MediaType;
  *
  * @author bayron
  */
-@Stateless
 @Path("entidades.cliente")
 public class ClienteFacadeREST {
 
@@ -65,21 +64,36 @@ public class ClienteFacadeREST {
     }
 
     @DELETE
-    @Path("{cliente}")
-    public void remove(@PathParam("cliente") Cliente cliente) {
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando cliente{0}", cliente.getUser_id());
-            ejb.eliminarCliente(cliente);
-        } catch (DeleteException e) {
+            LOGGER.log(Level.INFO, "eliminando cliente{0}", id);
+            ejb.eliminarCliente(ejb.buscarPorId(id));
+        } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
 
     @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Cliente buscarPorId(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando cliente por id:");
+            Cliente cliente = ejb.buscarPorId(id);
+            cliente.setContrasenia(null);
+            return cliente;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @GET
     @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente buscar(@PathParam("valor") String valor) {
+    public Cliente buscar(@PathParam("usrValor") String valor) {
         try {
             Cliente cliente = ejb.buscarCliente(valor);
             return cliente;
@@ -90,9 +104,9 @@ public class ClienteFacadeREST {
     }
 
     @GET
-    @Path("busquedaTelefono/{telefono}")
+    @Path("busquedaTelefono/{usrTelefono}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente buscar(@PathParam("telefono") int telefono) {
+    public Cliente buscarTelefono(@PathParam("usrTelefono") int telefono) {
         try {
             Cliente cliente = ejb.buscarPorTelefono(telefono);
             return cliente;
