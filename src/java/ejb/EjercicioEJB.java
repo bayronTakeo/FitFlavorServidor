@@ -84,4 +84,15 @@ public class EjercicioEJB implements EjercicioInterface {
         }
     }
 
+    @Override
+    public Ejercicio buscarPorId(Integer id) throws ReadException {
+        Ejercicio ejercicio;
+        try {
+            ejercicio = em.find(Ejercicio.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return ejercicio;
+    }
+
 }

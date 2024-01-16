@@ -31,4 +31,6 @@ public interface EjercicioInterface {
 
     public List<Ejercicio> listaEjercicios() throws ReadException;
 
+    public Ejercicio buscarPorId(Integer id) throws ReadException;
+
 }

@@ -114,4 +114,18 @@ public class EjercicioFacadeREST {
             throw new InternalServerErrorException(e.getMessage());
         }
     }
+
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Ejercicio buscarPorId(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando ejercicio por id:");
+            Ejercicio ejercicio = ejb.buscarPorId(id);
+            return ejercicio;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
 }
