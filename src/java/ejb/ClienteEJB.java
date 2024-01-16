@@ -54,8 +54,9 @@ public class ClienteEJB implements ClienteInterfaz {
     @Override
     public void eliminarCliente(Cliente cli) throws DeleteException {
         try {
-            LOGGER.info("Entrnado a eliminar");
-            em.remove(cli);
+            LOGGER.info("Entrando a eliminar");
+            LOGGER.info(cli.toString());
+            em.remove(em.merge(cli));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
         }
