@@ -149,9 +149,11 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         this.privilegio = privilegio;
     }
-    public Usuario() { 
-        
+
+    public Usuario() {
+
     }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -174,7 +176,16 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Usuario{"
+                + "user_id=" + user_id
+                + ", email='" + email + '\''
+                + ", nombreCompleto='" + nombreCompleto + '\''
+                + ", fechaNacimiento=" + fechaNacimiento
+                + ", telefono=" + telefono
+                + ", direccion='" + direccion + '\''
+                + ", codigoPostal=" + codigoPostal
+                + ", contrasenia='" + contrasenia + '\''
+                + ", privilegio=" + privilegio
+                + '}';
     }
-
 }

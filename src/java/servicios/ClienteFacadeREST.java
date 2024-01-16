@@ -90,7 +90,7 @@ public class ClienteFacadeREST {
     }
 
     @GET
-    @Path("/busquedaTelefono/{telefono}")
+    @Path("busquedaTelefono/{telefono}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente buscar(@PathParam("telefono") int telefono) {
         try {
