@@ -41,7 +41,7 @@ public class EjercicioEJB implements EjercicioInterface {
     public void updateEjercicio(Ejercicio ejercicio) throws UpdateException {
         try {
             if (!em.contains(ejercicio)) {
-                em.merge(ejercicio);
+                em.merge(em.merge(ejercicio));
             }
             em.flush();
         } catch (Exception e) {

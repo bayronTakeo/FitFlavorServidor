@@ -66,12 +66,13 @@ public class EjercicioFacadeREST {
     }
 
     @DELETE
+    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void remove(Ejercicio entity) {
+    public void remove(@PathParam("id") Integer id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando ejercicio{0}", entity.getId());
-            ejb.deleteEjercicio(entity);
-        } catch (DeleteException e) {
+            LOGGER.log(Level.INFO, "eliminando ejercicio{0}");
+            ejb.deleteEjercicio(ejb.buscarPorId(id));
+        } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
