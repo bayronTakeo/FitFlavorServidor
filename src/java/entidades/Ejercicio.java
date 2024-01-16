@@ -38,15 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
             name = "buscarPorTipo", query = "SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipoEjercicio"
     )
     ,@NamedQuery(
-            name = "pierna", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :pierna"
-    )
-    ,@NamedQuery(
-            name = "pecho", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :pecho"
-    )
-    ,@NamedQuery(
-            name = "espalda", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = :espalda"
-    )
-    ,@NamedQuery(
             name = "buscarIntensidad", query = "SELECT e FROM Ejercicio e Where intensidad = :intensidad"
     )})
 
