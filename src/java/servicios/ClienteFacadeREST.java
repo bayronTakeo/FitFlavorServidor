@@ -67,7 +67,7 @@ public class ClienteFacadeREST {
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando cliente{0}", id);
+            LOGGER.log(Level.INFO, "eliminando cliente: ", id);
             ejb.eliminarCliente(ejb.buscarPorId(id));
         } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
