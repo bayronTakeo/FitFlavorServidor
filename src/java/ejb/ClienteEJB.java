@@ -20,10 +20,12 @@ import javax.persistence.PersistenceContext;
  * @author bayro
  */
 @Stateless
-public class ClienteEJB implements ClienteInterfaz{
+public class ClienteEJB implements ClienteInterfaz {
+
     @PersistenceContext(unitName = "FitFlavorServidorPU")
 
     private EntityManager em;
+
     @Override
     public void crearCliente(Cliente cli) throws CreateException {
         try {
@@ -35,9 +37,9 @@ public class ClienteEJB implements ClienteInterfaz{
 
     @Override
     public void actualizarCliente(Cliente cli) throws UpdateException {
-       
+
         try {
-             if(!em.contains(cli)) { 
+            if (!em.contains(cli)) {
                 em.merge(cli);
             }
             em.flush();
@@ -81,11 +83,10 @@ public class ClienteEJB implements ClienteInterfaz{
     public Cliente buscarPorTelefono(int telefono) throws ReadException {
         Cliente cliente;
         try {
-            cliente = (Cliente) em.createNamedQuery("buscarPorTelefono").setParameter("telefono", telefono).getSingleResult();
+            cliente = (Cliente) em.createNamedQuery("buscarPorTelefono").setParameter("usrTelefono", telefono).getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
         return cliente;
     }
-    
 }
