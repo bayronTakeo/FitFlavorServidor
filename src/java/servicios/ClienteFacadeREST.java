@@ -43,7 +43,7 @@ public class ClienteFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente entity) {
         try {
-            LOGGER.log(Level.INFO, "Creando cliente{0}", entity.getUser_id());
+            LOGGER.log(Level.INFO, "Creando cliente", entity.getUser_id());
             ejb.crearCliente(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
@@ -93,10 +93,10 @@ public class ClienteFacadeREST {
     @GET
     @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente buscar(@PathParam("usrValor") String valor) {
+    public List<Cliente> buscar(@PathParam("usrValor") String valor) {
         try {
-            Cliente cliente = ejb.buscarCliente(valor);
-            return cliente;
+            List<Cliente> clientes = ejb.buscarCliente(valor);
+            return clientes;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());

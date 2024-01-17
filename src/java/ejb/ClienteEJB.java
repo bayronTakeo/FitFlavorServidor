@@ -33,6 +33,9 @@ public class ClienteEJB implements ClienteInterfaz {
     @Override
     public void crearCliente(Cliente cli) throws CreateException {
         try {
+            LOGGER.info("ejb" + cli.toString());
+            cli.setUser_id(null);
+            // Persiste la entidad en el contexto actual
             em.persist(cli);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
@@ -74,10 +77,10 @@ public class ClienteEJB implements ClienteInterfaz {
     }
 
     @Override
-    public Cliente buscarCliente(String valor) throws ReadException {
-        Cliente cliente;
+    public List<Cliente> buscarCliente(String valor) throws ReadException {
+        List<Cliente> cliente;
         try {
-            cliente = (Cliente) em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getSingleResult();
+            cliente = em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
