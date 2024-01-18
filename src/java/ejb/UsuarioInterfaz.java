@@ -13,6 +13,6 @@ import excepciones.ReadException;
  * @author bayro
  */
 public interface UsuarioInterfaz {
-    
+
     public Usuario signIn(String email, String contrasenia) throws ReadException;
 }

@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,7 +50,7 @@ public class Usuario implements Serializable {
 
     private String nombreCompleto;
 
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
 
     private int telefono;
 
@@ -74,7 +75,7 @@ public class Usuario implements Serializable {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -114,7 +115,7 @@ public class Usuario implements Serializable {
         return nombreCompleto;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
@@ -138,7 +139,7 @@ public class Usuario implements Serializable {
         return privilegio;
     }
 
-    public Usuario(Integer user_id, String email, String nombreCompleto, LocalDate fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    public Usuario(Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         this.user_id = user_id;
         this.email = email;
         this.nombreCompleto = nombreCompleto;
@@ -149,9 +150,11 @@ public class Usuario implements Serializable {
         this.contrasenia = contrasenia;
         this.privilegio = privilegio;
     }
-    public Usuario() { 
-        
+
+    public Usuario() {
+
     }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -174,7 +177,16 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Usuario{"
+                + "user_id=" + user_id
+                + ", email='" + email + '\''
+                + ", nombreCompleto='" + nombreCompleto + '\''
+                + ", fechaNacimiento=" + fechaNacimiento
+                + ", telefono=" + telefono
+                + ", direccion='" + direccion + '\''
+                + ", codigoPostal=" + codigoPostal
+                + ", contrasenia='" + contrasenia + '\''
+                + ", privilegio=" + privilegio
+                + '}';
     }
-
 }

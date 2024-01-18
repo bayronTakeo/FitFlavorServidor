@@ -5,10 +5,13 @@
  */
 package entidades;
 
+import entidades.Cliente;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,18 +29,16 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author gaizka
  */
-
 @NamedQueries({
     @NamedQuery(
-            name = "brazo", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = brazo"
-    ),@NamedQuery(
-            name = "pierna", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = pierna"
-    ),@NamedQuery(
-            name = "pecho", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = pecho"
-    ),@NamedQuery(
-            name = "espalda", query = "SELECT e FROM Ejercicio e WHERE tipoEjercicio = espalda"
-    ),@NamedQuery(
-            name = "intensidad", query = "SELECT e FROM Ejercicio e ORDER BY intensidad ASC"
+            name = "todosEjercicios", query = "SELECT e from Ejercicio e "
+    )
+    ,
+    @NamedQuery(
+            name = "buscarPorTipo", query = "SELECT e FROM Ejercicio e WHERE e.tipoEjercicio = :tipoEjercicio"
+    )
+    ,@NamedQuery(
+            name = "buscarIntensidad", query = "SELECT e FROM Ejercicio e Where intensidad = :intensidad"
     )})
 
 @Entity
@@ -60,6 +61,7 @@ public class Ejercicio implements Serializable {
     /**
      * Tipo Ejercicio
      */
+    @Enumerated(EnumType.STRING)
     private TipoEjercicio tipoEjercicio;
     /**
      * Descripcion del Ejercicio
@@ -92,7 +94,10 @@ public class Ejercicio implements Serializable {
         this.intensidad = intensidad;
         this.listaDiariosE = listaDiariosE;
     }
-    
+
+    public Ejercicio() {
+
+    }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
         this.listaDiariosE = ListaDiarios;
@@ -134,8 +139,6 @@ public class Ejercicio implements Serializable {
         this.nombre = nombre;
     }
 
-    
-
     /**
      *
      * @return the tipoEjercicio
@@ -148,7 +151,7 @@ public class Ejercicio implements Serializable {
      *
      * @param tipoEjercicio the tipoEjercicio to be set
      */
-    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {    
+    public void setTipoEjercicio(TipoEjercicio tipoEjercicio) {
         this.tipoEjercicio = tipoEjercicio;
     }
 
@@ -215,7 +218,7 @@ public class Ejercicio implements Serializable {
     public void setIntensidad(String intensidad) {
         this.intensidad = intensidad;
     }
-    
+
     /**
      *
      * @return the listaDiariosE
@@ -223,6 +226,7 @@ public class Ejercicio implements Serializable {
     public List<Diario> getListaDiariosE() {
         return listaDiariosE;
     }
+
     /**
      *
      * @param listaDiariosE the listaDiariosE to be set

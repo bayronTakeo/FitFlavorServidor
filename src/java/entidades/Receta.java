@@ -34,20 +34,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(
             name = "lista", query = "SELECT r FROM Receta r"
     ),
+ //   @NamedQuery(
+   //         name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
+    //),
+
     @NamedQuery(
-            name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
+            name = "esVegano", query = "SELECT r FROM Receta r WHERE r.esVegano = :esVegano"
     ),
     @NamedQuery(
-            name = "ordenarDuracion", query = "SELECT r FROM Receta r ORDER BY r.duracion ASC"
+            name = "esVegetariano", query = "SELECT r FROM Receta r WHERE r.esVegetariano = :esVegetariano"
     ),
     @NamedQuery(
-            name = "vegano", query = "SELECT r FROM Receta r WHERE r.esVegano = true"
-    ),
-    @NamedQuery(
-            name = "vegetariano", query = "SELECT r FROM Receta r WHERE r.esVegetariano = true"
-    ),
-    @NamedQuery(
-            name = "precio", query = "SELECT r FROM Receta r ORDER BY r.precio ASC"
+            name = "precio", query = "SELECT r FROM Receta r WHERE r.precio = :precio"
     )
 })
 
@@ -144,6 +142,12 @@ public class Receta implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getId() {
+        return id;
+    }
+    
+    
 
     public String getPasos() {
         return pasos;

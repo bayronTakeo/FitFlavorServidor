@@ -11,22 +11,31 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import servicios.ClienteFacadeREST;
 
 /**
  *
  * @author bayro
  */
 @Stateless
-public class ClienteEJB implements ClienteInterfaz{
+public class ClienteEJB implements ClienteInterfaz {
+
     @PersistenceContext(unitName = "FitFlavorServidorPU")
 
     private EntityManager em;
+
+    private Logger LOGGER = Logger.getLogger(ClienteEJB.class.getName());
+
     @Override
     public void crearCliente(Cliente cli) throws CreateException {
         try {
+            LOGGER.info("ejb" + cli.toString());
+            cli.setUser_id(null);
+            // Persiste la entidad en el contexto actual
             em.persist(cli);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
@@ -35,9 +44,8 @@ public class ClienteEJB implements ClienteInterfaz{
 
     @Override
     public void actualizarCliente(Cliente cli) throws UpdateException {
-       
         try {
-             if(!em.contains(cli)) { 
+            if (!em.contains(cli)) {
                 em.merge(cli);
             }
             em.flush();
@@ -49,7 +57,9 @@ public class ClienteEJB implements ClienteInterfaz{
     @Override
     public void eliminarCliente(Cliente cli) throws DeleteException {
         try {
-            em.remove(cli);
+            LOGGER.info("Entrando a eliminar");
+            LOGGER.info(cli.toString());
+            em.remove(em.merge(cli));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
         }
@@ -67,10 +77,10 @@ public class ClienteEJB implements ClienteInterfaz{
     }
 
     @Override
-    public Cliente buscarCliente(String valor) throws ReadException {
-        Cliente cliente;
+    public List<Cliente> buscarCliente(String valor) throws ReadException {
+        List<Cliente> cliente;
         try {
-            cliente = (Cliente) em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getSingleResult();
+            cliente = em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -81,11 +91,21 @@ public class ClienteEJB implements ClienteInterfaz{
     public Cliente buscarPorTelefono(int telefono) throws ReadException {
         Cliente cliente;
         try {
-            cliente = (Cliente) em.createNamedQuery("buscarPorTelefono").setParameter("telefono", telefono).getSingleResult();
+            cliente = (Cliente) em.createNamedQuery("buscarPorTelefono").setParameter("usrTelefono", telefono).getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
         return cliente;
     }
-    
+
+    @Override
+    public Cliente buscarPorId(Integer id) throws ReadException {
+        Cliente cliente;
+        try {
+            cliente = em.find(Cliente.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return cliente;
+    }
 }
