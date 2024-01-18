@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface IngredienteInterface {
 
-    public void deleteIngrediente(int id) throws DeleteException;
+    public void deleteIngrediente(Ingrediente ing) throws DeleteException;
 
     public void createIngrediente(Ingrediente ingrediente) throws CreateException;
 
@@ -38,5 +38,7 @@ public interface IngredienteInterface {
     public List<Ingrediente> buscarNombre(String nombre) throws ReadException;
 
     public List<Ingrediente> tipoIngrediente(String tipoIngrediente) throws ReadException;
+
+    public Ingrediente buscarPorId(Integer id) throws ReadException;
 
 }

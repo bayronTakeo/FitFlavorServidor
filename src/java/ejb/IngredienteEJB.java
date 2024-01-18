@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import entidades.Ingrediente;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -25,10 +26,12 @@ public class IngredienteEJB implements IngredienteInterface {
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
-    @Override
-    public void deleteIngrediente(int id) throws DeleteException {
-        try {
-            em.remove(em.merge(id));
+
+    public void deleteIngrediente(Ingrediente ing) throws DeleteException {
+       try {
+            LOGGER.info("Entrando a eliminar");
+            LOGGER.info(ing.toString());
+            em.remove(em.merge(ing));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
         }
@@ -112,5 +115,18 @@ public class IngredienteEJB implements IngredienteInterface {
             throw new ReadException(e.getMessage());
         }
     }
+    
+      
+    public Ingrediente buscarPorId(Integer id) throws ReadException {
+        Ingrediente ingrediente;
+        try {
+            ingrediente = em.find(Ingrediente.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return ingrediente;
+    }
+
+    
 
 }

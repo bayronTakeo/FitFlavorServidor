@@ -71,12 +71,12 @@ public class RecetaFacadeREST {
     }
 
     @DELETE
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void remove(Receta entity) {
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando receta{0}", entity.getId());
-            ejb.deleteReceta(entity);
-        } catch (DeleteException e) {
+            LOGGER.log(Level.INFO, "eliminando receta: ", id);
+            ejb.deleteReceta(ejb.buscarPorId(id));
+        } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
@@ -94,18 +94,20 @@ public class RecetaFacadeREST {
         }
     }
 
-    // @GET
-    //@Path("/listaIngrediente")
-    // @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    //public List<Receta> listaIngrediente() {
-    //  try {
-    //    List<Receta> recetas = ejb.listaIngredientes();
-    //  return recetas;
-    // } catch (ReadException e) {
-    //   LOGGER.severe(e.getMessage());
-    // throw new InternalServerErrorException(e.getMessage());
-    //}
-    //}
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Receta buscarPorId(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando receta por id:");
+            Receta receta = ejb.buscarPorId(id);
+            return receta;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+    
     @GET
     @Path("/vegano/{esVegano}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

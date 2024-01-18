@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface RecetaInterface {
 
-    public void deleteReceta(Receta receta) throws DeleteException;
+    public void deleteReceta(Receta rec) throws DeleteException;
 
     public void createReceta(Receta receta) throws CreateException;
 
@@ -26,12 +26,12 @@ public interface RecetaInterface {
 
     public List<Receta> listaRecetas() throws ReadException;
 
-  //  public List<Receta> listaIngredientes() throws ReadException;
-
     public List<Receta> vegano(boolean esVegano) throws ReadException;
 
     public List<Receta> vegetariano(boolean esVegano) throws ReadException;
 
     public List<Receta> precio(float precio) throws ReadException;
+
+    public Receta buscarPorId(Integer id) throws ReadException;
 
 }

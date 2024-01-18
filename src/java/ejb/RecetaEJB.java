@@ -5,6 +5,7 @@
  */
 package ejb;
 
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import entidades.Receta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -26,9 +27,11 @@ public class RecetaEJB implements RecetaInterface {
     private EntityManager em;
 
     @Override
-    public void deleteReceta(Receta receta) throws DeleteException {
+    public void deleteReceta(Receta rec) throws DeleteException {
         try {
-            em.remove(em.merge(receta));
+            LOGGER.info("Entrando a eliminar");
+            LOGGER.info(rec.toString());
+            em.remove(em.merge(rec));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
         }
@@ -64,14 +67,6 @@ public class RecetaEJB implements RecetaInterface {
         }
     }
 
-    // @Override
-    // public List<Receta> listaIngredientes() throws ReadException {
-    //     try {
-    //         return em.createNamedQuery("listaIngredientes").setParameter("listaIngredientes", tipoIngrediente).getResultList();
-    //    } catch (Exception e) {
-    //         throw new ReadException(e.getMessage());
-    //     }
-    // }
     public List<Receta> vegano(boolean esVegano) throws ReadException {
         try {
             return em.createNamedQuery("esVegano").setParameter("esVegano", esVegano).getResultList();
@@ -95,6 +90,17 @@ public class RecetaEJB implements RecetaInterface {
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
+    }
+
+    @Override
+    public Receta buscarPorId(Integer id) throws ReadException {
+        Receta receta;
+        try {
+            receta = em.find(Receta.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return receta;
     }
 
 }

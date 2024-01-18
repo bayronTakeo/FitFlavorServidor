@@ -8,7 +8,6 @@ package servicios;
 import ejb.IngredienteInterface;
 import ejb.RecetaInterface;
 import entidades.Ingrediente;
-import static entidades.Ingrediente_.kCal;
 import entidades.Receta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -75,9 +74,9 @@ public class IngredienteFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") int id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando receta{0}", id);
-            ejb.deleteIngrediente(id);
-        } catch (DeleteException e) {
+            LOGGER.log(Level.INFO, "eliminando ingrediente: ", id);
+            ejb.deleteIngrediente(ejb.buscarPorId(id));
+        } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
@@ -157,6 +156,21 @@ public class IngredienteFacadeREST {
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+    
+    
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Ingrediente buscarPorId(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando cliente por id:");
+            Ingrediente ingrediente = ejb.buscarPorId(id);
+            return ingrediente;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
         }
     }
 
