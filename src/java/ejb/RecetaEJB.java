@@ -5,13 +5,13 @@
  */
 package ejb;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import entidades.Receta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +25,7 @@ public class RecetaEJB implements RecetaInterface {
 
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
+    private Logger LOGGER = Logger.getLogger(RecetaEJB.class.getName());
 
     @Override
     public void deleteReceta(Receta rec) throws DeleteException {

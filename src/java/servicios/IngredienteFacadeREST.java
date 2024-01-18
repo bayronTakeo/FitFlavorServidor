@@ -6,9 +6,7 @@
 package servicios;
 
 import ejb.IngredienteInterface;
-import ejb.RecetaInterface;
 import entidades.Ingrediente;
-import entidades.Receta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -18,8 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -149,7 +145,7 @@ public class IngredienteFacadeREST {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ingrediente> tipoIngrediente(@PathParam("tipoIngrediente") String tipoIngrediente){
+    public List<Ingrediente> tipoIngrediente(@PathParam("tipoIngrediente") String tipoIngrediente) {
         try {
             List<Ingrediente> ingredientes = ejb.tipoIngrediente(tipoIngrediente);
             return ingredientes;
@@ -158,8 +154,7 @@ public class IngredienteFacadeREST {
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
-    
+
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
