@@ -29,33 +29,28 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "buscarkCal", query = "SELECT i FROM Ingrediente i WHERE i.kCal = :kCal"
-    )
-    ,
+            name = "ordenarkCal", query = "SELECT i FROM Ingrediente i ORDER BY i.kCal ASC"
+    ),
     @NamedQuery(
-            name = "buscarPrecio", query = "SELECT i FROM Ingrediente i WHERE i.precio = :precio"
-    )
-    ,
+            name = "ordenarPrecio", query = "SELECT i FROM Ingrediente i ORDER BY i.precio ASC"
+    ),
     @NamedQuery(
-            name = "buscarCarbohidratos", query = "SELECT i FROM Ingrediente i WHERE i.carbohidratos = :carbohidratos"
-    )
-    ,
+            name = "ordenarCarbohidratos", query = "SELECT i FROM Ingrediente i ORDER BY i.carbohidratos ASC"
+    ),
     @NamedQuery(
-            name = "buscarProteinas", query = "SELECT i FROM Ingrediente i WHERE i.proteinas = :proteinas"
-    )
-    ,
+            name = "ordenarProteinas", query = "SELECT i FROM Ingrediente i ORDER BY i.proteinas ASC"
+    ),
     @NamedQuery(
-            name = "buscarGrasas", query = "SELECT i FROM Ingrediente i WHERE i.grasas = :grasas"
-    )
-    ,
+            name = "ordenarGrasas", query = "SELECT i FROM Ingrediente i ORDER BY i.grasas ASC"
+    ),
     @NamedQuery(
-            name = "buscarNombre", query = "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre"
-    )
-    ,
+            name = "ordenarNombre", query = "SELECT i FROM Ingrediente i ORDER BY i.nombre ASC"
+    ),
     @NamedQuery(
             name = "tipoIngrediente", query = "SELECT i FROM Ingrediente i WHERE i.tipoIngrediente = :tipoIngrediente"
     )
 })
+
 
 @Entity
 @Table(name = "ingrediente", schema = "fitFlavor")
@@ -112,9 +107,9 @@ public class Ingrediente implements Serializable {
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
     }
-
-    public Ingrediente() {
-
+    
+    public Ingrediente(){
+        
     }
 
     @XmlTransient

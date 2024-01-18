@@ -9,7 +9,6 @@ import ejb.UsuarioInterfaz;
 import entidades.Usuario;
 import excepciones.ReadException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,48 +28,47 @@ import javax.ws.rs.core.MediaType;
  * @author bayro
  */
 @Stateless
-@Path("usuario")
+@Path("entidades.usuario")
 public class UsuarioFacadeREST {
-
-    @EJB
-    private UsuarioInterfaz usuInter;
-
-    private Logger LOGGER = Logger.getLogger(UsuarioFacadeREST.class.getName());
-
+     @EJB
+     private UsuarioInterfaz usuInter;
+    
+     private Logger LOGGER = Logger.getLogger(UsuarioFacadeREST.class.getName());
+      
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Usuario entity) {
-
+        
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Integer id, Usuario entity) {
-
+       
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-
+       
     }
 
     @GET
-    @Path("/usuario/{id}")
+    @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario find(@PathParam("id") Integer id) {
-        return null;
-
+         return null;
+       
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Usuario> findAll() {
-        return null;
-
+         return null;
+       
     }
-
+    
     /**
      * GET metodo para iniciar sesion
      *
@@ -83,10 +81,8 @@ public class UsuarioFacadeREST {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario signIn(@PathParam("emailUsr") String emailUsr, @PathParam("contraseniaUsr") String contraseniaUsr) {
         try {
-            LOGGER.log(Level.INFO, "Intentando iniciar sesion");
             Usuario usuario = usuInter.signIn(emailUsr, contraseniaUsr);
-            LOGGER.log(Level.INFO, usuario.toString());
-            //usuario.setContrasenia(contraseniaUsr);
+            usuario.setContrasenia(null);
             return usuario;
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
@@ -94,4 +90,5 @@ public class UsuarioFacadeREST {
         }
     }
 
+    
 }

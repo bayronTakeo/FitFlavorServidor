@@ -31,6 +31,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author bayron
  */
+@Stateless
 @Path("entidades.cliente")
 public class ClienteFacadeREST {
 
@@ -43,7 +44,7 @@ public class ClienteFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Cliente entity) {
         try {
-            LOGGER.log(Level.INFO, "Creando cliente", entity.getUser_id());
+            LOGGER.log(Level.INFO, "Creando cliente{0}", entity.getUser_id());
             ejb.crearCliente(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
@@ -64,39 +65,24 @@ public class ClienteFacadeREST {
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    @Path("{cliente}")
+    public void remove(@PathParam("cliente") Cliente cliente) {
         try {
-            LOGGER.log(Level.INFO, "eliminando cliente: ", id);
-            ejb.eliminarCliente(ejb.buscarPorId(id));
-        } catch (DeleteException | ReadException e) {
+            LOGGER.log(Level.INFO, "eliminando cliente{0}", cliente.getUser_id());
+            ejb.eliminarCliente(cliente);
+        } catch (DeleteException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
         }
     }
 
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente buscarPorId(@PathParam("id") Integer id) {
-        try {
-            LOGGER.log(Level.INFO, "Buscando cliente por id:");
-            Cliente cliente = ejb.buscarPorId(id);
-            cliente.setContrasenia(null);
-            return cliente;
-        } catch (ReadException ex) {
-            LOGGER.severe(ex.getMessage());
-            throw new InternalServerErrorException(ex.getMessage());
-        }
-    }
-
-    @GET
     @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> buscar(@PathParam("usrValor") String valor) {
+    public Cliente buscar(@PathParam("valor") String valor) {
         try {
-            List<Cliente> clientes = ejb.buscarCliente(valor);
-            return clientes;
+            Cliente cliente = ejb.buscarCliente(valor);
+            return cliente;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -104,9 +90,9 @@ public class ClienteFacadeREST {
     }
 
     @GET
-    @Path("busquedaTelefono/{usrTelefono}")
+    @Path("/busquedaTelefono/{telefono}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente buscarTelefono(@PathParam("usrTelefono") int telefono) {
+    public Cliente buscar(@PathParam("telefono") int telefono) {
         try {
             Cliente cliente = ejb.buscarPorTelefono(telefono);
             return cliente;

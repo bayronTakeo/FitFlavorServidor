@@ -1,7 +1,6 @@
 package entidades;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,16 +22,15 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "sacarTodos", query = "SELECT u from Usuario u WHERE privilegio = 1"
-    )
-    ,
+            name="sacarTodos", query="SELECT u from Usuario u WHERE privilegio = 1"
+    ),
     @NamedQuery(
-            name = "buscarCliente", query = "SELECT u from Usuario u WHERE privilegio=1 AND(email like :usrValor or nombreCompleto like :usrValor)"
-    )
-    ,
+            name="buscarCliente", query="SELECT u from Usuario u WHERE privilegio=1 AND(email like :usrValor or nombreCompleto like :usrValor)"
+    ), 
     @NamedQuery(
-            name = "buscarPorTelefono", query = "SELECT u from Usuario u WHERE privilegio=1 and telefono = :usrTelefono"
-    ),})
+            name="buscarPorTelefono", query="SELECT u from Usuario u WHERE privilegio=1 and telefono = :usrTelefono"
+    ),
+})
 @Entity
 @Table(name = "cliente", schema = "fitFlavor")
 @DiscriminatorValue("1")
@@ -49,13 +47,13 @@ public class Cliente extends Usuario {
     @Enumerated(EnumType.ORDINAL)
     private EnumObjetivo objetivo;
 
-    private Integer altura;
+    private int altura;
 
     @XmlTransient
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Receta> recetasUsu;
 
-    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, Integer telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, int altura, List<Receta> recetasUsu, Integer user_id, String email, String nombreCompleto, LocalDate fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
         this.sexo = sexo;
         this.peso = peso;
@@ -63,16 +61,17 @@ public class Cliente extends Usuario {
         this.altura = altura;
         this.recetasUsu = recetasUsu;
     }
-
+    
     // Constructor por defecto sin argumentos
-    public Cliente() {
-        super();
+     public Cliente() {
+       super();
     }
 
     public void setRecetasUsu(List<Receta> recetasUsu) {
         this.recetasUsu = recetasUsu;
     }
 
+  
     public List<Receta> getRecetasUsu() {
         return recetasUsu;
     }
@@ -93,7 +92,7 @@ public class Cliente extends Usuario {
         return objetivo;
     }
 
-    public Integer getAltura() {
+    public int getAltura() {
         return altura;
     }
 
@@ -109,7 +108,7 @@ public class Cliente extends Usuario {
         this.objetivo = objetivo;
     }
 
-    public void setAltura(Integer altura) {
+    public void setAltura(int altura) {
         this.altura = altura;
     }
 
