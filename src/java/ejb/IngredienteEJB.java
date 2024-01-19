@@ -127,4 +127,15 @@ public class IngredienteEJB implements IngredienteInterface {
         return ingrediente;
     }
 
+    @Override
+    public List<Ingrediente> findAll() throws ReadException {
+        List<Ingrediente> ingredientes;
+        try {
+            ingredientes = em.createNamedQuery("sacarTodosIngredientes").getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return ingredientes;
+    }
+
 }

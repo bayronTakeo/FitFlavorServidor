@@ -144,6 +144,7 @@ public class IngredienteFacadeREST {
     }
 
     @GET
+    @Path("/buscarTipo/{tipoIngrediente}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Ingrediente> tipoIngrediente(@PathParam("tipoIngrediente") String tipoIngrediente) {
         try {
@@ -166,6 +167,18 @@ public class IngredienteFacadeREST {
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Ingrediente> findAll() {
+        try {
+            List<Ingrediente> ingredientes = ejb.findAll();
+            return ingredientes;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 

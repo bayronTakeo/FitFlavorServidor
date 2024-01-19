@@ -25,6 +25,8 @@ public interface IngredienteInterface {
 
     public void updateIngrediente(Ingrediente ingrediente) throws UpdateException;
 
+    public List<Ingrediente> findAll() throws ReadException;
+
     public List<Ingrediente> buscarkCal(float kCal) throws ReadException;
 
     public List<Ingrediente> buscarPrecio(float precio) throws ReadException;

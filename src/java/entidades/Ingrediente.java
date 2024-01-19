@@ -29,6 +29,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @NamedQueries({
     @NamedQuery(
+            name = "sacarTodosIngredientes", query = "SELECT i from Ingrediente i"
+    )
+    ,
+    @NamedQuery(
             name = "buscarkCal", query = "SELECT i FROM Ingrediente i WHERE i.kCal = :kCal"
     )
     ,
