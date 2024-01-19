@@ -115,7 +115,7 @@ public class IngredienteEJB implements IngredienteInterface {
     @Override
     public List<Ingrediente> buscarkCal(float kCal) throws ReadException {
         try {
-            return em.createNamedQuery("buscarkCal").setParameter("kCal", kCal).getResultList();
+            return em.createNamedQuery("buscarkCal").setParameter("kcal", kCal).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -176,7 +176,7 @@ public class IngredienteEJB implements IngredienteInterface {
                 if (tipoIngrediente != null || nombre != null || precio != null) {
                     jpql.append(" AND");
                 }
-                jpql.append(" i.kCal <= :kcal");
+                jpql.append(" i.kcal <= :kcal");
             }
 
             if (carb != null) {

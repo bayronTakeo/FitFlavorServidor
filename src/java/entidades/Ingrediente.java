@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "buscarkCal", query = "SELECT i FROM Ingrediente i WHERE i.kCal = :kCal"
+            name = "buscarkCal", query = "SELECT i FROM Ingrediente i WHERE i.kcal = :kcal"
     )
     ,
     @NamedQuery(
@@ -86,9 +86,9 @@ public class Ingrediente implements Serializable {
      */
     private Float precio;
     /**
-     * kCal del ingrediente.
+     * kcal del ingrediente.
      */
-    private Float kCal;
+    private Float kcal;
     /**
      * Carbohidratos del ingredientet.
      */
@@ -105,12 +105,12 @@ public class Ingrediente implements Serializable {
     @ManyToMany(mappedBy = "ingredientes", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kCal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas) {
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
         this.precio = precio;
-        this.kCal = kCal;
+        this.kcal = kcal;
         this.carbohidratos = carbohidratos;
         this.proteinas = proteinas;
         this.grasas = grasas;
@@ -196,18 +196,18 @@ public class Ingrediente implements Serializable {
 
     /**
      *
-     * @return kCal
+     * @return kcal
      */
-    public Float getkCal() {
-        return kCal;
+    public Float getKcal() {
+        return kcal;
     }
 
     /**
      *
-     * @param kCal the calories to be set
+     * @param kcal the calories to be set
      */
-    public void setkCal(Float kCal) {
-        this.kCal = kCal;
+    public void setKcal(Float kcal) {
+        this.kcal = kcal;
     }
 
     /**
