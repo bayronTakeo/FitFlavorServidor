@@ -84,28 +84,28 @@ public class Ingrediente implements Serializable {
     /**
      * Precio del ingrediente.
      */
-    private float precio;
+    private Float precio;
     /**
      * kCal del ingrediente.
      */
-    private float kCal;
+    private Float kCal;
     /**
      * Carbohidratos del ingredientet.
      */
-    private float carbohidratos;
+    private Float carbohidratos;
     /**
      * Proteinas del ingrediente.
      */
-    private float proteinas;
+    private Float proteinas;
     /**
      * Grasas del ingrediente.
      */
-    private float grasas;
+    private Float grasas;
 
     @ManyToMany(mappedBy = "ingredientes", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, float precio, float kCal, float carbohidratos, float proteinas, float grasas, List<Receta> listaRecetas) {
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kCal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
@@ -182,7 +182,7 @@ public class Ingrediente implements Serializable {
      *
      * @return precio
      */
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
@@ -190,7 +190,7 @@ public class Ingrediente implements Serializable {
      *
      * @param precio the price to be set
      */
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
@@ -198,7 +198,7 @@ public class Ingrediente implements Serializable {
      *
      * @return kCal
      */
-    public float getkCal() {
+    public Float getkCal() {
         return kCal;
     }
 
@@ -206,7 +206,7 @@ public class Ingrediente implements Serializable {
      *
      * @param kCal the calories to be set
      */
-    public void setkCal(float kCal) {
+    public void setkCal(Float kCal) {
         this.kCal = kCal;
     }
 
@@ -214,7 +214,7 @@ public class Ingrediente implements Serializable {
      *
      * @return carbohidratos
      */
-    public float getCarbohidratos() {
+    public Float getCarbohidratos() {
         return carbohidratos;
     }
 
@@ -222,7 +222,7 @@ public class Ingrediente implements Serializable {
      *
      * @param carbohidratos the carbohydrates to be set
      */
-    public void setCarbohidratos(float carbohidratos) {
+    public void setCarbohidratos(Float carbohidratos) {
         this.carbohidratos = carbohidratos;
     }
 
@@ -230,7 +230,7 @@ public class Ingrediente implements Serializable {
      *
      * @return proteinas
      */
-    public float getProteinas() {
+    public Float getProteinas() {
         return proteinas;
     }
 
@@ -238,7 +238,7 @@ public class Ingrediente implements Serializable {
      *
      * @param proteinas the proteins to be set
      */
-    public void setProteinas(float proteinas) {
+    public void setProteinas(Float proteinas) {
         this.proteinas = proteinas;
     }
 
@@ -246,7 +246,7 @@ public class Ingrediente implements Serializable {
      *
      * @return grasas
      */
-    public float getGrasas() {
+    public Float getGrasas() {
         return grasas;
     }
 
@@ -254,7 +254,7 @@ public class Ingrediente implements Serializable {
      *
      * @param grasas the fats to be set
      */
-    public void setGrasas(float grasas) {
+    public void setGrasas(Float grasas) {
         this.grasas = grasas;
     }
 

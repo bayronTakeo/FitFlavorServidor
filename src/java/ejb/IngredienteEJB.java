@@ -199,6 +199,7 @@ public class IngredienteEJB implements IngredienteInterface {
                 }
                 jpql.append(" i.grasas <= :grasas");
             }
+            LOGGER.info(jpql.toString());
 
             // Creación de la consulta
             Query query = em.createQuery(jpql.toString());
