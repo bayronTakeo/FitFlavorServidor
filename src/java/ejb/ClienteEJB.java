@@ -5,16 +5,19 @@
  */
 package ejb;
 
+import Encriptacion.Hash;
 import entidades.Cliente;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
+import files.Asymmetric;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -33,6 +36,8 @@ public class ClienteEJB implements ClienteInterfaz {
     public void crearCliente(Cliente cli) throws CreateException {
         try {
             LOGGER.info("ejb" + cli.toString());
+            byte[] passwordBytes = new Asymmetric().decrypt(DatatypeConverter.parseHexBinary(cli.getContrasenia()));
+            cli.setContrasenia(Hash.hashText(new String(passwordBytes)));
             cli.setUser_id(null);
             // Persiste la entidad en el contexto actual
             em.persist(cli);
