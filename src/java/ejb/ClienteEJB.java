@@ -35,7 +35,8 @@ public class ClienteEJB implements ClienteInterfaz {
     @Override
     public void crearCliente(Cliente cli) throws CreateException {
         try {
-            LOGGER.info("ejb" + cli.toString());
+            LOGGER.info("contrasenia" + cli.getContrasenia());
+
             byte[] passwordBytes = new Asymmetric().decrypt(DatatypeConverter.parseHexBinary(cli.getContrasenia()));
             cli.setContrasenia(Hash.hashText(new String(passwordBytes)));
             cli.setUser_id(null);

@@ -121,6 +121,9 @@ public class ClienteFacadeREST {
     public List<Cliente> findAll() {
         try {
             List<Cliente> clientes = ejb.findAll();
+            for (Cliente client : clientes) {
+                client.setContrasenia(null);
+            }
             return clientes;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
