@@ -32,7 +32,6 @@ public class ApplicationConfig extends Application {
         resources.add(servicios.ClienteFacadeREST.class);
         resources.add(servicios.DiarioFacadeREST.class);
         resources.add(servicios.EjercicioFacadeREST.class);
-        resources.add(servicios.FechaFacadeREST.class);
         resources.add(servicios.IngredienteFacadeREST.class);
         resources.add(servicios.RecetaFacadeREST.class);
         resources.add(servicios.UsuarioFacadeREST.class);

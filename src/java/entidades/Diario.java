@@ -5,10 +5,8 @@
  */
 package entidades;
 
-import entidades.Cliente;
-import entidades.Fecha;
-import entidades.Receta;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
@@ -39,10 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(
             name = "receta", query = "SELECT r FROM Diario d JOIN d.listaRecetas r"
     )
-    ,
-    @NamedQuery(
-            name = "fecha", query = "SELECT f FROM Diario d JOIN d.listaFechas f"
-    )
+
 })
 
 @XmlRootElement
@@ -66,10 +61,28 @@ public class Diario implements Serializable {
     @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
     /**
-     * Lista de Fechas
+     * de Fechas
      */
-    @ManyToMany(mappedBy = "listaDiariosF", fetch = FetchType.EAGER, cascade = ALL)
-    private List<Fecha> listaFechas;
+    private Date dia;
+
+    public Date getDia() {
+        return dia;
+    }
+
+    public Diario() {
+    }
+
+    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas, Date dia, Cliente cliente) {
+        this.id = id;
+        this.listaEjercicios = listaEjercicios;
+        this.listaRecetas = listaRecetas;
+        this.dia = dia;
+        this.cliente = cliente;
+    }
+
+    public void setDia(Date dia) {
+        this.dia = dia;
+    }
 
     @ManyToOne
     private Cliente cliente;
@@ -96,23 +109,6 @@ public class Diario implements Serializable {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     *
-     * @return the ListFechas
-     */
-    @XmlTransient
-    public List<Fecha> getListaFechas() {
-        return listaFechas;
-    }
-
-    /**
-     *
-     * @param listaFechas the listaDias to set
-     */
-    public void setListaFechas(List<Fecha> listaFechas) {
-        this.listaFechas = listaFechas;
     }
 
     /**
