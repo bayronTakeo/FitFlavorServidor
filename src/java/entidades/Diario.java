@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,16 +29,17 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author gaizka
  */
-
 @Entity
 @Table(name = "diario", schema = "fitFlavor")
 @NamedQueries({
     @NamedQuery(
             name = "ejercicio", query = "SELECT e FROM Diario d JOIN d.listaEjercicios e"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "receta", query = "SELECT r FROM Diario d JOIN d.listaRecetas r"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "fecha", query = "SELECT f FROM Diario d JOIN d.listaFechas f"
     )
@@ -68,6 +70,17 @@ public class Diario implements Serializable {
      */
     @ManyToMany(mappedBy = "listaDiariosF", fetch = FetchType.EAGER, cascade = ALL)
     private List<Fecha> listaFechas;
+
+    @ManyToOne
+    private Cliente cliente;
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
 
     /**
      *

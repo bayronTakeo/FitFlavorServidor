@@ -55,18 +55,31 @@ public class Cliente extends Usuario {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Receta> recetasUsu;
 
-    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, Integer telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    @XmlTransient
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    private List<Diario> clienteDiario;
+
+    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, List<Diario> clienteDiario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, Integer telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
         this.sexo = sexo;
         this.peso = peso;
         this.objetivo = objetivo;
         this.altura = altura;
         this.recetasUsu = recetasUsu;
+        this.clienteDiario = clienteDiario;
     }
 
     // Constructor por defecto sin argumentos
     public Cliente() {
         super();
+    }
+
+    public void setClienteDiario(List<Diario> clienteDiario) {
+        this.clienteDiario = clienteDiario;
+    }
+
+    public List<Diario> getClienteDiario() {
+        return clienteDiario;
     }
 
     public void setRecetasUsu(List<Receta> recetasUsu) {
