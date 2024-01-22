@@ -6,9 +6,8 @@
 package servicios;
 
 import ejb.IngredienteInterface;
-import ejb.RecetaInterface;
 import entidades.Ingrediente;
-import entidades.Receta;
+import entidades.TipoIngrediente;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -18,8 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,6 +26,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -148,8 +146,9 @@ public class IngredienteFacadeREST {
     }
 
     @GET
+    @Path("/buscarTipo/{tipoIngrediente}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Ingrediente> tipoIngrediente(@PathParam("tipoIngrediente") String tipoIngrediente){
+    public List<Ingrediente> tipoIngrediente(@PathParam("tipoIngrediente") String tipoIngrediente) {
         try {
             List<Ingrediente> ingredientes = ejb.tipoIngrediente(tipoIngrediente);
             return ingredientes;
@@ -158,8 +157,7 @@ public class IngredienteFacadeREST {
             throw new InternalServerErrorException(e.getMessage());
         }
     }
-    
-    
+
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -171,6 +169,39 @@ public class IngredienteFacadeREST {
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Ingrediente> findAll() {
+        try {
+            List<Ingrediente> ingredientes = ejb.findAll();
+            return ingredientes;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/buscarFiltros")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Ingrediente> buscarFiltros(
+            @QueryParam("tipoIngrediente") TipoIngrediente tipoIngrediente,
+            @QueryParam("nombre") String nombre,
+            @QueryParam("precio") Float precio,
+            @QueryParam("kcal") Float kcal,
+            @QueryParam("carb") Float carb,
+            @QueryParam("proteina") Float proteina,
+            @QueryParam("grasas") Float grasas
+    ) {
+        try {
+            List<Ingrediente> ingredientes = ejb.buscarFiltros(tipoIngrediente, nombre, precio, kcal, carb, proteina, grasas);
+            return ingredientes;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
         }
     }
 

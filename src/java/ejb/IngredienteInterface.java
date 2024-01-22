@@ -7,6 +7,8 @@ package ejb;
 
 import entidades.Ingrediente;
 import entidades.Receta;
+import entidades.TipoIngrediente;
+import entidades.TipoReceta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -25,6 +27,8 @@ public interface IngredienteInterface {
 
     public void updateIngrediente(Ingrediente ingrediente) throws UpdateException;
 
+    public List<Ingrediente> findAll() throws ReadException;
+
     public List<Ingrediente> buscarkCal(float kCal) throws ReadException;
 
     public List<Ingrediente> buscarPrecio(float precio) throws ReadException;
@@ -40,5 +44,7 @@ public interface IngredienteInterface {
     public List<Ingrediente> tipoIngrediente(String tipoIngrediente) throws ReadException;
 
     public Ingrediente buscarPorId(Integer id) throws ReadException;
+
+    public List<Ingrediente> buscarFiltros(TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carb, Float proteina, Float grasas) throws ReadException;
 
 }

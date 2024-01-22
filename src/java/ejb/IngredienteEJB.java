@@ -5,16 +5,19 @@
  */
 package ejb;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import entidades.Ingrediente;
+import entidades.TipoIngrediente;
+import entidades.TipoReceta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,9 +29,10 @@ public class IngredienteEJB implements IngredienteInterface {
     @PersistenceContext(unitName = "FitFlavorServidorPU")
     private EntityManager em;
 
+    private Logger LOGGER = Logger.getLogger(IngredienteEJB.class.getName());
 
     public void deleteIngrediente(Ingrediente ing) throws DeleteException {
-       try {
+        try {
             LOGGER.info("Entrando a eliminar");
             LOGGER.info(ing.toString());
             em.remove(em.merge(ing));
@@ -40,6 +44,7 @@ public class IngredienteEJB implements IngredienteInterface {
     @Override
     public void createIngrediente(Ingrediente ingrediente) throws CreateException {
         try {
+            ingrediente.setId(null);
             em.persist(ingrediente);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
@@ -110,13 +115,12 @@ public class IngredienteEJB implements IngredienteInterface {
     @Override
     public List<Ingrediente> buscarkCal(float kCal) throws ReadException {
         try {
-            return em.createNamedQuery("buscarkCal").setParameter("kCal", kCal).getResultList();
+            return em.createNamedQuery("buscarkCal").setParameter("kcal", kCal).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
     }
-    
-      
+
     public Ingrediente buscarPorId(Integer id) throws ReadException {
         Ingrediente ingrediente;
         try {
@@ -127,6 +131,113 @@ public class IngredienteEJB implements IngredienteInterface {
         return ingrediente;
     }
 
-    
+    @Override
+    public List<Ingrediente> findAll() throws ReadException {
+        List<Ingrediente> ingredientes;
+        try {
+            ingredientes = em.createNamedQuery("sacarTodosIngredientes").getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return ingredientes;
+    }
+
+    @Override
+    public List<Ingrediente> buscarFiltros(TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carb, Float proteina, Float grasas) throws ReadException {
+        try {
+            // Construcción de la consulta JPQL
+            StringBuilder jpql = new StringBuilder("SELECT i FROM Ingrediente i");
+
+            // Utilizar WHERE solo si hay al menos un filtro
+            if (tipoIngrediente != null || nombre != null || precio != null || kcal != null || carb != null || proteina != null || grasas != null) {
+                jpql.append(" WHERE");
+            }
+
+            // Añadir condiciones al JPQL según los filtros proporcionados
+            if (tipoIngrediente != null) {
+                jpql.append(" i.tipoIngrediente = :tipoIngrediente");
+            }
+
+            if (nombre != null) {
+                if (tipoIngrediente != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.nombre LIKE :nombre");
+            }
+
+            if (precio != null) {
+                if (tipoIngrediente != null || nombre != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.precio <= :precio");
+            }
+
+            if (kcal != null) {
+                if (tipoIngrediente != null || nombre != null || precio != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.kcal <= :kcal");
+            }
+
+            if (carb != null) {
+                if (tipoIngrediente != null || nombre != null || precio != null || kcal != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.carbohidratos <= :carb");
+            }
+
+            if (proteina != null) {
+                if (tipoIngrediente != null || nombre != null || precio != null || kcal != null || carb != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.proteinas <= :proteina");
+            }
+
+            if (grasas != null) {
+                if (tipoIngrediente != null || nombre != null || precio != null || kcal != null || carb != null || proteina != null) {
+                    jpql.append(" AND");
+                }
+                jpql.append(" i.grasas <= :grasas");
+            }
+            LOGGER.info(jpql.toString());
+
+            // Creación de la consulta
+            Query query = em.createQuery(jpql.toString());
+
+            // Configuración de los parámetros de la consulta
+            if (tipoIngrediente != null) {
+                query.setParameter("tipoIngrediente", tipoIngrediente);
+            }
+
+            if (nombre != null) {
+                query.setParameter("nombre", "%" + nombre + "%");
+            }
+
+            if (precio != null) {
+                query.setParameter("precio", precio);
+            }
+
+            if (kcal != null) {
+                query.setParameter("kcal", kcal);
+            }
+
+            if (carb != null) {
+                query.setParameter("carb", carb);
+            }
+
+            if (proteina != null) {
+                query.setParameter("proteina", proteina);
+            }
+
+            if (grasas != null) {
+                query.setParameter("grasas", grasas);
+            }
+
+            // Ejecución de la consulta
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+    }
 
 }
