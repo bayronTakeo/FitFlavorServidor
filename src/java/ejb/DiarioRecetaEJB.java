@@ -5,7 +5,7 @@
  */
 package ejb;
 
-import entidades.DiarioEjercicio;
+import entidades.DiarioReceta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -19,27 +19,27 @@ import javax.persistence.PersistenceContext;
  *
  * @author bayro
  */
-public class DiarioEjercicioEJB implements DiarioEjercicioInterface {
+public class DiarioRecetaEJB implements DiarioRecetaInterface {
 
     @PersistenceContext(unitName = "FitFlavorServidorPU")
 
     private EntityManager em;
 
-    private Logger LOGGER = Logger.getLogger(DiarioEjercicioEJB.class.getName());
+    private Logger LOGGER = Logger.getLogger(DiarioRecetaEJB.class.getName());
 
     @Override
-    public void crearDiarioE(DiarioEjercicio diarioEjercicio) throws CreateException {
+    public void crearDiarioE(DiarioReceta diarioReceta) throws CreateException {
         try {
             LOGGER.info("Creando diarioEjercicio");
             // Persiste la entidad en el contexto actual
-            em.persist(diarioEjercicio);
+            em.persist(diarioReceta);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
         }
     }
 
     @Override
-    public void eliminarDiario(DiarioEjercicio diario) throws DeleteException {
+    public void eliminarDiario(DiarioReceta diario) throws DeleteException {
         try {
             LOGGER.info("Entrando a eliminar");
             LOGGER.info(diario.toString());
@@ -50,10 +50,10 @@ public class DiarioEjercicioEJB implements DiarioEjercicioInterface {
     }
 
     @Override
-    public List<DiarioEjercicio> findAll() throws ReadException {
-        List<DiarioEjercicio> diarioEjercicios;
+    public List<DiarioReceta> findAll() throws ReadException {
+        List<DiarioReceta> diarioEjercicios;
         try {
-            diarioEjercicios = em.createNamedQuery("sacarDiarioE").getResultList();
+            diarioEjercicios = em.createNamedQuery("sacarDiarioR").getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -61,10 +61,10 @@ public class DiarioEjercicioEJB implements DiarioEjercicioInterface {
     }
 
     @Override
-    public List<DiarioEjercicio> buscarPorFecha(Date fecha) throws ReadException {
-        List<DiarioEjercicio> diarioEjercicios;
+    public List<DiarioReceta> buscarPorFecha(Date fecha) throws ReadException {
+        List<DiarioReceta> diarioEjercicios;
         try {
-            diarioEjercicios = em.createNamedQuery("sacarFechaE").setParameter("fecha", fecha).getResultList();
+            diarioEjercicios = em.createNamedQuery("sacarFechaR").setParameter("fecha", fecha).getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -72,14 +72,14 @@ public class DiarioEjercicioEJB implements DiarioEjercicioInterface {
     }
 
     @Override
-    public DiarioEjercicio buscarPorId(Integer id) throws ReadException {
-        DiarioEjercicio diarioEjercicio;
+    public DiarioReceta buscarPorId(Integer id) throws ReadException {
+        DiarioReceta diarioReceta;
         try {
-            diarioEjercicio = em.find(DiarioEjercicio.class, id);
+            diarioReceta = em.find(DiarioReceta.class, id);
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
-        return diarioEjercicio;
+        return diarioReceta;
     }
 
 }

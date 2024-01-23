@@ -13,12 +13,23 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author bayro
  */
+@NamedQueries({
+    @NamedQuery(
+            name = "sacarFechaR", query = "SELECT d from DiarioReceta d WHERE fecha = :fecha"
+    )
+    ,
+     @NamedQuery(
+            name = "sacarDiarioR", query = "SELECT d from DiarioReceta "
+    ),})
 @Entity
 @IdClass(DiarioRecetaId.class)
 @XmlRootElement
@@ -40,6 +51,7 @@ public class DiarioReceta implements Serializable {
     )
     private Receta receta;
 
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
 
     public DiarioReceta(Diario diario, Receta receta, Date fecha) {
