@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -105,7 +106,10 @@ public class Ingrediente implements Serializable {
     @ManyToMany(mappedBy = "ingredientes", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas) {
+    @ManyToOne
+    private Cliente cliente;
+
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas, Cliente cliente) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
@@ -115,10 +119,20 @@ public class Ingrediente implements Serializable {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
+        this.cliente = cliente;
     }
 
     public Ingrediente() {
 
+    }
+
+    @XmlTransient
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     @XmlTransient
