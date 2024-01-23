@@ -8,6 +8,7 @@ package entidades;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -55,15 +57,15 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
-    @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = ALL)
-    private List<Ejercicio> listaEjercicios;
+    @OneToMany(mappedBy = "diario", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<diarioEjercicio> listaEjercicios;
     /**
      * Lista de Recetas
      */
     @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
 
-    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas) {
+    public Diario(Integer id, List<diarioEjercicio> listaEjercicios, List<Receta> listaRecetas) {
         this.id = id;
         this.listaEjercicios = listaEjercicios;
         this.listaRecetas = listaRecetas;
@@ -94,7 +96,7 @@ public class Diario implements Serializable {
      * @return the ListaEjercicios
      */
     @XmlTransient
-    public List<Ejercicio> getListaEjercicios() {
+    public List<diarioEjercicio> getListaEjercicios() {
         return listaEjercicios;
     }
 
@@ -102,7 +104,7 @@ public class Diario implements Serializable {
      *
      * @param listaEjercicios the listaEjercicios to set
      */
-    public void setListaEjercicios(List<Ejercicio> listaEjercicios) {
+    public void setListaEjercicios(List<diarioEjercicio> listaEjercicios) {
         this.listaEjercicios = listaEjercicios;
     }
 

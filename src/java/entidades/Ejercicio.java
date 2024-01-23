@@ -5,7 +5,6 @@
  */
 package entidades;
 
-import entidades.Cliente;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -16,14 +15,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de Ejercicios
@@ -81,14 +78,13 @@ public class Ejercicio implements Serializable {
      */
     private String intensidad;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
-    private List<Diario> listaDiariosE;
+    @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<diarioEjercicio> listaDiariosE;
 
     @ManyToOne
     private Cliente cliente;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Cliente cliente) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<diarioEjercicio> listaDiariosE, Cliente cliente) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -112,11 +108,11 @@ public class Ejercicio implements Serializable {
         return cliente;
     }
 
-    public void setListaDiarios(List<Diario> ListaDiarios) {
+    public void setListaDiarios(List<diarioEjercicio> ListaDiarios) {
         this.listaDiariosE = ListaDiarios;
     }
 
-    public List<Diario> getListaDiarios() {
+    public List<diarioEjercicio> getListaDiarios() {
         return listaDiariosE;
     }
 
@@ -234,15 +230,8 @@ public class Ejercicio implements Serializable {
 
     /**
      *
-     * @return the listaDiariosE
-     */
-    public List<Diario> getListaDiariosE() {
-        return listaDiariosE;
-    }
-
-    /**
+     * @param ListaDiariosE
      *
-     * @param listaDiariosE the listaDiariosE to be set
      */
     public void setListaDiariosE(List<Diario> ListaDiariosE) {
         this.listaDiariosE = listaDiariosE;
