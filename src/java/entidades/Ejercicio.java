@@ -79,12 +79,12 @@ public class Ejercicio implements Serializable {
     private String intensidad;
 
     @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<diarioEjercicio> listaDiariosE;
+    private List<DiarioEjercicio> listaDiariosE;
 
     @ManyToOne
     private Cliente cliente;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<diarioEjercicio> listaDiariosE, Cliente cliente) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<DiarioEjercicio> listaDiariosE, Cliente cliente) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -108,11 +108,11 @@ public class Ejercicio implements Serializable {
         return cliente;
     }
 
-    public void setListaDiarios(List<diarioEjercicio> ListaDiarios) {
+    public void setListaDiarios(List<DiarioEjercicio> ListaDiarios) {
         this.listaDiariosE = ListaDiarios;
     }
 
-    public List<diarioEjercicio> getListaDiarios() {
+    public List<DiarioEjercicio> getListaDiarios() {
         return listaDiariosE;
     }
 

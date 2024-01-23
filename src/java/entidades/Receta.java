@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,21 +30,23 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author paula
  */
-
 @NamedQueries({
     @NamedQuery(
             name = "lista", query = "SELECT r FROM Receta r"
-    ),
+    )
+    ,
  //   @NamedQuery(
    //         name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
     //),
 
     @NamedQuery(
             name = "esVegano", query = "SELECT r FROM Receta r WHERE r.esVegano = :esVegano"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "esVegetariano", query = "SELECT r FROM Receta r WHERE r.esVegetariano = :esVegetariano"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "precio", query = "SELECT r FROM Receta r WHERE r.precio = :precio"
     )
@@ -96,9 +99,9 @@ public class Receta implements Serializable {
     @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
     private List<Ingrediente> ingredientes;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
-    private List<Diario> listaDiariosR;
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<DiarioReceta> listaDiariosR;
+
     @ManyToOne
     private Cliente cliente;
 
@@ -111,7 +114,7 @@ public class Receta implements Serializable {
         this.cliente = cliente;
     }
 
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> listaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<DiarioReceta> listaDiariosR) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -122,16 +125,17 @@ public class Receta implements Serializable {
         this.ingredientes = ingredientes;
         this.listaDiariosR = listaDiariosR;
     }
+
     public Receta() {
-        
+
     }
 
     @XmlTransient
-    public List<Diario> getListaDiariosR() {
+    public List<DiarioReceta> getListaDiariosR() {
         return listaDiariosR;
     }
 
-    public void setListaDiariosR(List<Diario> listaDiariosR) {
+    public void setListaDiariosR(List<DiarioReceta> listaDiariosR) {
         this.listaDiariosR = listaDiariosR;
     }
 
@@ -146,8 +150,6 @@ public class Receta implements Serializable {
     public Integer getId() {
         return id;
     }
-    
-    
 
     public String getPasos() {
         return pasos;
