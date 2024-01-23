@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 @IdClass(DiarioRecetaId.class)
+@XmlRootElement
 public class DiarioReceta implements Serializable {
 
     @Id

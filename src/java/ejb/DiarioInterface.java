@@ -5,21 +5,25 @@
  */
 package ejb;
 
+import entidades.Cliente;
 import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
+import java.util.List;
 
 /**
  *
  * @author gaizka
  */
 public interface DiarioInterface {
-    
+
     public void createDiario(Diario diario) throws CreateException;
-    
-    public void readDiario(Diario diario) throws ReadException;
-    
-    public void updateDiario(Diario diario) throws UpdateException;
+
+    public void deleteDiario(Diario diario) throws DeleteException;
+
+    public List<Diario> findAll() throws ReadException;
+
+    public Diario buscarPorId(Integer id) throws ReadException;
 }

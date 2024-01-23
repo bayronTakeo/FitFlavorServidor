@@ -82,6 +82,7 @@ public class Cliente extends Usuario {
         this.diario = diario;
     }
 
+    @XmlTransient
     public List<Ejercicio> getEjercicios() {
         return ejercicios;
     }
@@ -107,6 +108,7 @@ public class Cliente extends Usuario {
         this.ingredientes = ingredientes;
     }
 
+    @XmlTransient
     public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
@@ -115,6 +117,7 @@ public class Cliente extends Usuario {
         this.recetasUsu = recetasUsu;
     }
 
+    @XmlTransient
     public List<Receta> getRecetasUsu() {
         return recetasUsu;
     }

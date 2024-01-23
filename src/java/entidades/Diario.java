@@ -35,6 +35,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(
             name = "receta", query = "SELECT r FROM Diario d JOIN d.listaRecetas r"
     )
+    ,
+    @NamedQuery(
+            name = "sacarDiarios", query = "SELECT d from Diario d "
+    )
 
 })
 
