@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -84,7 +85,10 @@ public class Ejercicio implements Serializable {
     @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
     private List<Diario> listaDiariosE;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE) {
+    @ManyToOne
+    private Cliente cliente;
+
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Cliente cliente) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -93,10 +97,19 @@ public class Ejercicio implements Serializable {
         this.kcalQuemadas = kcalQuemadas;
         this.intensidad = intensidad;
         this.listaDiariosE = listaDiariosE;
+        this.cliente = cliente;
     }
 
     public Ejercicio() {
 
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {

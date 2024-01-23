@@ -14,10 +14,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -60,39 +62,15 @@ public class Diario implements Serializable {
      */
     @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = ALL)
     private List<Receta> listaRecetas;
-    /**
-     * de Fechas
-     */
-    private Date dia;
 
-    public Date getDia() {
-        return dia;
-    }
-
-    public Diario() {
-    }
-
-    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas, Date dia, Cliente cliente) {
+    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas) {
         this.id = id;
         this.listaEjercicios = listaEjercicios;
         this.listaRecetas = listaRecetas;
-        this.dia = dia;
-        this.cliente = cliente;
+
     }
 
-    public void setDia(Date dia) {
-        this.dia = dia;
-    }
-
-    @ManyToOne
-    private Cliente cliente;
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
+    public Diario() {
     }
 
     /**
