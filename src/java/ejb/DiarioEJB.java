@@ -7,8 +7,10 @@ package ejb;
 
 import entidades.Diario;
 import excepciones.CreateException;
+import excepciones.DeleteException;
 import excepciones.ReadException;
-import excepciones.UpdateException;
+import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,14 +20,19 @@ import javax.persistence.PersistenceContext;
  * @author gaizka
  */
 @Stateless
-public class DiarioEJB implements DiarioInterface{
+public class DiarioEJB implements DiarioInterface {
 
-    @PersistenceContext(unitName ="FitFlavorServidorPU")
+    @PersistenceContext(unitName = "FitFlavorServidorPU")
+
     private EntityManager em;
-    
+
+    private Logger LOGGER = Logger.getLogger(DiarioEJB.class.getName());
+
     @Override
     public void createDiario(Diario diario) throws CreateException {
         try {
+            LOGGER.info("Creando diario");
+            // Persiste la entidad en el contexto actual
             em.persist(diario);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
@@ -33,26 +40,36 @@ public class DiarioEJB implements DiarioInterface{
     }
 
     @Override
-    public void updateDiario(Diario diario) throws UpdateException {
+    public void deleteDiario(Diario diario) throws DeleteException {
         try {
-            if (!em.contains(diario)) {
-                em.merge(diario);
-            }
-            em.flush();
+            LOGGER.info("Entrando a eliminar");
+            LOGGER.info(diario.toString());
+            em.remove(em.merge(diario));
         } catch (Exception e) {
-            throw new UpdateException(e.getMessage());
+            throw new DeleteException(e.getMessage());
         }
     }
-    
+
     @Override
-    public void readDiario(Diario diario) throws ReadException {
+    public List<Diario> findAll() throws ReadException {
+        List<Diario> diarios;
         try {
-            if (!em.contains(diario)) {
-                em.merge(diario);
-            }
-            em.flush();
+            diarios = em.createNamedQuery("sacarDiarios").getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
+        return diarios;
     }
+
+    @Override
+    public Diario buscarPorId(Integer id) throws ReadException {
+        Diario diario;
+        try {
+            diario = em.find(Diario.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return diario;
+    }
+
 }

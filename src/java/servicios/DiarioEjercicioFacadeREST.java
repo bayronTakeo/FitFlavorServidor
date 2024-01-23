@@ -5,17 +5,22 @@
  */
 package servicios;
 
-import entidades.Diario;
+import ejb.DiarioEjercicioInterface;
 import entidades.DiarioEjercicio;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -27,66 +32,73 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entidades.diarioejercicio")
-public class DiarioEjercicioFacadeREST extends AbstractFacade<DiarioEjercicio> {
+public class DiarioEjercicioFacadeREST {
 
-    @PersistenceContext(unitName = "FitFlavorServidorPU")
-    private EntityManager em;
-
-    public DiarioEjercicioFacadeREST() {
-        super(DiarioEjercicio.class);
-    }
+    @EJB
+    private DiarioEjercicioInterface ejb;
+    private Logger LOGGER = Logger.getLogger(DiarioEjercicioFacadeREST.class.getName());
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(DiarioEjercicio entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Diario id, DiarioEjercicio entity) {
-        super.edit(entity);
+        try {
+            LOGGER.log(Level.INFO, "Creando diario");
+            ejb.crearDiarioE(entity);
+        } catch (CreateException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Diario id) {
-        super.remove(super.find(id));
+    public void remove(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "eliminando diario: ", id);
+            ejb.eliminarDiario(ejb.buscarPorId(id));
+        } catch (DeleteException | ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public DiarioEjercicio find(@PathParam("id") Diario id) {
-        return super.find(id);
+    public DiarioEjercicio buscarPorId(@PathParam("id") Integer id) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando diario por id:");
+            DiarioEjercicio diario = ejb.buscarPorId(id);
+            return diario;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<DiarioEjercicio> findAll() {
-        return super.findAll();
+        try {
+            List<DiarioEjercicio> diarios = ejb.findAll();
+
+            return diarios;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
 
     @GET
-    @Path("{from}/{to}")
+    @Path("/buscarFecha/{fecha}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<DiarioEjercicio> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+    public List<DiarioEjercicio> buscar(@PathParam("fecha") Date fecha) {
+        try {
+            List<DiarioEjercicio> diarioEjer = ejb.buscarPorFecha(fecha);
+            return diarioEjer;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
     }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-
 }
