@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -78,13 +80,14 @@ public class Ejercicio implements Serializable {
      */
     private String intensidad;
 
-    @OneToMany(mappedBy = "ejercicio", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<DiarioEjercicio> listaDiariosE;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
+    private List<Diario> listaDiariosE;
 
     @ManyToOne
     private Cliente cliente;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<DiarioEjercicio> listaDiariosE, Cliente cliente) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Cliente cliente) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -108,11 +111,11 @@ public class Ejercicio implements Serializable {
         return cliente;
     }
 
-    public void setListaDiarios(List<DiarioEjercicio> ListaDiarios) {
+    public void setListaDiarios(List<Diario> ListaDiarios) {
         this.listaDiariosE = ListaDiarios;
     }
 
-    public List<DiarioEjercicio> getListaDiarios() {
+    public List<Diario> getListaDiarios() {
         return listaDiariosE;
     }
 
