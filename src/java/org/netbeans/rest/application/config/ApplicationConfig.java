@@ -29,12 +29,11 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(servicios.ClienteFacadeREST.class);
-        resources.add(servicios.DiarioEjercicioFacadeREST.class);
         resources.add(servicios.DiarioFacadeREST.class);
-        resources.add(servicios.DiarioRecetaFacadeREST.class);
         resources.add(servicios.EjercicioFacadeREST.class);
         resources.add(servicios.IngredienteFacadeREST.class);
         resources.add(servicios.RecetaFacadeREST.class);
+        resources.add(servicios.RecetaIngredienteFacadeREST.class);
         resources.add(servicios.UsuarioFacadeREST.class);
     }
 

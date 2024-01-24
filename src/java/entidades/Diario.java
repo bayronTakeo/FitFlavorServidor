@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,10 +14,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -55,19 +58,53 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
-    @OneToMany(mappedBy = "diario", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DiarioEjercicio> listaEjercicios;
+    @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Ejercicio> listaEjercicios;
     /**
      * Lista de Recetas
      */
-    @OneToMany(mappedBy = "diario", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DiarioReceta> listaRecetas;
+    @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Receta> listaRecetas;
 
-    public Diario(Integer id, List<DiarioEjercicio> listaEjercicios, List<DiarioReceta> listaRecetas) {
+    @ManyToOne
+    private Cliente cliente;
+
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dia;
+
+    private String comentarios;
+
+    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas, Cliente cliente, Date dia, String comentarios) {
         this.id = id;
         this.listaEjercicios = listaEjercicios;
         this.listaRecetas = listaRecetas;
+        this.cliente = cliente;
+        this.dia = dia;
+        this.comentarios = comentarios;
+    }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Date getDia() {
+        return dia;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setDia(Date dia) {
+        this.dia = dia;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Diario() {
@@ -94,7 +131,7 @@ public class Diario implements Serializable {
      * @return the ListaEjercicios
      */
     @XmlTransient
-    public List<DiarioEjercicio> getListaEjercicios() {
+    public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
 
@@ -102,7 +139,7 @@ public class Diario implements Serializable {
      *
      * @param listaEjercicios the listaEjercicios to set
      */
-    public void setListaEjercicios(List<DiarioEjercicio> listaEjercicios) {
+    public void setListaEjercicios(List<Ejercicio> listaEjercicios) {
         this.listaEjercicios = listaEjercicios;
     }
 
@@ -111,7 +148,7 @@ public class Diario implements Serializable {
      * @return the ListaRecetas
      */
     @XmlTransient
-    public List<DiarioReceta> getListaRecetas() {
+    public List<Receta> getListaRecetas() {
         return listaRecetas;
     }
 
@@ -119,7 +156,7 @@ public class Diario implements Serializable {
      *
      * @param listaRecetas the listaEjercicios to set
      */
-    public void setListaRecetas(List<DiarioReceta> listaRecetas) {
+    public void setListaRecetas(List<Receta> listaRecetas) {
         this.listaRecetas = listaRecetas;
     }
 

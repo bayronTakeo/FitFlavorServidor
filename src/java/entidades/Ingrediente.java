@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -103,13 +105,13 @@ public class Ingrediente implements Serializable {
      */
     private Float grasas;
 
-    @ManyToMany(mappedBy = "ingredientes", fetch = FetchType.EAGER, cascade = ALL)
-    private List<Receta> listaRecetas;
+    @OneToMany(mappedBy = "ingrediente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecetaIngrediente> listaRecetas;
 
     @ManyToOne
     private Cliente cliente;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<Receta> listaRecetas, Cliente cliente) {
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas, Cliente cliente) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
@@ -136,11 +138,11 @@ public class Ingrediente implements Serializable {
     }
 
     @XmlTransient
-    public List<Receta> getListaRecetas() {
+    public List<RecetaIngrediente> getListaRecetas() {
         return listaRecetas;
     }
 
-    public void setListaRecetas(List<Receta> listaRecetas) {
+    public void setListaRecetas(List<RecetaIngrediente> listaRecetas) {
         this.listaRecetas = listaRecetas;
     }
 

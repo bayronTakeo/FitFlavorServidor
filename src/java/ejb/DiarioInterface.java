@@ -5,12 +5,10 @@
  */
 package ejb;
 
-import entidades.Cliente;
 import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
-import excepciones.UpdateException;
 import java.util.List;
 
 /**

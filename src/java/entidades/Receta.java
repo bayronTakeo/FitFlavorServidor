@@ -95,12 +95,12 @@ public class Receta implements Serializable {
      */
     private String pasos;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
-    private List<Ingrediente> ingredientes;
-
     @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<DiarioReceta> listaDiariosR;
+    private List<RecetaIngrediente> ingredientes;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
+    private List<Diario> listaDiariosR;
 
     @ManyToOne
     private Cliente cliente;
@@ -114,7 +114,7 @@ public class Receta implements Serializable {
         this.cliente = cliente;
     }
 
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<DiarioReceta> listaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<RecetaIngrediente> ingredientes, List<Diario> listaDiariosR) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -131,11 +131,11 @@ public class Receta implements Serializable {
     }
 
     @XmlTransient
-    public List<DiarioReceta> getListaDiariosR() {
+    public List<Diario> getListaDiariosR() {
         return listaDiariosR;
     }
 
-    public void setListaDiariosR(List<DiarioReceta> listaDiariosR) {
+    public void setListaDiariosR(List<Diario> listaDiariosR) {
         this.listaDiariosR = listaDiariosR;
     }
 
@@ -260,7 +260,7 @@ public class Receta implements Serializable {
      * @return ingrediente
      */
     @XmlTransient
-    public List<Ingrediente> getIngredientes() {
+    public List<RecetaIngrediente> getIngredientes() {
         return ingredientes;
     }
 
@@ -268,7 +268,7 @@ public class Receta implements Serializable {
      *
      * @param ingredientes the ingredients to set
      */
-    public void setIngredientes(List<Ingrediente> ingredientes) {
+    public void setIngredientes(List<RecetaIngrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
 

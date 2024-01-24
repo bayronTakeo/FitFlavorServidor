@@ -9,42 +9,43 @@ import java.io.Serializable;
 
 /**
  *
- * @author bayro
+ * @author Bayron
  */
-public class DiarioRecetaId implements Serializable {
+public class RecetaIngredienteId implements Serializable {
 
-    private int diario;
     private int receta;
 
-    public DiarioRecetaId(int diario, int receta) {
-        this.diario = diario;
+    private int ingrediente;
+
+    public RecetaIngredienteId(int receta, int ingrediente) {
         this.receta = receta;
+        this.ingrediente = ingrediente;
     }
 
-    public DiarioRecetaId() {
-    }
-
-    public int getDiario() {
-        return diario;
+    public RecetaIngredienteId() {
     }
 
     public int getReceta() {
         return receta;
     }
 
-    public void setDiario(int diario) {
-        this.diario = diario;
+    public int getIngrediente() {
+        return ingrediente;
     }
 
     public void setReceta(int receta) {
         this.receta = receta;
     }
 
+    public void setIngrediente(int ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + this.diario;
-        hash = 47 * hash + this.receta;
+        int hash = 7;
+        hash = 67 * hash + this.receta;
+        hash = 67 * hash + this.ingrediente;
         return hash;
     }
 
@@ -59,11 +60,11 @@ public class DiarioRecetaId implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DiarioRecetaId other = (DiarioRecetaId) obj;
-        if (this.diario != other.diario) {
+        final RecetaIngredienteId other = (RecetaIngredienteId) obj;
+        if (this.receta != other.receta) {
             return false;
         }
-        if (this.receta != other.receta) {
+        if (this.ingrediente != other.ingrediente) {
             return false;
         }
         return true;

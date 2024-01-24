@@ -66,11 +66,11 @@ public class Cliente extends Usuario {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Ejercicio> ejercicios;
 
-    @OneToOne
-    @JoinColumn(name = "diario_id")
-    private Diario diario;
+    @XmlTransient
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Diario> diario;
 
-    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, List<Ingrediente> ingredientes, List<Ejercicio> ejercicios, Diario diario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, List<Ingrediente> ingredientes, List<Ejercicio> ejercicios, List<Diario> diario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
         this.sexo = sexo;
         this.peso = peso;
@@ -96,11 +96,12 @@ public class Cliente extends Usuario {
         super();
     }
 
-    public void setDiario(Diario diario) {
+    public void setDiario(List<Diario> diario) {
         this.diario = diario;
     }
 
-    public Diario getDiario() {
+    @XmlTransient
+    public List<Diario> getDiario() {
         return diario;
     }
 
