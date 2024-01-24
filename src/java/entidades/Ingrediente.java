@@ -7,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
@@ -105,13 +106,13 @@ public class Ingrediente implements Serializable {
      */
     private Float grasas;
 
-    @OneToMany(mappedBy = "ingrediente", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ingrediente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RecetaIngrediente> listaRecetas;
 
     @ManyToOne
     private Cliente cliente;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas, Cliente cliente) {
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
@@ -121,18 +122,18 @@ public class Ingrediente implements Serializable {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
-        this.cliente = cliente;
+
     }
 
     public Ingrediente() {
 
     }
 
-    @XmlTransient
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
+    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -276,19 +277,24 @@ public class Ingrediente implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ingrediente other = (Ingrediente) obj;
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -296,7 +302,18 @@ public class Ingrediente implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Ingrediente{"
+                + "id=" + id
+                + ", tipoIngrediente=" + tipoIngrediente
+                + ", nombre='" + nombre + '\''
+                + ", precio=" + precio
+                + ", kcal=" + kcal
+                + ", carbohidratos=" + carbohidratos
+                + ", proteinas=" + proteinas
+                + ", grasas=" + grasas
+                + ", listaRecetas=" + listaRecetas
+                + ", cliente=" + cliente
+                + '}';
     }
 
 }

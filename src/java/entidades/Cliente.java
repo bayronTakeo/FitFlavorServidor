@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "buscarCliente", query = "SELECT u from Cliente u WHERE email like :usrValor or nombreCompleto like :usrValor"
+            name = "buscarCliente", query = "SELECT u from Cliente u WHERE email = :usrValor "
     )
     ,
     @NamedQuery(

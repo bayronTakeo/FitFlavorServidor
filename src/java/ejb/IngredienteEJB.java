@@ -13,6 +13,7 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -135,7 +136,11 @@ public class IngredienteEJB implements IngredienteInterface {
     public List<Ingrediente> findAll() throws ReadException {
         List<Ingrediente> ingredientes;
         try {
+            LOGGER.info("Entrando a find all de ingredientes: ");
             ingredientes = em.createNamedQuery("sacarTodosIngredientes").getResultList();
+            for (Ingrediente ing : ingredientes) {
+                LOGGER.info(ing.toString());
+            }
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

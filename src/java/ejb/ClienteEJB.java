@@ -82,10 +82,11 @@ public class ClienteEJB implements ClienteInterfaz {
     }
 
     @Override
-    public List<Cliente> buscarCliente(String valor) throws ReadException {
-        List<Cliente> cliente;
+    public Cliente buscarCliente(String valor) throws ReadException {
+        Cliente cliente;
         try {
-            cliente = em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getResultList();
+            LOGGER.info("Entrando a buscar");
+            cliente = (Cliente) em.createNamedQuery("buscarCliente").setParameter("usrValor", valor).getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

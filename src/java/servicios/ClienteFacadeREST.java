@@ -92,10 +92,10 @@ public class ClienteFacadeREST {
     @GET
     @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> buscar(@PathParam("usrValor") String valor) {
+    public Cliente buscar(@PathParam("usrValor") String valor) {
         try {
-            List<Cliente> clientes = ejb.buscarCliente(valor);
-            return clientes;
+            Cliente cliente = ejb.buscarCliente(valor);
+            return cliente;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());

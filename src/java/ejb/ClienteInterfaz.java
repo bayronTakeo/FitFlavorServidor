@@ -26,7 +26,7 @@ public interface ClienteInterfaz {
 
     public List<Cliente> findAll() throws ReadException;
 
-    public List<Cliente> buscarCliente(String valor) throws ReadException;
+    public Cliente buscarCliente(String valor) throws ReadException;
 
     public Cliente buscarPorTelefono(int telefono) throws ReadException;
 
