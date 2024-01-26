@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @NamedQueries({
     @NamedQuery(
-            name = "sacarTodos", query = "SELECT u from Usuario u WHERE privilegio = 1"
+            name = "sacarTodos", query = "SELECT u from Cliente u "
     )
     ,
     @NamedQuery(
@@ -32,11 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "buscarPorTelefono", query = "SELECT u from Usuario u WHERE privilegio=1 and telefono = :usrTelefono"
+            name = "buscarPorTelefono", query = "SELECT u from Cliente u  WHERE telefono = :usrTelefono"
     ),})
 @Entity
-@Table(name = "cliente", schema = "fitFlavor")
-@DiscriminatorValue("1")
+
+@DiscriminatorValue("USUARIO")
 @XmlRootElement
 public class Cliente extends Usuario {
 
@@ -58,14 +58,6 @@ public class Cliente extends Usuario {
 
     @XmlTransient
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Ingrediente> ingredientes;
-
-    @XmlTransient
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Ejercicio> ejercicios;
-
-    @XmlTransient
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Diario> diario;
 
     public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, List<Ingrediente> ingredientes, List<Ejercicio> ejercicios, List<Diario> diario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
@@ -75,17 +67,8 @@ public class Cliente extends Usuario {
         this.objetivo = objetivo;
         this.altura = altura;
         this.recetasUsu = recetasUsu;
-        this.ingredientes = ingredientes;
-        this.ejercicios = ejercicios;
+
         this.diario = diario;
-    }
-
-    public List<Ejercicio> getEjercicios() {
-        return ejercicios;
-    }
-
-    public void setEjercicios(List<Ejercicio> ejercicios) {
-        this.ejercicios = ejercicios;
     }
 
     // Constructor por defecto sin argumentos
@@ -100,15 +83,6 @@ public class Cliente extends Usuario {
     @XmlTransient
     public List<Diario> getDiario() {
         return diario;
-    }
-
-    public void setIngredientes(List<Ingrediente> ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    @XmlTransient
-    public List<Ingrediente> getIngredientes() {
-        return ingredientes;
     }
 
     public void setRecetasUsu(List<Receta> recetasUsu) {

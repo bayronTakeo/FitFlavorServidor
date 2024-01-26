@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -110,9 +108,9 @@ public class Ingrediente implements Serializable {
     private List<RecetaIngrediente> listaRecetas;
 
     @ManyToOne
-    private Cliente cliente;
+    private Admin cliente;
 
-    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas) {
+    public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas, Admin cliente) {
         this.id = id;
         this.tipoIngrediente = tipoIngrediente;
         this.nombre = nombre;
@@ -122,19 +120,19 @@ public class Ingrediente implements Serializable {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
-
+        this.cliente = cliente;
     }
 
     public Ingrediente() {
 
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Admin cliente) {
         this.cliente = cliente;
     }
 
     @XmlTransient
-    public Cliente getCliente() {
+    public Admin getCliente() {
         return cliente;
     }
 

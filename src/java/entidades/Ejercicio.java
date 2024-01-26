@@ -85,9 +85,9 @@ public class Ejercicio implements Serializable {
     private List<Diario> listaDiariosE;
 
     @ManyToOne
-    private Cliente cliente;
+    private Admin cliente;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Cliente cliente) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Admin cliente) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -103,11 +103,11 @@ public class Ejercicio implements Serializable {
 
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Admin cliente) {
         this.cliente = cliente;
     }
 
-    public Cliente getCliente() {
+    public Admin getCliente() {
         return cliente;
     }
 

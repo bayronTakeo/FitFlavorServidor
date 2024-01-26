@@ -6,9 +6,10 @@
 package entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,9 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -38,8 +36,7 @@ import org.hibernate.annotations.DiscriminatorFormula;
     ),})
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorFormula("privilegio")
-@DiscriminatorValue("0")
+@DiscriminatorColumn(name = "privilegio", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "usuario", schema = "fitFlavor")
 @XmlRootElement
 public class Usuario implements Serializable {
@@ -64,7 +61,8 @@ public class Usuario implements Serializable {
 
     private String contrasenia;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "privilegio", insertable = false, updatable = false)
     private EnumPrivilegios privilegio;
 
     public void setUser_id(Integer user_id) {
