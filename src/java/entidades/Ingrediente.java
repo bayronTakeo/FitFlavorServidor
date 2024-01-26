@@ -108,7 +108,7 @@ public class Ingrediente implements Serializable {
     private List<RecetaIngrediente> listaRecetas;
 
     @ManyToOne
-    private Admin cliente;
+    private Admin admin;
 
     public Ingrediente(Integer id, TipoIngrediente tipoIngrediente, String nombre, Float precio, Float kcal, Float carbohidratos, Float proteinas, Float grasas, List<RecetaIngrediente> listaRecetas, Admin cliente) {
         this.id = id;
@@ -120,20 +120,20 @@ public class Ingrediente implements Serializable {
         this.proteinas = proteinas;
         this.grasas = grasas;
         this.listaRecetas = listaRecetas;
-        this.cliente = cliente;
+        this.admin = admin;
     }
 
     public Ingrediente() {
 
     }
 
-    public void setCliente(Admin cliente) {
-        this.cliente = cliente;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @XmlTransient
-    public Admin getCliente() {
-        return cliente;
+    public Admin getAdmin() {
+        return admin;
     }
 
     @XmlTransient
@@ -310,7 +310,7 @@ public class Ingrediente implements Serializable {
                 + ", proteinas=" + proteinas
                 + ", grasas=" + grasas
                 + ", listaRecetas=" + listaRecetas
-                + ", cliente=" + cliente
+                + ", admin=" + admin
                 + '}';
     }
 

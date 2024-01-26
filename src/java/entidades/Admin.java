@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Admin extends Usuario {
 
     @XmlTransient
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ingrediente> ingredientes;
 
     @XmlTransient
