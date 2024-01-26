@@ -131,7 +131,6 @@ public class Ingrediente implements Serializable {
         this.admin = admin;
     }
 
-    @XmlTransient
     public Admin getAdmin() {
         return admin;
     }

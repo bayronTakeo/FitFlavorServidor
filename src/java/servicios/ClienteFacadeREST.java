@@ -94,7 +94,7 @@ public class ClienteFacadeREST {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente buscar(@PathParam("usrValor") String valor) {
         try {
-            LOGGER.info("entrando a buscar" + valor);
+            LOGGER.info("entrando a buscar " + valor);
             Cliente cliente = ejb.buscarCliente(valor);
             return cliente;
         } catch (ReadException e) {

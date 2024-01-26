@@ -11,7 +11,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -20,7 +19,6 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Bayron
  */
 @Entity
-
 @DiscriminatorValue("ADMIN")
 @XmlRootElement
 public class Admin extends Usuario {
@@ -30,9 +28,10 @@ public class Admin extends Usuario {
     private List<Ingrediente> ingredientes;
 
     @XmlTransient
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ejercicio> ejercicios;
 
+    @XmlTransient
     public List<Ejercicio> getEjercicios() {
         return ejercicios;
     }

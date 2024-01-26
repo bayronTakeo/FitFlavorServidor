@@ -20,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -70,7 +69,7 @@ public class Ejercicio implements Serializable {
     /**
      * Duracion del Ejercicio
      */
-    private float duracion;
+    private Float duracion;
     /**
      * Kcal quemadas con el Ejercicio
      */
@@ -78,37 +77,38 @@ public class Ejercicio implements Serializable {
     /**
      * Intensidad del Ejercicio
      */
-    private String intensidad;
+    @Enumerated(EnumType.STRING)
+    private TipoIntensidad tipoIntensidad;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
     private List<Diario> listaDiariosE;
 
     @ManyToOne
-    private Admin cliente;
+    private Admin admin;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE, Admin cliente) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, Float duracion, int kcalQuemadas, TipoIntensidad tipoIntensidad, List<Diario> listaDiariosE, Admin admin) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
-        this.intensidad = intensidad;
+        this.tipoIntensidad = tipoIntensidad;
         this.listaDiariosE = listaDiariosE;
-        this.cliente = cliente;
+        this.admin = admin;
     }
 
     public Ejercicio() {
 
     }
 
-    public void setCliente(Admin cliente) {
-        this.cliente = cliente;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
-    public Admin getCliente() {
-        return cliente;
+    public Admin getAdmin() {
+        return admin;
     }
 
     public void setListaDiarios(List<Diario> ListaDiarios) {
@@ -187,7 +187,7 @@ public class Ejercicio implements Serializable {
      *
      * @return the duracion
      */
-    public float getDuracion() {
+    public Float getDuracion() {
         return duracion;
     }
 
@@ -195,7 +195,7 @@ public class Ejercicio implements Serializable {
      *
      * @param duracion the duracion to be set
      */
-    public void setDuracion(float duracion) {
+    public void setDuracion(Float duracion) {
         this.duracion = duracion;
     }
 
@@ -219,25 +219,16 @@ public class Ejercicio implements Serializable {
      *
      * @return the intensidad
      */
-    public String getIntensidad() {
-        return intensidad;
+    public TipoIntensidad getIntensidad() {
+        return tipoIntensidad;
     }
 
     /**
      *
-     * @param intensidad the intensidad to be set
+     * @param tipoIntensidad the intensidad to be set
      */
-    public void setIntensidad(String intensidad) {
-        this.intensidad = intensidad;
-    }
-
-    /**
-     *
-     * @param ListaDiariosE
-     *
-     */
-    public void setListaDiariosE(List<Diario> ListaDiariosE) {
-        this.listaDiariosE = listaDiariosE;
+    public void setTipoIntensidad(TipoIntensidad tipoIntensidad) {
+        this.tipoIntensidad = tipoIntensidad;
     }
 
     @Override
@@ -262,7 +253,17 @@ public class Ejercicio implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Ejercicio{"
+                + "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", tipoEjercicio=" + tipoEjercicio
+                + ", descripcion='" + descripcion + '\''
+                + ", duracion=" + duracion
+                + ", kcalQuemadas=" + kcalQuemadas
+                + ", intensidad='" + tipoIntensidad + '\''
+                + ", listaDiariosE=" + listaDiariosE
+                + ", admin=" + admin
+                + '}';
     }
 
 }

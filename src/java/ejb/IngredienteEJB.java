@@ -45,6 +45,7 @@ public class IngredienteEJB implements IngredienteInterface {
     @Override
     public void createIngrediente(Ingrediente ingrediente) throws CreateException {
         try {
+            LOGGER.info("Ingrediente que lelga" + ingrediente.toString());
             ingrediente.setId(null);
             em.persist(ingrediente);
         } catch (Exception e) {

@@ -45,7 +45,7 @@ public class EjercicioFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Ejercicio entity) {
         try {
-            LOGGER.log(Level.INFO, "Creando Ejercicio{0}", entity.getId());
+            LOGGER.info("Ejercicio que llega" + entity.toString());
             ejb.createEjercicio(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
