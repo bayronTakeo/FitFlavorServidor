@@ -84,9 +84,11 @@ public class RecetaFacadeREST {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Receta> lista() {
+    public List<Receta> listaRecetas() {
         try {
+            LOGGER.info("Aqui entra");
             List<Receta> recetas = ejb.listaRecetas();
+            LOGGER.info(recetas.toString());
             return recetas;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());

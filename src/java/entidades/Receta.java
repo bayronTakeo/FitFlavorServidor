@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @NamedQueries({
     @NamedQuery(
-            name = "lista", query = "SELECT r FROM Receta r"
+            name = "listaRecetas", query = "SELECT r FROM Receta r"
     ),
  //   @NamedQuery(
    //         name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
@@ -74,7 +74,7 @@ public class Receta implements Serializable {
     /**
      * Duracion de la receta.
      */
-    private float duracion;
+    private Float duracion;
     /**
      * Boolean que indica si es vegetariano o no.
      */
@@ -86,7 +86,7 @@ public class Receta implements Serializable {
     /**
      * Precio de la receta.
      */
-    private float precio;
+    private Float precio;
     /**
      * Lista de ingredientes que contiene la receta.
      */
@@ -99,19 +99,12 @@ public class Receta implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioReceta")
     private List<Diario> listaDiariosR;
-    @ManyToOne
-    private Cliente cliente;
+   
 
-    @XmlTransient
-    public Cliente getCliente() {
-        return cliente;
-    }
+  
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> listaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, Float duracion, boolean esVegetariano, boolean esVegano, Float precio, List<Ingrediente> ingredientes, List<Diario> listaDiariosR) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -121,6 +114,7 @@ public class Receta implements Serializable {
         this.precio = precio;
         this.ingredientes = ingredientes;
         this.listaDiariosR = listaDiariosR;
+     
     }
     public Receta() {
         
@@ -193,7 +187,7 @@ public class Receta implements Serializable {
      *
      * @return duracion.
      */
-    public float getDuracion() {
+    public Float getDuracion() {
         return duracion;
     }
 
@@ -201,7 +195,7 @@ public class Receta implements Serializable {
      *
      * @param duracion the duration to be set
      */
-    public void setDuracion(float duracion) {
+    public void setDuracion(Float duracion) {
         this.duracion = duracion;
     }
 
@@ -241,7 +235,7 @@ public class Receta implements Serializable {
      *
      * @return precio
      */
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
@@ -249,7 +243,7 @@ public class Receta implements Serializable {
      *
      * @param precio the price to be set
      */
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 

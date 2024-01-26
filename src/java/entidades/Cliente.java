@@ -51,9 +51,7 @@ public class Cliente extends Usuario {
 
     private Integer altura;
 
-    @XmlTransient
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    private List<Receta> recetasUsu;
+  
 
     public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, Integer telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
@@ -61,7 +59,7 @@ public class Cliente extends Usuario {
         this.peso = peso;
         this.objetivo = objetivo;
         this.altura = altura;
-        this.recetasUsu = recetasUsu;
+        
     }
 
     // Constructor por defecto sin argumentos
@@ -69,13 +67,7 @@ public class Cliente extends Usuario {
         super();
     }
 
-    public void setRecetasUsu(List<Receta> recetasUsu) {
-        this.recetasUsu = recetasUsu;
-    }
-
-    public List<Receta> getRecetasUsu() {
-        return recetasUsu;
-    }
+   
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
