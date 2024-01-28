@@ -6,7 +6,6 @@
 package servicios;
 
 import ejb.DiarioInterface;
-import entidades.Cliente;
 import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -25,7 +24,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -66,6 +64,19 @@ public class DiarioFacadeREST {
     }
 
     @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Diario> findAll() {
+        try {
+            List<Diario> diarios = ejb.findAll();
+            LOGGER.info(diarios.toString());
+            return diarios;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
+    @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Diario buscarPorId(@PathParam("id") Integer id) {
@@ -80,14 +91,16 @@ public class DiarioFacadeREST {
     }
 
     @GET
-    @Path("/buscarFecha")
+    @Path("buscarPorFecha/{diaDiario}/{idCliente}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Diario buscarPorFecha(
-            @QueryParam("diaDiario") Date diaDiario,
-            @QueryParam("clienteDiario") Cliente clienteDiario) {
+            @PathParam("diaDiario") String diaDiario,
+            @PathParam("idCliente") Integer idCliente) {
         try {
-            LOGGER.log(Level.INFO, "Buscando diario por id:");
-            Diario diario = ejb.buscarPorFecha(diaDiario, clienteDiario);
+            LOGGER.info("Entrando a buscarFecha: ");
+
+            Diario diario = ejb.buscarPorFecha(diaDiario, idCliente);
+            LOGGER.info(diario.toString());
             return diario;
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
@@ -96,15 +109,21 @@ public class DiarioFacadeREST {
     }
 
     @GET
+    @Path("buscarEjercicio/{diaDiario}/{idCliente}/{idEjercicio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Diario> findAll() {
+    public Diario buscarPorFecha(
+            @PathParam("diaDiario") String diaDiario,
+            @PathParam("idCliente") Integer idCliente,
+            @PathParam("idEjercicio") Integer idEjercicio) {
         try {
-            List<Diario> diarios = ejb.findAll();
-            LOGGER.info(diarios.toString());
-            return diarios;
-        } catch (ReadException e) {
-            LOGGER.severe(e.getMessage());
-            throw new InternalServerErrorException(e.getMessage());
+            LOGGER.info("Entrando a buscarFecha: ");
+
+            Diario diario = ejb.buscarPorFecha(diaDiario, idCliente, idEjercicio);
+            LOGGER.info(diario.toString());
+            return diario;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
         }
     }
 }

@@ -10,6 +10,7 @@ import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public interface DiarioInterface {
 
     public Diario buscarPorId(Integer id) throws ReadException;
 
-    public Diario buscarPorFecha(Date diarioFecha, Cliente clienteDiario) throws ReadException;
+    public Diario buscarPorFecha(String diaDiario, Integer idCliente) throws ReadException;
+
+    public Diario buscarPorFecha(String diaDiario, Integer idCliente, Integer idEjercicio) throws ReadException;
 
 }

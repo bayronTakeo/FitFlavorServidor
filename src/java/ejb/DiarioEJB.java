@@ -10,6 +10,8 @@ import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -75,13 +77,45 @@ public class DiarioEJB implements DiarioInterface {
     }
 
     @Override
-    public Diario buscarPorFecha(Date diarioFecha, Cliente clienteDiario) throws ReadException {
+    public Diario buscarPorFecha(String diaDiario, Integer idCliente) throws ReadException {
         Diario diario;
         try {
             LOGGER.info("Entrando a buscar");
-            diario = (Diario) em.createNamedQuery("buscarDiarioFecha")
-                    .setParameter("diaDiario", diarioFecha)
-                    .setParameter("clienteDiario", clienteDiario)
+
+            // Convertir String a LocalDate
+            LocalDate localDate = LocalDate.parse(diaDiario);
+
+            // Convertir LocalDate a Date
+            Date fecha = java.sql.Date.valueOf(localDate);
+
+            LOGGER.info(fecha.toString());
+            diario = (Diario) em.createNamedQuery("buscarPorFecha")
+                    .setParameter("diaDiario", fecha)
+                    .setParameter("idCliente", idCliente)
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return diario;
+    }
+
+    @Override
+    public Diario buscarPorFecha(String diaDiario, Integer idCliente, Integer idEjercicio) throws ReadException {
+        Diario diario;
+        try {
+            LOGGER.info("Entrando a buscar");
+
+            // Convertir String a LocalDate
+            LocalDate localDate = LocalDate.parse(diaDiario);
+
+            // Convertir LocalDate a Date
+            Date fecha = java.sql.Date.valueOf(localDate);
+
+            LOGGER.info(fecha.toString());
+            diario = (Diario) em.createNamedQuery("buscarEjercicio")
+                    .setParameter("diaDiario", fecha)
+                    .setParameter("idCliente", idCliente)
+                    .setParameter("idEjercicio", idEjercicio)
                     .getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());

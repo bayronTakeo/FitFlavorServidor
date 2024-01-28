@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -20,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -44,7 +46,12 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
-            name = "buscarDiarioFecha", query = "SELECT d from Diario d WHERE dia = :diaDiario and cliente = :clienteDiario"
+            name = "buscarPorFecha", query = "SELECT d from Diario d WHERE dia LIKE :diaDiario and d.cliente.user_id = :idCliente"
+    )
+    ,
+  @NamedQuery(
+            name = "buscarEjercicio",
+            query = "SELECT d FROM Diario d JOIN d.listaEjercicios e WHERE d.dia LIKE :diaDiario AND d.cliente.user_id = :idCliente AND e.id = :idEjercicio"
     )
 
 })
@@ -73,7 +80,7 @@ public class Diario implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private Date dia;
 
     private String comentarios;
