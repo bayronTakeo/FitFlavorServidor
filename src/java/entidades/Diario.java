@@ -83,6 +83,7 @@ public class Diario implements Serializable {
         this.comentarios = comentarios;
     }
 
+    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -126,11 +127,11 @@ public class Diario implements Serializable {
         this.id = id;
     }
 
+    @XmlTransient
     /**
      *
      * @return the ListaEjercicios
      */
-    @XmlTransient
     public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
@@ -163,26 +164,29 @@ public class Diario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Diario)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
-            return false;
-        }
-        return true;
+        Diario other = (Diario) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Diario{"
+                + "id=" + id
+                + ", cliente=" + (cliente != null ? cliente.getUser_id() : "null")
+                + ", dia=" + dia
+                + ", comentarios='" + comentarios + '\''
+                + ", listaEjercicios=" + listaEjercicios
+                + ", listaRecetas=" + listaRecetas
+                + '}';
     }
 
 }

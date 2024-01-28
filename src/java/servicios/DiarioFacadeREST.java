@@ -82,7 +82,7 @@ public class DiarioFacadeREST {
     public List<Diario> findAll() {
         try {
             List<Diario> diarios = ejb.findAll();
-
+            LOGGER.info(diarios.toString());
             return diarios;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
