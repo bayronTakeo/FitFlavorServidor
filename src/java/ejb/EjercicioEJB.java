@@ -12,8 +12,6 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +29,7 @@ public class EjercicioEJB implements EjercicioInterface {
     @Override
     public void createEjercicio(Ejercicio ejercicio) throws CreateException {
         try {
+            ejercicio.setId(null);
             em.persist(ejercicio);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
@@ -52,6 +51,7 @@ public class EjercicioEJB implements EjercicioInterface {
     @Override
     public void deleteEjercicio(Ejercicio ejercicio) throws DeleteException {
         try {
+
             em.remove(em.merge(ejercicio));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());

@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Esta clase guarda los atributos de Ejercicios
@@ -107,15 +108,17 @@ public class Ejercicio implements Serializable {
         this.admin = admin;
     }
 
+    @XmlTransient
     public Admin getAdmin() {
         return admin;
     }
 
-    public void setListaDiarios(List<Diario> ListaDiarios) {
-        this.listaDiariosE = ListaDiarios;
+    public void setListaDiariosE(List<Diario> ListaDiariosE) {
+        this.listaDiariosE = ListaDiariosE;
     }
 
-    public List<Diario> getListaDiarios() {
+    @XmlTransient
+    public List<Diario> getListaDiariosE() {
         return listaDiariosE;
     }
 
@@ -217,9 +220,9 @@ public class Ejercicio implements Serializable {
 
     /**
      *
-     * @return the intensidad
+     * @return the tipoIntensidad
      */
-    public TipoIntensidad getIntensidad() {
+    public TipoIntensidad getTipoIntensidad() {
         return tipoIntensidad;
     }
 
@@ -240,15 +243,11 @@ public class Ejercicio implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Ejercicio)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
-            return false;
-        }
-        return true;
+        Ejercicio other = (Ejercicio) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
@@ -260,8 +259,7 @@ public class Ejercicio implements Serializable {
                 + ", descripcion='" + descripcion + '\''
                 + ", duracion=" + duracion
                 + ", kcalQuemadas=" + kcalQuemadas
-                + ", intensidad='" + tipoIntensidad + '\''
-                + ", listaDiariosE=" + listaDiariosE
+                + ", tipoIntensidad=" + tipoIntensidad
                 + ", admin=" + admin
                 + '}';
     }
