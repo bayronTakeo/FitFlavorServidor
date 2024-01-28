@@ -5,10 +5,12 @@
  */
 package ejb;
 
+import entidades.Cliente;
 import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +26,7 @@ public interface DiarioInterface {
     public List<Diario> findAll() throws ReadException;
 
     public Diario buscarPorId(Integer id) throws ReadException;
+
+    public Diario buscarPorFecha(Date diarioFecha, Cliente clienteDiario) throws ReadException;
+
 }

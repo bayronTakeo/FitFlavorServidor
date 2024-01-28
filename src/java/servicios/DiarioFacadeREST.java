@@ -11,6 +11,7 @@ import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -70,6 +72,22 @@ public class DiarioFacadeREST {
         try {
             LOGGER.log(Level.INFO, "Buscando diario por id:");
             Diario diario = ejb.buscarPorId(id);
+            return diario;
+        } catch (ReadException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/buscarFecha")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Diario buscarPorFecha(
+            @QueryParam("diaDiario") Date diaDiario,
+            @QueryParam("clienteDiario") Cliente clienteDiario) {
+        try {
+            LOGGER.log(Level.INFO, "Buscando diario por id:");
+            Diario diario = ejb.buscarPorFecha(diaDiario, clienteDiario);
             return diario;
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());

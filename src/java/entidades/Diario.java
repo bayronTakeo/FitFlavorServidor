@@ -42,6 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(
             name = "sacarDiarios", query = "SELECT d from Diario d "
     )
+    ,
+    @NamedQuery(
+            name = "buscarDiarioFecha", query = "SELECT d from Diario d WHERE dia = :diaDiario and cliente = :clienteDiario"
+    )
 
 })
 

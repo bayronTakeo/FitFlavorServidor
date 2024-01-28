@@ -5,10 +5,12 @@
  */
 package ejb;
 
+import entidades.Cliente;
 import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -66,6 +68,21 @@ public class DiarioEJB implements DiarioInterface {
         Diario diario;
         try {
             diario = em.find(Diario.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return diario;
+    }
+
+    @Override
+    public Diario buscarPorFecha(Date diarioFecha, Cliente clienteDiario) throws ReadException {
+        Diario diario;
+        try {
+            LOGGER.info("Entrando a buscar");
+            diario = (Diario) em.createNamedQuery("buscarDiarioFecha")
+                    .setParameter("diaDiario", diarioFecha)
+                    .setParameter("clienteDiario", clienteDiario)
+                    .getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
