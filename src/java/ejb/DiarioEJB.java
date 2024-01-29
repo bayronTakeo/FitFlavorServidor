@@ -10,6 +10,7 @@ import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import excepciones.UpdateException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -121,6 +122,20 @@ public class DiarioEJB implements DiarioInterface {
             throw new ReadException(e.getMessage());
         }
         return diario;
+    }
+
+    @Override
+    public void actualizarDiario(Diario diario) throws UpdateException {
+        try {
+            LOGGER.info("Actualizando");
+
+            if (!em.contains(diario)) {
+                em.merge(diario);
+            }
+            em.flush();
+        } catch (Exception e) {
+            throw new UpdateException(e.getMessage());
+        }
     }
 
 }

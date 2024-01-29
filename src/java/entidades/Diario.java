@@ -69,7 +69,7 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
-    @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Ejercicio> listaEjercicios;
     /**
      * Lista de Recetas
@@ -94,7 +94,6 @@ public class Diario implements Serializable {
         this.comentarios = comentarios;
     }
 
-    @XmlTransient
     public Cliente getCliente() {
         return cliente;
     }
@@ -138,7 +137,6 @@ public class Diario implements Serializable {
         this.id = id;
     }
 
-    @XmlTransient
     /**
      *
      * @return the ListaEjercicios

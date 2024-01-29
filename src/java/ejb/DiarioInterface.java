@@ -10,6 +10,7 @@ import entidades.Diario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
+import excepciones.UpdateException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +24,8 @@ public interface DiarioInterface {
     public void createDiario(Diario diario) throws CreateException;
 
     public void deleteDiario(Diario diario) throws DeleteException;
+
+    public void actualizarDiario(Diario diario) throws UpdateException;
 
     public List<Diario> findAll() throws ReadException;
 

@@ -81,14 +81,10 @@ public class Ejercicio implements Serializable {
     @Enumerated(EnumType.STRING)
     private TipoIntensidad tipoIntensidad;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
-    private List<Diario> listaDiariosE;
-
     @ManyToOne
     private Admin admin;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, Float duracion, int kcalQuemadas, TipoIntensidad tipoIntensidad, List<Diario> listaDiariosE, Admin admin) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, Float duracion, int kcalQuemadas, TipoIntensidad tipoIntensidad, Admin admin) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
@@ -96,7 +92,7 @@ public class Ejercicio implements Serializable {
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
         this.tipoIntensidad = tipoIntensidad;
-        this.listaDiariosE = listaDiariosE;
+
         this.admin = admin;
     }
 
@@ -108,18 +104,8 @@ public class Ejercicio implements Serializable {
         this.admin = admin;
     }
 
-    @XmlTransient
     public Admin getAdmin() {
         return admin;
-    }
-
-    public void setListaDiariosE(List<Diario> ListaDiariosE) {
-        this.listaDiariosE = ListaDiariosE;
-    }
-
-    @XmlTransient
-    public List<Diario> getListaDiariosE() {
-        return listaDiariosE;
     }
 
     /**
