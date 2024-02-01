@@ -5,7 +5,6 @@
  */
 package entidades;
 
-import entidades.Cliente;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -70,7 +70,7 @@ public class Ejercicio implements Serializable {
     /**
      * Duracion del Ejercicio
      */
-    private float duracion;
+    private Float duracion;
     /**
      * Kcal quemadas con el Ejercicio
      */
@@ -78,33 +78,34 @@ public class Ejercicio implements Serializable {
     /**
      * Intensidad del Ejercicio
      */
-    private String intensidad;
+    @Enumerated(EnumType.STRING)
+    private TipoIntensidad tipoIntensidad;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "diarioEjercicio")
-    private List<Diario> listaDiariosE;
+    @ManyToOne
+    private Admin admin;
 
-    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, float duracion, int kcalQuemadas, String intensidad, List<Diario> listaDiariosE) {
+    public Ejercicio(Integer id, String nombre, TipoEjercicio tipoEjercicio, String descripcion, Float duracion, int kcalQuemadas, TipoIntensidad tipoIntensidad, Admin admin) {
         this.id = id;
         this.nombre = nombre;
         this.tipoEjercicio = tipoEjercicio;
         this.descripcion = descripcion;
         this.duracion = duracion;
         this.kcalQuemadas = kcalQuemadas;
-        this.intensidad = intensidad;
-        this.listaDiariosE = listaDiariosE;
+        this.tipoIntensidad = tipoIntensidad;
+
+        this.admin = admin;
     }
 
     public Ejercicio() {
 
     }
 
-    public void setListaDiarios(List<Diario> ListaDiarios) {
-        this.listaDiariosE = ListaDiarios;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
-    public List<Diario> getListaDiarios() {
-        return listaDiariosE;
+    public Admin getAdmin() {
+        return admin;
     }
 
     /**
@@ -175,7 +176,7 @@ public class Ejercicio implements Serializable {
      *
      * @return the duracion
      */
-    public float getDuracion() {
+    public Float getDuracion() {
         return duracion;
     }
 
@@ -183,7 +184,7 @@ public class Ejercicio implements Serializable {
      *
      * @param duracion the duracion to be set
      */
-    public void setDuracion(float duracion) {
+    public void setDuracion(Float duracion) {
         this.duracion = duracion;
     }
 
@@ -205,34 +206,18 @@ public class Ejercicio implements Serializable {
 
     /**
      *
-     * @return the intensidad
+     * @return the tipoIntensidad
      */
-    public String getIntensidad() {
-        return intensidad;
+    public TipoIntensidad getTipoIntensidad() {
+        return tipoIntensidad;
     }
 
     /**
      *
-     * @param intensidad the intensidad to be set
+     * @param tipoIntensidad the intensidad to be set
      */
-    public void setIntensidad(String intensidad) {
-        this.intensidad = intensidad;
-    }
-
-    /**
-     *
-     * @return the listaDiariosE
-     */
-    public List<Diario> getListaDiariosE() {
-        return listaDiariosE;
-    }
-
-    /**
-     *
-     * @param listaDiariosE the listaDiariosE to be set
-     */
-    public void setListaDiariosE(List<Diario> ListaDiariosE) {
-        this.listaDiariosE = listaDiariosE;
+    public void setTipoIntensidad(TipoIntensidad tipoIntensidad) {
+        this.tipoIntensidad = tipoIntensidad;
     }
 
     @Override
@@ -244,20 +229,25 @@ public class Ejercicio implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Ejercicio)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
-            return false;
-        }
-        return true;
+        Ejercicio other = (Ejercicio) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Ejercicio{"
+                + "id=" + id
+                + ", nombre='" + nombre + '\''
+                + ", tipoEjercicio=" + tipoEjercicio
+                + ", descripcion='" + descripcion + '\''
+                + ", duracion=" + duracion
+                + ", kcalQuemadas=" + kcalQuemadas
+                + ", tipoIntensidad=" + tipoIntensidad
+                + ", admin=" + admin
+                + '}';
     }
 
 }

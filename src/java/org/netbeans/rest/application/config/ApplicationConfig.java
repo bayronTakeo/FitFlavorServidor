@@ -23,19 +23,18 @@ public class ApplicationConfig extends Application {
     }
 
     /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
+     * Do not modify addRestResourceClasses() method. It is automatically
+     * populated with all resources defined in the project. If required, comment
+     * out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(servicios.ClienteFacadeREST.class);
         resources.add(servicios.DiarioFacadeREST.class);
         resources.add(servicios.EjercicioFacadeREST.class);
-        resources.add(servicios.FechaFacadeREST.class);
         resources.add(servicios.IngredienteFacadeREST.class);
         resources.add(servicios.RecetaFacadeREST.class);
+        resources.add(servicios.RecetaIngredienteFacadeREST.class);
         resources.add(servicios.UsuarioFacadeREST.class);
     }
-    
+
 }

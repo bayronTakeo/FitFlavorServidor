@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -93,10 +92,11 @@ public class ClienteFacadeREST {
     @GET
     @Path("/busqueda/{usrValor}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> buscar(@PathParam("usrValor") String valor) {
+    public Cliente buscar(@PathParam("usrValor") String valor) {
         try {
-            List<Cliente> clientes = ejb.buscarCliente(valor);
-            return clientes;
+            LOGGER.info("entrando a buscar " + valor);
+            Cliente cliente = ejb.buscarCliente(valor);
+            return cliente;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -121,6 +121,9 @@ public class ClienteFacadeREST {
     public List<Cliente> findAll() {
         try {
             List<Cliente> clientes = ejb.findAll();
+            for (Cliente client : clientes) {
+                client.setContrasenia(null);
+            }
             return clientes;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());

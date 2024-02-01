@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,21 +30,23 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author paula
  */
-
 @NamedQueries({
     @NamedQuery(
             name = "lista", query = "SELECT r FROM Receta r"
-    ),
+    )
+    ,
  //   @NamedQuery(
    //         name = "listaIngrediente", query = "SELECT r FROM Receta r JOIN r.ingredientes i WHERE i = :ingrediente"
     //),
 
     @NamedQuery(
             name = "esVegano", query = "SELECT r FROM Receta r WHERE r.esVegano = :esVegano"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "esVegetariano", query = "SELECT r FROM Receta r WHERE r.esVegetariano = :esVegetariano"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "precio", query = "SELECT r FROM Receta r WHERE r.precio = :precio"
     )
@@ -65,7 +68,7 @@ public class Receta implements Serializable {
     /**
      * Enumeracion de tipo receta.
      */
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TipoReceta tipoReceta;
     /**
      * Nombre de la receta.
@@ -74,7 +77,7 @@ public class Receta implements Serializable {
     /**
      * Duracion de la receta.
      */
-    private float duracion;
+    private Float duracion;
     /**
      * Boolean que indica si es vegetariano o no.
      */
@@ -86,32 +89,23 @@ public class Receta implements Serializable {
     /**
      * Precio de la receta.
      */
-    private float precio;
+    private Float precio;
     /**
      * Lista de ingredientes que contiene la receta.
      */
     private String pasos;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "recetaIngrediente")
-    private List<Ingrediente> ingredientes;
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<RecetaIngrediente> ingredientes;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(schema = "fitFlavor", name = "diarioReceta")
     private List<Diario> listaDiariosR;
+
     @ManyToOne
     private Cliente cliente;
 
-    @XmlTransient
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<Ingrediente> ingredientes, List<Diario> listaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, Float duracion, boolean esVegetariano, boolean esVegano, Float precio, List<RecetaIngrediente> ingredientes, List<Diario> listaDiariosR, Cliente cliente) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -121,9 +115,20 @@ public class Receta implements Serializable {
         this.precio = precio;
         this.ingredientes = ingredientes;
         this.listaDiariosR = listaDiariosR;
+        this.cliente = cliente;
     }
+
     public Receta() {
-        
+
+    }
+
+    @XmlTransient
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @XmlTransient
@@ -146,8 +151,6 @@ public class Receta implements Serializable {
     public Integer getId() {
         return id;
     }
-    
-    
 
     public String getPasos() {
         return pasos;
@@ -193,7 +196,7 @@ public class Receta implements Serializable {
      *
      * @return duracion.
      */
-    public float getDuracion() {
+    public Float getDuracion() {
         return duracion;
     }
 
@@ -201,7 +204,7 @@ public class Receta implements Serializable {
      *
      * @param duracion the duration to be set
      */
-    public void setDuracion(float duracion) {
+    public void setDuracion(Float duracion) {
         this.duracion = duracion;
     }
 
@@ -241,7 +244,7 @@ public class Receta implements Serializable {
      *
      * @return precio
      */
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
@@ -249,7 +252,7 @@ public class Receta implements Serializable {
      *
      * @param precio the price to be set
      */
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
@@ -258,7 +261,7 @@ public class Receta implements Serializable {
      * @return ingrediente
      */
     @XmlTransient
-    public List<Ingrediente> getIngredientes() {
+    public List<RecetaIngrediente> getIngredientes() {
         return ingredientes;
     }
 
@@ -266,28 +269,24 @@ public class Receta implements Serializable {
      *
      * @param ingredientes the ingredients to set
      */
-    public void setIngredientes(List<Ingrediente> ingredientes) {
+    public void setIngredientes(List<RecetaIngrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Receta)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
-            return false;
-        }
-        return true;
+        Receta other = (Receta) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override

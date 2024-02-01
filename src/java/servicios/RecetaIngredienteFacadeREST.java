@@ -5,14 +5,12 @@
  */
 package servicios;
 
-import ejb.DiarioInterface;
-import entidades.Cliente;
-import entidades.Diario;
+import ejb.RecetaIngredienteInterface;
+import entidades.RecetaIngrediente;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,23 +29,22 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author bayro
+ * @author Bayron
  */
 @Stateless
-@Path("entidades.diario")
-public class DiarioFacadeREST {
+@Path("entidades.recetaingrediente")
+public class RecetaIngredienteFacadeREST {
 
     @EJB
-    private DiarioInterface ejb;
-
-    private Logger LOGGER = Logger.getLogger(DiarioFacadeREST.class.getName());
+    private RecetaIngredienteInterface ejb;
+    private Logger LOGGER = Logger.getLogger(RecetaIngredienteFacadeREST.class.getName());
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Diario entity) {
+    public void create(RecetaIngrediente entity) {
         try {
             LOGGER.log(Level.INFO, "Creando diario");
-            ejb.createDiario(entity);
+            ejb.createRecetaIng(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -56,10 +53,10 @@ public class DiarioFacadeREST {
 
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(Diario entity) {
+    public void edit(RecetaIngrediente entity) {
         try {
-            LOGGER.log(Level.INFO, "modificando diario{0}", entity.toString());
-            ejb.actualizarDiario(entity);
+            LOGGER.log(Level.INFO, "modificando cliente{0}");
+            ejb.editarRecetaIng(entity);
         } catch (UpdateException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -71,7 +68,7 @@ public class DiarioFacadeREST {
     public void remove(@PathParam("id") Integer id) {
         try {
             LOGGER.log(Level.INFO, "eliminando diario: ", id);
-            ejb.deleteDiario(ejb.buscarPorId(id));
+            ejb.deleteRecetaIng(ejb.buscarPorId(id));
         } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -80,11 +77,11 @@ public class DiarioFacadeREST {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Diario> findAll() {
+    public List<RecetaIngrediente> findAll() {
         try {
-            List<Diario> diarios = ejb.findAll();
-            LOGGER.info(diarios.toString());
-            return diarios;
+            List<RecetaIngrediente> recetaIng = ejb.findAll();
+
+            return recetaIng;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());
             throw new InternalServerErrorException(e.getMessage());
@@ -94,51 +91,15 @@ public class DiarioFacadeREST {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Diario buscarPorId(@PathParam("id") Integer id) {
+    public RecetaIngrediente buscarPorId(@PathParam("id") Integer id) {
         try {
             LOGGER.log(Level.INFO, "Buscando diario por id:");
-            Diario diario = ejb.buscarPorId(id);
-            return diario;
+            RecetaIngrediente recetaIng = ejb.buscarPorId(id);
+            return recetaIng;
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());
             throw new InternalServerErrorException(ex.getMessage());
         }
     }
 
-    @GET
-    @Path("buscarPorFecha/{diaDiario}/{idCliente}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Diario buscarPorFecha(
-            @PathParam("diaDiario") String diaDiario,
-            @PathParam("idCliente") Integer idCliente) {
-        try {
-            LOGGER.info("Entrando a buscarFecha: ");
-
-            Diario diario = ejb.buscarPorFecha(diaDiario, idCliente);
-            LOGGER.info(diario.toString());
-            return diario;
-        } catch (ReadException ex) {
-            LOGGER.severe(ex.getMessage());
-            throw new InternalServerErrorException(ex.getMessage());
-        }
-    }
-
-    @GET
-    @Path("buscarEjercicio/{diaDiario}/{idCliente}/{idEjercicio}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Diario buscarEjercicio(
-            @PathParam("diaDiario") String diaDiario,
-            @PathParam("idCliente") Integer idCliente,
-            @PathParam("idEjercicio") Integer idEjercicio) {
-        try {
-            LOGGER.info("Entrando a buscarFecha: ");
-
-            Diario diario = ejb.buscarPorFecha(diaDiario, idCliente, idEjercicio);
-            LOGGER.info(diario.toString());
-            return diario;
-        } catch (ReadException ex) {
-            LOGGER.severe(ex.getMessage());
-            throw new InternalServerErrorException(ex.getMessage());
-        }
-    }
 }

@@ -45,7 +45,7 @@ public class EjercicioFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Ejercicio entity) {
         try {
-            LOGGER.log(Level.INFO, "Creando Ejercicio{0}", entity.getId());
+            LOGGER.info("Ejercicio que llega" + entity.toString());
             ejb.createEjercicio(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
@@ -57,7 +57,7 @@ public class EjercicioFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Ejercicio entity) {
         try {
-            LOGGER.log(Level.INFO, "modificando ejercicio{0}", entity.getId());
+            LOGGER.info("modificando ejercicio" + entity.toString());
             ejb.updateEjercicio(entity);
         } catch (UpdateException e) {
             LOGGER.severe(e.getMessage());
@@ -70,7 +70,7 @@ public class EjercicioFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
         try {
-            LOGGER.log(Level.INFO, "eliminando ejercicio{0}");
+            LOGGER.info("Eliminando ejercicio: " + id);
             ejb.deleteEjercicio(ejb.buscarPorId(id));
         } catch (DeleteException | ReadException e) {
             LOGGER.severe(e.getMessage());

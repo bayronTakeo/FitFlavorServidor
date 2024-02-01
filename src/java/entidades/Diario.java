@@ -5,21 +5,23 @@
  */
 package entidades;
 
-import entidades.Cliente;
-import entidades.Fecha;
-import entidades.Receta;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
-import static javax.persistence.CascadeType.ALL;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -28,19 +30,30 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author gaizka
  */
-
 @Entity
 @Table(name = "diario", schema = "fitFlavor")
 @NamedQueries({
     @NamedQuery(
             name = "ejercicio", query = "SELECT e FROM Diario d JOIN d.listaEjercicios e"
-    ),
+    )
+    ,
     @NamedQuery(
             name = "receta", query = "SELECT r FROM Diario d JOIN d.listaRecetas r"
-    ),
-    @NamedQuery(
-            name = "fecha", query = "SELECT f FROM Diario d JOIN d.listaFechas f"
     )
+    ,
+    @NamedQuery(
+            name = "sacarDiarios", query = "SELECT d from Diario d "
+    )
+    ,
+    @NamedQuery(
+            name = "buscarPorFecha", query = "SELECT d from Diario d WHERE dia LIKE :diaDiario and d.cliente.user_id = :idCliente"
+    )
+    ,
+  @NamedQuery(
+            name = "buscarEjercicio",
+            query = "SELECT d FROM Diario d JOIN d.listaEjercicios e WHERE d.dia LIKE :diaDiario AND d.cliente.user_id = :idCliente AND e.id = :idEjercicio"
+    )
+
 })
 
 @XmlRootElement
@@ -56,18 +69,57 @@ public class Diario implements Serializable {
     /**
      * Lista de Ejercicios.
      */
-    @ManyToMany(mappedBy = "listaDiariosE", fetch = FetchType.EAGER, cascade = ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Ejercicio> listaEjercicios;
     /**
      * Lista de Recetas
      */
-    @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = ALL)
+    @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Receta> listaRecetas;
-    /**
-     * Lista de Fechas
-     */
-    @ManyToMany(mappedBy = "listaDiariosF", fetch = FetchType.EAGER, cascade = ALL)
-    private List<Fecha> listaFechas;
+
+    @ManyToOne
+    private Cliente cliente;
+
+    @Temporal(TemporalType.DATE)
+    private Date dia;
+
+    private String comentarios;
+
+    public Diario(Integer id, List<Ejercicio> listaEjercicios, List<Receta> listaRecetas, Cliente cliente, Date dia, String comentarios) {
+        this.id = id;
+        this.listaEjercicios = listaEjercicios;
+        this.listaRecetas = listaRecetas;
+        this.cliente = cliente;
+        this.dia = dia;
+        this.comentarios = comentarios;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Date getDia() {
+        return dia;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setDia(Date dia) {
+        this.dia = dia;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public Diario() {
+    }
 
     /**
      *
@@ -87,26 +139,8 @@ public class Diario implements Serializable {
 
     /**
      *
-     * @return the ListFechas
-     */
-    @XmlTransient
-    public List<Fecha> getListaFechas() {
-        return listaFechas;
-    }
-
-    /**
-     *
-     * @param listaFechas the listaDias to set
-     */
-    public void setListaFechas(List<Fecha> listaFechas) {
-        this.listaFechas = listaFechas;
-    }
-
-    /**
-     *
      * @return the ListaEjercicios
      */
-    @XmlTransient
     public List<Ejercicio> getListaEjercicios() {
         return listaEjercicios;
     }
@@ -139,26 +173,29 @@ public class Diario implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (super.getClass() != null ? getClass().hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
+        if (!(object instanceof Diario)) {
             return false;
         }
-        Cliente other = (Cliente) object;
-        if ((super.getClass() == null && other.getClass() != null) || (super.getClass() != null && !super.getClass().equals(other.getClass()))) {
-            return false;
-        }
-        return true;
+        Diario other = (Diario) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Diario{"
+                + "id=" + id
+                + ", cliente=" + (cliente != null ? cliente.getUser_id() : "null")
+                + ", dia=" + dia
+                + ", comentarios='" + comentarios + '\''
+                + ", listaEjercicios=" + listaEjercicios
+                + ", listaRecetas=" + listaRecetas
+                + '}';
     }
 
 }

@@ -5,16 +5,19 @@
  */
 package ejb;
 
+import Encriptacion.Hash;
 import entidades.Cliente;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
+import files.Asymmetric;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  *
@@ -32,7 +35,10 @@ public class ClienteEJB implements ClienteInterfaz {
     @Override
     public void crearCliente(Cliente cli) throws CreateException {
         try {
-            LOGGER.info("ejb" + cli.toString());
+            LOGGER.info("contrasenia" + cli.getContrasenia());
+
+            byte[] passwordBytes = new Asymmetric().decrypt(DatatypeConverter.parseHexBinary(cli.getContrasenia()));
+            cli.setContrasenia(Hash.hashText(new String(passwordBytes)));
             cli.setUser_id(null);
             // Persiste la entidad en el contexto actual
             em.persist(cli);
@@ -76,10 +82,11 @@ public class ClienteEJB implements ClienteInterfaz {
     }
 
     @Override
-    public List<Cliente> buscarCliente(String valor) throws ReadException {
-        List<Cliente> cliente;
+    public Cliente buscarCliente(String valor) throws ReadException {
+        Cliente cliente;
         try {
-            cliente = em.createNamedQuery("buscarCliente").setParameter("usrValor", "%" + valor + "%").getResultList();
+            LOGGER.info("Entrando a buscar");
+            cliente = (Cliente) em.createNamedQuery("buscarCliente").setParameter("usrValor", valor).getSingleResult();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

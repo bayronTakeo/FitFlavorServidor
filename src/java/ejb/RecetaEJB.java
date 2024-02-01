@@ -62,7 +62,7 @@ public class RecetaEJB implements RecetaInterface {
     @Override
     public List<Receta> listaRecetas() throws ReadException {
         try {
-            return em.createNamedQuery("listaRecetas").getResultList();
+            return em.createNamedQuery("lista").getResultList();
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
