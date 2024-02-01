@@ -51,6 +51,7 @@ public class RecetaFacadeREST {
     public void create(Receta entity) {
         try {
             LOGGER.log(Level.INFO, "Creando receta{0}", entity.getId());
+            entity.setId(null);
             ejb.createReceta(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());

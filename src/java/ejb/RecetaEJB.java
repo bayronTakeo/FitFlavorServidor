@@ -50,7 +50,7 @@ public class RecetaEJB implements RecetaInterface {
     public void updateReceta(Receta receta) throws UpdateException {
         try {
             if (!em.contains(receta)) {
-                em.merge(receta);
+                em.merge(em.merge(receta));
             }
             em.flush();
         } catch (Exception e) {

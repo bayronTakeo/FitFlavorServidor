@@ -65,7 +65,7 @@ public class Receta implements Serializable {
     /**
      * Enumeracion de tipo receta.
      */
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TipoReceta tipoReceta;
     /**
      * Nombre de la receta.
@@ -251,7 +251,7 @@ public class Receta implements Serializable {
      *
      * @return ingrediente
      */
-    @XmlTransient
+    
     public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
@@ -286,7 +286,18 @@ public class Receta implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Receta{" +
+            "id=" + id +
+            ", tipoReceta=" + tipoReceta +
+            ", nombre='" + nombre + '\'' +
+            ", duracion=" + duracion +
+            ", esVegetariano=" + esVegetariano +
+            ", esVegano=" + esVegano +
+            ", precio=" + precio +
+            ", pasos='" + pasos + '\'' +
+            ", ingredientes=" + ingredientes +
+            ", listaDiariosR=" + listaDiariosR +
+            '}'; 
     }
 
 }
