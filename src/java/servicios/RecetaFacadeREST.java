@@ -5,10 +5,7 @@
  */
 package servicios;
 
-import ejb.ClienteInterfaz;
 import ejb.RecetaInterface;
-import entidades.Cliente;
-import entidades.Ingrediente;
 import entidades.Receta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -19,8 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -51,6 +46,7 @@ public class RecetaFacadeREST {
     public void create(Receta entity) {
         try {
             LOGGER.log(Level.INFO, "Creando receta{0}", entity.getId());
+            entity.setId(null);
             ejb.createReceta(entity);
         } catch (CreateException e) {
             LOGGER.severe(e.getMessage());
@@ -107,7 +103,7 @@ public class RecetaFacadeREST {
             throw new InternalServerErrorException(ex.getMessage());
         }
     }
-    
+
     @GET
     @Path("/vegano/{esVegano}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

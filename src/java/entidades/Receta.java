@@ -68,7 +68,7 @@ public class Receta implements Serializable {
     /**
      * Enumeracion de tipo receta.
      */
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private TipoReceta tipoReceta;
     /**
      * Nombre de la receta.
@@ -77,7 +77,7 @@ public class Receta implements Serializable {
     /**
      * Duracion de la receta.
      */
-    private float duracion;
+    private Float duracion;
     /**
      * Boolean que indica si es vegetariano o no.
      */
@@ -89,7 +89,7 @@ public class Receta implements Serializable {
     /**
      * Precio de la receta.
      */
-    private float precio;
+    private Float precio;
     /**
      * Lista de ingredientes que contiene la receta.
      */
@@ -105,16 +105,7 @@ public class Receta implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
-    @XmlTransient
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, float duracion, boolean esVegetariano, boolean esVegano, float precio, List<RecetaIngrediente> ingredientes, List<Diario> listaDiariosR) {
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, Float duracion, boolean esVegetariano, boolean esVegano, Float precio, List<RecetaIngrediente> ingredientes, List<Diario> listaDiariosR, Cliente cliente) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -124,10 +115,20 @@ public class Receta implements Serializable {
         this.precio = precio;
         this.ingredientes = ingredientes;
         this.listaDiariosR = listaDiariosR;
+        this.cliente = cliente;
     }
 
     public Receta() {
 
+    }
+
+    @XmlTransient
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     @XmlTransient
@@ -195,7 +196,7 @@ public class Receta implements Serializable {
      *
      * @return duracion.
      */
-    public float getDuracion() {
+    public Float getDuracion() {
         return duracion;
     }
 
@@ -203,7 +204,7 @@ public class Receta implements Serializable {
      *
      * @param duracion the duration to be set
      */
-    public void setDuracion(float duracion) {
+    public void setDuracion(Float duracion) {
         this.duracion = duracion;
     }
 
@@ -243,7 +244,7 @@ public class Receta implements Serializable {
      *
      * @return precio
      */
-    public float getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
@@ -251,7 +252,7 @@ public class Receta implements Serializable {
      *
      * @param precio the price to be set
      */
-    public void setPrecio(float precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
