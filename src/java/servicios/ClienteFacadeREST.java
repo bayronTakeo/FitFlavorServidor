@@ -63,6 +63,19 @@ public class ClienteFacadeREST {
     }
 
     @PUT
+    @Path("editPassword")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void editPassword(Cliente entity) {
+        try {
+            LOGGER.log(Level.INFO, "cliente", entity.getUser_id());
+            ejb.actualizarContraseña(entity);
+        } catch (UpdateException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @PUT
     @Path("recoverPassword")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void recoverPassword(Cliente entity) {

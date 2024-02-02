@@ -138,4 +138,24 @@ public class ClienteEJB implements ClienteInterfaz {
             throw new UpdateException(e.getMessage());
         }
     }
+
+    @Override
+    public void actualizarContraseña(Cliente cliente) throws UpdateException {
+        try {
+            if (!em.contains(cliente)) {
+                EmailServicio emailService = new EmailServicio();
+                String body = "Sr/a " + cliente.getNombreCompleto() + ",\n"
+                        + "Hemos relizado el cambio de contraseña solicitado por usted exitosamente!"
+                        + "Gracias por seguir usando nuestra app:)";
+                String subject = "Cambio de contraseña";
+                emailService.sendEmail(cliente.getEmail(), null, body, subject);
+                byte[] passwordBytes = new Asymmetric().decrypt(DatatypeConverter.parseHexBinary(cliente.getContrasenia()));
+                cliente.setContrasenia(Hash.hashText(new String(passwordBytes)));
+                em.merge(cliente);
+            }
+            em.flush();
+        } catch (Exception e) {
+            throw new UpdateException(e.getMessage());
+        }
+    }
 }
