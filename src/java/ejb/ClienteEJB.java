@@ -158,4 +158,17 @@ public class ClienteEJB implements ClienteInterfaz {
             throw new UpdateException(e.getMessage());
         }
     }
+
+    @Override
+    public Cliente buscarPorNombre(String nombre) throws ReadException {
+        Cliente cliente;
+        try {
+            LOGGER.info("Entrando a buscar");
+            cliente = (Cliente) em.createNamedQuery("buscarNombreCliente").setParameter("usr", nombre).getSingleResult();
+            LOGGER.info("Cliente encontrado: " + cliente.toString());
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return cliente;
+    }
 }

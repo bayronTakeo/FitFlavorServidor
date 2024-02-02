@@ -130,6 +130,20 @@ public class ClienteFacadeREST {
     }
 
     @GET
+    @Path("/busquedaNombre/{usr}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Cliente buscarNombre(@PathParam("usr") String usr) {
+        try {
+            LOGGER.info("entrando a buscar " + usr);
+            Cliente cliente = ejb.buscarPorNombre(usr);
+            return cliente;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
+    @GET
     @Path("busquedaTelefono/{usrTelefono}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente buscarTelefono(@PathParam("usrTelefono") int telefono) {

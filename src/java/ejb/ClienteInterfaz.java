@@ -35,4 +35,7 @@ public interface ClienteInterfaz {
     public void recuperarContrasenia(Cliente cliente) throws UpdateException;
 
     public void actualizarContraseña(Cliente cliente) throws UpdateException;
+
+    public Cliente buscarPorNombre(String nombre) throws ReadException;
+
 }

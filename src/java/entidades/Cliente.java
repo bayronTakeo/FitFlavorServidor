@@ -30,6 +30,10 @@ import javax.xml.bind.annotation.XmlTransient;
     )
     ,
     @NamedQuery(
+            name = "buscarNombreCliente", query = "SELECT u from Cliente u WHERE nombreCompleto = :usr "
+    )
+    ,
+    @NamedQuery(
             name = "buscarPorTelefono", query = "SELECT u from Cliente u  WHERE telefono = :usrTelefono"
     ),})
 @Entity
