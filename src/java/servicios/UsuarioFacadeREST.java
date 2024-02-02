@@ -86,7 +86,7 @@ public class UsuarioFacadeREST {
             LOGGER.log(Level.INFO, "Intentando iniciar sesion");
             Usuario usuario = usuInter.signIn(emailUsr, contraseniaUsr);
             LOGGER.log(Level.INFO, usuario.toString());
-            //usuario.setContrasenia(contraseniaUsr);
+            //usuario.setContrasenia(null);
             return usuario;
         } catch (ReadException ex) {
             LOGGER.severe(ex.getMessage());

@@ -31,4 +31,6 @@ public interface ClienteInterfaz {
     public Cliente buscarPorTelefono(int telefono) throws ReadException;
 
     public Cliente buscarPorId(Integer id) throws ReadException;
+
+    public void recuperarContrasenia(Cliente cliente) throws UpdateException;
 }

@@ -62,6 +62,19 @@ public class ClienteFacadeREST {
         }
     }
 
+    @PUT
+    @Path("recoverPassword")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void recoverPassword(Cliente entity) {
+        try {
+            LOGGER.log(Level.INFO, "Updating client {0}", entity.getUser_id());
+            ejb.recuperarContrasenia(entity);
+        } catch (UpdateException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {

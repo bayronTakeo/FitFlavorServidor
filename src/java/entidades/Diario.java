@@ -74,7 +74,7 @@ public class Diario implements Serializable {
     /**
      * Lista de Recetas
      */
-    @ManyToMany(mappedBy = "listaDiariosR", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Receta> listaRecetas;
 
     @ManyToOne
@@ -157,7 +157,6 @@ public class Diario implements Serializable {
      *
      * @return the ListaRecetas
      */
-    @XmlTransient
     public List<Receta> getListaRecetas() {
         return listaRecetas;
     }
