@@ -17,7 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -95,17 +94,12 @@ public class Receta implements Serializable {
      */
     private String pasos;
 
-    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "receta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RecetaIngrediente> ingredientes;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(schema = "fitFlavor", name = "diarioReceta")
-    private List<Diario> listaDiariosR;
-
-    @ManyToOne
-    private Cliente cliente;
-
-    public Receta(Integer id, TipoReceta tipoReceta, String nombre, Float duracion, boolean esVegetariano, boolean esVegano, Float precio, List<RecetaIngrediente> ingredientes, List<Diario> listaDiariosR, Cliente cliente) {
+//    @ManyToOne
+//    private Cliente cliente;
+    public Receta(Integer id, TipoReceta tipoReceta, String nombre, Float duracion, boolean esVegetariano, boolean esVegano, Float precio, List<RecetaIngrediente> ingredientes) {
         this.id = id;
         this.tipoReceta = tipoReceta;
         this.nombre = nombre;
@@ -114,31 +108,20 @@ public class Receta implements Serializable {
         this.esVegano = esVegano;
         this.precio = precio;
         this.ingredientes = ingredientes;
-        this.listaDiariosR = listaDiariosR;
-        this.cliente = cliente;
     }
 
     public Receta() {
 
     }
-
-    @XmlTransient
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    @XmlTransient
-    public List<Diario> getListaDiariosR() {
-        return listaDiariosR;
-    }
-
-    public void setListaDiariosR(List<Diario> listaDiariosR) {
-        this.listaDiariosR = listaDiariosR;
-    }
+//
+//    @XmlTransient
+//    public Cliente getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(Cliente cliente) {
+//        this.cliente = cliente;
+//    }
 
     /**
      *

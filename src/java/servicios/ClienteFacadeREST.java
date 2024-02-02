@@ -62,6 +62,32 @@ public class ClienteFacadeREST {
         }
     }
 
+    @PUT
+    @Path("editPassword")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void editPassword(Cliente entity) {
+        try {
+            LOGGER.log(Level.INFO, "cliente", entity.getUser_id());
+            ejb.actualizarContraseña(entity);
+        } catch (UpdateException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
+    @PUT
+    @Path("recoverPassword")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void recoverPassword(Cliente entity) {
+        try {
+            LOGGER.log(Level.INFO, "Updating client {0}", entity.getUser_id());
+            ejb.recuperarContrasenia(entity);
+        } catch (UpdateException ex) {
+            LOGGER.severe(ex.getMessage());
+            throw new InternalServerErrorException(ex.getMessage());
+        }
+    }
+
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
@@ -96,6 +122,20 @@ public class ClienteFacadeREST {
         try {
             LOGGER.info("entrando a buscar " + valor);
             Cliente cliente = ejb.buscarCliente(valor);
+            return cliente;
+        } catch (ReadException e) {
+            LOGGER.severe(e.getMessage());
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/busquedaNombre/{usr}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Cliente buscarNombre(@PathParam("usr") String usr) {
+        try {
+            LOGGER.info("entrando a buscar " + usr);
+            Cliente cliente = ejb.buscarPorNombre(usr);
             return cliente;
         } catch (ReadException e) {
             LOGGER.severe(e.getMessage());

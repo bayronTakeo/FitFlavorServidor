@@ -12,6 +12,7 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import files.Asymmetric;
+import files.EmailServicio;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -87,6 +88,7 @@ public class ClienteEJB implements ClienteInterfaz {
         try {
             LOGGER.info("Entrando a buscar");
             cliente = (Cliente) em.createNamedQuery("buscarCliente").setParameter("usrValor", valor).getSingleResult();
+            LOGGER.info("Cliente encontrado: " + cliente.toString());
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
@@ -109,6 +111,61 @@ public class ClienteEJB implements ClienteInterfaz {
         Cliente cliente;
         try {
             cliente = em.find(Cliente.class, id);
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return cliente;
+    }
+
+    @Override
+    public void recuperarContrasenia(Cliente cliente) throws UpdateException {
+        try {
+            if (!em.contains(cliente)) {
+                EmailServicio emailService = new EmailServicio();
+                String password = emailService.generateRandomPassword().toString();
+                String body = "Has solicitado una nueva contraseña:\n"
+                        + password + "\n"
+                        + "Atentamente el equipo de fitFlavour :)";
+                String subject = "Recuperar contraseña";
+                emailService.sendEmail(cliente.getEmail(), password, body, subject);
+
+                cliente.setContrasenia(Hash.hashText(password));
+                LOGGER.info(cliente.getContrasenia());
+                em.merge(cliente);
+            }
+            em.flush();
+        } catch (Exception e) {
+            throw new UpdateException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void actualizarContraseña(Cliente cliente) throws UpdateException {
+        try {
+            if (!em.contains(cliente)) {
+                EmailServicio emailService = new EmailServicio();
+                String body = "Sr/a " + cliente.getNombreCompleto() + ",\n"
+                        + "Hemos relizado el cambio de contraseña solicitado por usted exitosamente!"
+                        + "Gracias por seguir usando nuestra app:)";
+                String subject = "Cambio de contraseña";
+                emailService.sendEmail(cliente.getEmail(), null, body, subject);
+                byte[] passwordBytes = new Asymmetric().decrypt(DatatypeConverter.parseHexBinary(cliente.getContrasenia()));
+                cliente.setContrasenia(Hash.hashText(new String(passwordBytes)));
+                em.merge(cliente);
+            }
+            em.flush();
+        } catch (Exception e) {
+            throw new UpdateException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Cliente buscarPorNombre(String nombre) throws ReadException {
+        Cliente cliente;
+        try {
+            LOGGER.info("Entrando a buscar");
+            cliente = (Cliente) em.createNamedQuery("buscarNombreCliente").setParameter("usr", nombre).getSingleResult();
+            LOGGER.info("Cliente encontrado: " + cliente.toString());
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }

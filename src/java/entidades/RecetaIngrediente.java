@@ -6,11 +6,13 @@
 package entidades;
 
 import java.io.Serializable;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,35 +26,38 @@ import javax.xml.bind.annotation.XmlRootElement;
             name = "sacarRecetaIng", query = "SELECT r from RecetaIngrediente r "
     ),})
 @Entity
-@IdClass(RecetaIngredienteId.class)
 @XmlRootElement
 public class RecetaIngrediente implements Serializable {
 
-    @Id
+    @EmbeddedId
+    private RecetaIngredienteId recetaIngredienteId;
+
+    @MapsId("id")
     @ManyToOne
-    @JoinColumn(
-            name = "receta_id",
-            insertable = false, updatable = false
-    )
     private Receta receta;
 
-    @Id
+    @MapsId("id")
     @ManyToOne
-    @JoinColumn(
-            name = "ingrediente_id",
-            insertable = false, updatable = false
-    )
     private Ingrediente ingrediente;
 
     private Float cantidad;
 
-    public RecetaIngrediente(Receta receta, Ingrediente ingrediente, Float cantidad) {
+    public RecetaIngrediente(RecetaIngredienteId recetaIngredienteId, Receta receta, Ingrediente ingrediente, Float cantidad) {
+        this.recetaIngredienteId = recetaIngredienteId;
         this.receta = receta;
         this.ingrediente = ingrediente;
         this.cantidad = cantidad;
     }
 
     public RecetaIngrediente() {
+    }
+
+    public void setRecetaIngredienteId(RecetaIngredienteId recetaIngredienteId) {
+        this.recetaIngredienteId = recetaIngredienteId;
+    }
+
+    public RecetaIngredienteId getRecetaIngredienteId() {
+        return recetaIngredienteId;
     }
 
     public Receta getReceta() {

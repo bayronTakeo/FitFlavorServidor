@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -29,6 +27,10 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
     @NamedQuery(
             name = "buscarCliente", query = "SELECT u from Cliente u WHERE email = :usrValor "
+    )
+    ,
+    @NamedQuery(
+            name = "buscarNombreCliente", query = "SELECT u from Cliente u WHERE nombreCompleto = :usr "
     )
     ,
     @NamedQuery(
@@ -52,21 +54,20 @@ public class Cliente extends Usuario {
 
     private Integer altura;
 
-    @XmlTransient
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Receta> recetasUsu;
-
+//    @XmlTransient
+//    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private List<Receta> receta;
     @XmlTransient
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Diario> diario;
 
-    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Receta> recetasUsu, List<Diario> diario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
+    public Cliente(EnumSexo sexo, float peso, EnumObjetivo objetivo, Integer altura, List<Diario> diario, Integer user_id, String email, String nombreCompleto, Date fechaNacimiento, int telefono, String direccion, int codigoPostal, String contrasenia, EnumPrivilegios privilegio) {
         super(user_id, email, nombreCompleto, fechaNacimiento, telefono, direccion, codigoPostal, contrasenia, privilegio);
         this.sexo = sexo;
         this.peso = peso;
         this.objetivo = objetivo;
         this.altura = altura;
-        this.recetasUsu = recetasUsu;
+//        this.receta = receta;
 
         this.diario = diario;
     }
@@ -85,15 +86,14 @@ public class Cliente extends Usuario {
         return diario;
     }
 
-    public void setRecetasUsu(List<Receta> recetasUsu) {
-        this.recetasUsu = recetasUsu;
-    }
-
-    @XmlTransient
-    public List<Receta> getRecetasUsu() {
-        return recetasUsu;
-    }
-
+//    public void setReceta(List<Receta> receta) {
+//        this.receta = receta;
+//    }
+//
+//    @XmlTransient
+//    public List<Receta> getReceta() {
+//        return receta;
+//    }
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
