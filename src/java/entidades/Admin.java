@@ -5,6 +5,7 @@
  */
 package entidades;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -48,4 +49,9 @@ public class Admin extends Usuario {
     public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
+
+    public Admin() {
+        super();
+    }
+
 }
